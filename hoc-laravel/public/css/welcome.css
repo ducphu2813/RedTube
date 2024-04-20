@@ -1,0 +1,190 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 15px;
+}
+
+.btn-hover:hover {
+    opacity: .7;
+    transition: .3s;
+}
+
+.open {
+    display: block;
+}
+
+.closeElement {
+    display: none;
+}
+
+#wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.modal {
+    width: 66%;
+    height: 600px;
+    background-color: #fbfbfb;
+    border-radius: 100px;
+    display: flex;
+    box-shadow: 16px 9px 8px -6px rgba(0, 0, 0, .1);
+}
+
+.sub-modal {
+    display: flex;
+    width: 40%;
+    height: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: space-around;
+    background-color: #000;
+    border-radius: 100px;
+    opacity: .9;
+}
+
+.sub-modal div {
+    color: red;
+    text-align: center;
+    width: 100%;
+    font-size: 50px;
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+.sub-modal h1 {
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    padding-top: 100px;
+}
+
+.change-btn {
+    height: 75px;
+    border: none;
+    border-radius: 50px;
+    width: 60%;
+    background-color: red;
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    font-size: medium;
+    font-size: 20px;
+}
+
+
+.form-container {
+    width: 60%;
+    display: flex;
+}
+
+.form {
+    height: 100%;
+    width: 100%;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+}
+
+.form h1 {
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    color: red;
+    text-transform: uppercase;
+    font-weight: bolder;
+    font-size: 50px;
+}
+
+#form-sign-up {
+    margin-left: -40%;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.input-group input {
+    height: 50px;
+    border-radius: 20px;
+    width: 80%;
+    margin-top: 40px;
+    padding: 15px;
+    background-color: #ECECEC;
+    border: none;
+    font-size: 17px;
+}
+
+.list-btn {
+    padding: 30px;
+    text-align: center;
+}
+
+.list-btn i {
+    margin: 20px;
+    cursor: pointer;
+}
+
+.sign-in-btn {
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    width: 40%;
+    background-color: red;
+    cursor: pointer;
+    color: #fff;
+    font-size: medium;
+    text-transform: uppercase;
+    margin-top: 90px;
+    margin-left: 30%;
+}
+
+/* animation */
+.slide-right {
+    animation: slideRight .75s forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(150%);
+    }
+}
+
+.slide-left {
+    animation: slideLeft .75s forwards;
+}
+
+@keyframes slideLeft {
+    from {
+        transform: translateX(150%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+.show {
+    animation: showElement .3s ease-in;
+}
+
+@keyframes showElement {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
