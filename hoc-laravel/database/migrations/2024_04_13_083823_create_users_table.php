@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('picture_url')->nullable();
             $table->string('token')->nullable();
             $table->timestamp('token_expire')->nullable();
-            $table->int('role');
+            $table->integer('role');
             $table->timestamps();
         });
     }
