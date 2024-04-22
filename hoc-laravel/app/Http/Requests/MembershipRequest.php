@@ -4,17 +4,17 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class MembershipRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'comment_id' => ['required', 'integer'],
+            'membership_id' => ['required', 'integer'],
             'user_id' => ['required', 'exists:users'],
-            'video_id' => ['required', 'exists:video'],
-            'reply_id' => ['nullable'],
-            'content' => ['required'],
-            'created_date' => ['required', 'date'],
+            'name' => ['required'],
+            'price' => ['required', 'numeric'],
+            'description' => ['nullable'],
+            'duration' => ['required', 'integer'],
         ];
     }
 

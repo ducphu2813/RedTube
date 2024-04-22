@@ -4,16 +4,14 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentRequest extends FormRequest
+class SharePremiumRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'comment_id' => ['required', 'integer'],
+            'share_id' => ['required', 'integer'],
             'user_id' => ['required', 'exists:users'],
-            'video_id' => ['required', 'exists:video'],
-            'reply_id' => ['nullable'],
-            'content' => ['required'],
+            'premium_registration_id' => ['required', 'exists:premium_registration'],
             'created_date' => ['required', 'date'],
         ];
     }

@@ -2,22 +2,20 @@
 
 namespace Database\Factories;
 
-use App\Models\Comment;
+use App\Models\Interaction;
 use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class CommentFactory extends Factory
+class InteractionFactory extends Factory
 {
-    protected $model = Comment::class;
+    protected $model = Interaction::class;
 
     public function definition(): array
     {
         return [
-            'comment_id' => $this->faker->randomNumber(),
-            'reply_id' => $this->faker->randomNumber(),
-            'content' => $this->faker->word(),
+            'reaction' => $this->faker->boolean(),
             'created_date' => Carbon::now(),
 
             'user_id' => Users::factory(),

@@ -1,16 +1,14 @@
-<div class="reply-section">
-    <p class="user_name">${response.user_name} - ${response.created_date}</p>
-    <p class="content">${response.content}</p><br>
-</div>
-<div>
-    <form action="${response.reply_route}" method="post" class="reply-form">
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ }}">
+    <title>Document</title>
+</head>
+<body>
 
-        <input type="hidden" name="_token" value="${response.csrf_token}">
-        <input type="hidden" name="video_id" value="${response.video_id}">
-        <input type="hidden" name="reply_id" value="${response.comment_id}">
-        <textarea name="content" id="" cols="30" rows="4" placeholder="trả lời"></textarea>
-        <button type="submit">Comment</button>
-    </form>
-
-    <hr>
-</div>
+</body>
+</html>

@@ -15,8 +15,10 @@ class UsersRequest extends FormRequest
             'email' => ['required', 'email', 'max:254'],
             'password' => ['required'],
             'description' => ['nullable'],
-            'created_date' => ['required', 'date'],
+            'created_date' => ['nullable', 'date'],
             'active' => ['boolean'],
+            'picture_url' => ['nullable'],
+            'role' => ['required', 'integer'],
         ];
     }
 

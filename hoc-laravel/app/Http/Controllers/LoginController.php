@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Users;
-use App\Rules\RegisterUniqueRule;
 use App\Rules\LoginUniqueRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller{
-
 
     //xử lý đăng nhập
     public function login(Request $request){
@@ -44,6 +42,7 @@ class LoginController extends Controller{
             if($user->password == $request->password){
 
                 $request->session()->put('loggedInUser', $user->user_id);
+                $request->session()->put('userPermission', $user->role);
 
                 return response()->json([
                     'status' => 200,
@@ -66,6 +65,7 @@ class LoginController extends Controller{
 
             //lấy ra giá trị của loggedInUser và quên nó đi
             session()->pull('loggedInUser');
+            session()->pull('userPermission');
         }
 
         return redirect()->route('login-register')

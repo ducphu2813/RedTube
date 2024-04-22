@@ -18,6 +18,8 @@ class VideoController extends Controller{
             return Video::find($id);
         });
 
+//        return response()->json($video);
+
         return view('video.video-detail', ['video' => $video]);
 
     }

@@ -11,7 +11,15 @@ class VideoRequest extends FormRequest
         return [
             'video_id' => ['required', 'integer'],
             'title' => ['required'],
-            'user_id' => ['required', 'exists:users'],
+            'users_id' => ['required', 'exists:users'],
+            'created_date' => ['required', 'date'],
+            'view' => ['required', 'integer'],
+            'description' => ['nullable'],
+            'display_mode' => ['boolean'],
+            'membership' => ['boolean'],
+            'active' => ['boolean'],
+            'video_path' => ['required'],
+            'thumbnail_path' => ['required'],
         ];
     }
 
