@@ -34,6 +34,7 @@ html {
     border-radius: 100px;
     display: flex;
     box-shadow: 16px 9px 8px -6px rgba(0, 0, 0, .1);
+    transition: .5s;
 }
 
 .sub-modal {
@@ -122,6 +123,10 @@ html {
     font-size: 17px;
 }
 
+#form-sign-up .input-group input{
+    margin-top: 15px;
+}
+
 .list-btn {
     padding: 30px;
     text-align: center;
@@ -142,7 +147,7 @@ html {
     color: #fff;
     font-size: medium;
     text-transform: uppercase;
-    margin-top: 90px;
+    margin-top: 30px;
     margin-left: 30%;
 }
 
@@ -188,3 +193,18 @@ html {
         opacity: 1;
     }
 }
+
+/* invalid */
+.invalid_feedback {
+    flex-basis: 100%;
+    margin: 5px 70px;
+    font-size: 13px;
+    color: red;
+}
+
+/* Forgot password */
+.forgot-password {
+    float: right;
+    margin-right: 18px;
+}
+

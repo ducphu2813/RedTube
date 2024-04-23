@@ -1,0 +1,3 @@
+<div id="rightsection">
+    
+</div>

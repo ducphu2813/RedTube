@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
@@ -70,6 +71,10 @@ Route::prefix('admin')->group(function (){
     Route::middleware('ProductPermisson')->resource('products', ProductsController::class);
 
     Route::get('', [DashBoardController::class, 'index'])->name('admin.index');
+
+    Route::get('admin', [AdminController::class, 'abc'])->name('admin.abc');
+    
+    Route::get('layout', [AdminController::class, 'showAll'])->name('admin.layout');
 
 });
 
