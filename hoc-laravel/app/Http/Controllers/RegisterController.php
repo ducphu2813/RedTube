@@ -69,13 +69,13 @@ class RegisterController extends Controller{
             ];
 
             //cái này là để lưu user, comment lại để làm giao diện trước
-//            $user->createUser($data);
+           $user->createUser($data);
 
 
             //lấy ra id của user vừa tạo
-//            $userId = Users::
-            //lưu id user vào session
-//            $request->session()->put('loggedInUser', $user->user_id);
+        //    $userId = Users::lastInsertId();
+        //     // lưu id user vào session
+        //    $request->session()->put('loggedInUser', $userId);
 
             return response()->json([
                 'status' => 200,

@@ -70,7 +70,7 @@ class Users extends Model
         return $this->hasMany(Comment::class, 'user_id');
     }
 
-    public function lastInsertId(){
+    public static function lastInsertId(){
         return self::query()->latest('user_id')->first();
     }
 
