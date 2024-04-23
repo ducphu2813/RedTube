@@ -61,7 +61,7 @@
         </h4>
         <ul>
             @if($current_premium == null)
-                <li>Không có premium nào</li>
+                <li>Hiện không có premium nào</li>
             @else
 
                 <a href="">
@@ -69,21 +69,49 @@
                 </a>
 
                 Mua ngày {{ $current_premium->start_date }}<br>
-                Kết thúc vào ngày {{ $current_premium->end_date }}
+                Kết thúc vào ngày {{ $current_premium->end_date }}<br>
+
+                Những người mà bạn chia sẻ premium:
+                <ul>
+                    @if($current_premium->sharedUsers->count() == 0)
+                        <li>Không có ai</li>
+                    @else
+                        @foreach($current_premium->sharedUsers as $shared_premium)
+                            <li>
+                                {{ $shared_premium->user->user_name }}, vào ngày {{ $shared_premium->created_date }}
+                            </li>
+                        @endforeach
+                    @endif
+                </ul>
+
 
             @endif
         </ul>
 
         <h4>Danh sách premium bạn đã mua</h4>
         <ul>
-            @if($expired_premium->count() == 0)
+            @if($all_premium->count() == 0)
                 <li>Không có premium nào bạn đã mua</li>
             @else
-                @foreach($expired_premium as $premium)
+                @foreach($all_premium as $premium)
                     <li>
                         <a href="">
                             {{ $premium->package->name }}
                         </a>
+                        Mua ngày {{ $premium->start_date }}<br>
+                        Kết thúc vào ngày {{ $premium->end_date }}<br>
+                        Những người mà bạn chia sẻ premium:
+                        <ul>
+                            @if($premium->sharedUsers->count() == 0)
+                                <li>Không có ai</li>
+                            @else
+                                @foreach($premium->sharedUsers as $shared_premium)
+                                    <li>
+                                        {{ $shared_premium->user->user_name }}, vào ngày {{ $shared_premium->created_date }}
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
                     </li>
                 @endforeach
             @endif
@@ -95,15 +123,40 @@
             @if($current_shared_premium == null)
                 <li>Không có premium nào đang được chia sẻ cho bạn</li>
             @else
-
-                <a href="">
-                    {{ $current_shared_premium->premiumRegistration->package->name }}
-                </a>
-                Được chia sẻ vào ngày {{ $current_shared_premium->created_date }}<br>
-                Kết thúc vào ngày {{  $current_shared_premium->premiumRegistration->end_date  }}
-
+                <li>
+                    <a href="">
+                        {{ $current_shared_premium->premiumRegistration->package->name }}
+                    </a>
+                    Được chia sẻ vào ngày {{ $current_shared_premium->created_date }}<br>
+                    Kết thúc vào ngày {{  $current_shared_premium->premiumRegistration->end_date  }}<br>
+                    Người chia sẻ: {{ $current_shared_premium->premiumRegistration->user->user_name }}
+                </li>
             @endif
 
+        </ul>
+
+        <h4>Các gói premium đã được chia sẻ cho bạn</h4>
+        <ul>
+            @if($all_shared_premium->count() == 0)
+                <li>Không có gói premium nào đã được chia sẻ cho bạn</li>
+            @else
+                @foreach($all_shared_premium as $shared_premium)
+                    <li>
+                        <a href="">
+                            {{ $shared_premium->premiumRegistration->package->name }}
+                        </a>
+                        Được chia sẻ vào ngày {{ $shared_premium->created_date }}<br>
+                        Kết thúc vào ngày {{  $shared_premium->premiumRegistration->end_date  }}<br>
+                        Người chia sẻ: {{ $shared_premium->premiumRegistration->user->user_name }}
+                    </li>
+                @endforeach
+            @endif
+        </ul>
+
+    </div>
+
+    <div>
+        User role : {{ session('userPermission') }}
     </div>
 
 {{--    <div class="video-list">--}}

@@ -29,6 +29,7 @@ class PremiumRegistration extends Model
         'end_date',
     ];
 
+    //kiểm tra user có đang sử dụng gói premium còn hạn hay không
     public static function isUserPremiumActive(int $userId): bool
     {
         $currentDate = date('Y-m-d H:i:s');
@@ -38,7 +39,8 @@ class PremiumRegistration extends Model
             ->exists();
     }
 
-    public static function getExpiredPremiumRegistrations(int $userId)
+    //lấy tất cả các gói premium đã hết hạn của user
+    public static function getExpiredPremiumRegistrationsByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');
         $result = self::query()
@@ -49,7 +51,8 @@ class PremiumRegistration extends Model
         return $result;
     }
 
-    public static function getCurrentPremiumRegistration(int $userId)
+    //lấy gói premium đang sử dụng của user
+    public static function getCurrentPremiumRegistrationByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');
         $result = self::query()
@@ -62,6 +65,20 @@ class PremiumRegistration extends Model
 
 //        "SELECT * FROM premium_registration WHERE user_id = :userId AND end_date > :currentDate LIMIT 1";
 
+    }
+
+    //lấy tất cả các gói premium của user
+    public static function getAllPremiumRegistrationsByUser(int $userId)
+    {
+        return self::query()
+            ->where('user_id', $userId)
+            ->get();
+    }
+
+    //lấy những user được share gói premium theo id của premium registration
+    public function sharedUsers()
+    {
+        return $this->hasMany(SharePremium::class, 'premium_registration_id', 'registration_id');
     }
 
     public function user(): BelongsTo

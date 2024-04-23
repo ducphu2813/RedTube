@@ -52,9 +52,12 @@ class LoginController extends Controller{
                 ]);
             }
             else{
+
+                $data['password'] = 'Mật khẩu không chính xác';
+
                 return response()->json([
                     'status' => 400,
-                    'message' => 'Mật khẩu không chính xác',
+                    'message' => $data,
                 ]);
             }
         }

@@ -93,13 +93,15 @@ class UsersController extends Controller{
             'user' => Users::getUserById(session('loggedInUser')),
         ];
 
-        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistration(session('loggedInUser'));
+        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
 
-        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrations(session('loggedInUser'));
+        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrationsByUser(session('loggedInUser'));
 
-        $data['current_shared_premium'] = SharePremium::getCurrentSharedPremium(session('loggedInUser'));
+        $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
 
-        $data['expired_shared_premium'] = SharePremium::getExpiredSharedPremiums(session('loggedInUser'));
+        $data['current_shared_premium'] = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
+
+        $data['all_shared_premium'] = SharePremium::getAllSharedPremiumsByUser(session('loggedInUser'));
 
         return view('users.user-dashboard', $data);
     }

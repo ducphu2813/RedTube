@@ -37,7 +37,7 @@ class SharePremium extends Model
             ->exists();
     }
 
-    public static function getExpiredSharedPremiums(int $userId)
+    public static function getExpiredSharedPremiumsByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');
         $result = self::query()
@@ -50,7 +50,7 @@ class SharePremium extends Model
         return $result;
     }
 
-    public static function getCurrentSharedPremium(int $userId)
+    public static function getCurrentSharedPremiumByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');
         $result = self::query()
@@ -61,6 +61,13 @@ class SharePremium extends Model
             ->first();
 
         return $result;
+    }
+
+    public static function getAllSharedPremiumsByUser(int $userId)
+    {
+        return self::query()
+            ->where('user_id', $userId)
+            ->get();
     }
 
     public function user(): BelongsTo
