@@ -55,6 +55,57 @@
         </div>
     </div>
 
+    <div>
+        <h4>
+            Premium hiện tại của bạn
+        </h4>
+        <ul>
+            @if($current_premium == null)
+                <li>Không có premium nào</li>
+            @else
+
+                <a href="">
+                    {{ $current_premium->package->name }}
+                </a>
+
+                Mua ngày {{ $current_premium->start_date }}<br>
+                Kết thúc vào ngày {{ $current_premium->end_date }}
+
+            @endif
+        </ul>
+
+        <h4>Danh sách premium bạn đã mua</h4>
+        <ul>
+            @if($expired_premium->count() == 0)
+                <li>Không có premium nào bạn đã mua</li>
+            @else
+                @foreach($expired_premium as $premium)
+                    <li>
+                        <a href="">
+                            {{ $premium->package->name }}
+                        </a>
+                    </li>
+                @endforeach
+            @endif
+        </ul>
+
+
+        <h4>Premium bạn đang được chia sẻ</h4>
+        <ul>
+            @if($current_shared_premium == null)
+                <li>Không có premium nào đang được chia sẻ cho bạn</li>
+            @else
+
+                <a href="">
+                    {{ $current_shared_premium->premiumRegistration->package->name }}
+                </a>
+                Được chia sẻ vào ngày {{ $current_shared_premium->created_date }}<br>
+                Kết thúc vào ngày {{  $current_shared_premium->premiumRegistration->end_date  }}
+
+            @endif
+
+    </div>
+
 {{--    <div class="video-list">--}}
 {{--        <h2>Danh sách video</h2>--}}
 {{--        <ul>--}}

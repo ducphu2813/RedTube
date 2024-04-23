@@ -20,7 +20,7 @@ class Tag extends Model
         'name',
     ];
 
-public function videos(): HasManyThrough{
+public function getVideos(): HasManyThrough{
         return $this->hasManyThrough(
             Video::class,
             VideoTag::class,

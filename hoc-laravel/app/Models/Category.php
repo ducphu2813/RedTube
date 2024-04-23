@@ -20,7 +20,7 @@ class Category extends Model
         'name',
     ];
 
-    public function videos(): HasManyThrough{
+    public function getVideos(): HasManyThrough{
 
         return $this->hasManyThrough(
             Video::class,
@@ -37,8 +37,7 @@ class Category extends Model
         return self::query()->get();
     }
 
-    public static function getCategoryById($id)
-    {
+    public static function getCategoryById($id){
         return self::query()->where('category_id', $id)->first();
     }
 

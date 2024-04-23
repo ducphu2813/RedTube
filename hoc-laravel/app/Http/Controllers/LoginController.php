@@ -41,6 +41,8 @@ class LoginController extends Controller{
 
             if($user->password == $request->password){
 
+                //phần lưu các thông tin cần thiết của user vào session
+                // gồm user_id, role
                 $request->session()->put('loggedInUser', $user->user_id);
                 $request->session()->put('userPermission', $user->role);
 

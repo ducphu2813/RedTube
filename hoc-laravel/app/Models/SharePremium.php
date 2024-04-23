@@ -26,6 +26,43 @@ class SharePremium extends Model
         'created_date',
     ];
 
+    public static function isUserSharedPremium(int $userId): bool
+    {
+        return self::query()
+            ->where('user_id', $userId)
+            ->whereHas('premiumRegistration', function ($query) {
+                $currentDate = date('Y-m-d H:i:s');
+                $query->where('end_date', '>', $currentDate);
+            })
+            ->exists();
+    }
+
+    public static function getExpiredSharedPremiums(int $userId)
+    {
+        $currentDate = date('Y-m-d H:i:s');
+        $result = self::query()
+            ->where('user_id', $userId)
+            ->whereHas('premiumRegistration', function ($query) use ($currentDate) {
+                $query->where('end_date', '<', $currentDate);
+            })
+            ->get();
+
+        return $result;
+    }
+
+    public static function getCurrentSharedPremium(int $userId)
+    {
+        $currentDate = date('Y-m-d H:i:s');
+        $result = self::query()
+            ->where('user_id', $userId)
+            ->whereHas('premiumRegistration', function ($query) use ($currentDate) {
+                $query->where('end_date', '>', $currentDate);
+            })
+            ->first();
+
+        return $result;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(Users::class, 'user_id', 'user_id');
@@ -33,6 +70,7 @@ class SharePremium extends Model
 
     public function premiumRegistration(): BelongsTo
     {
-        return $this->belongsTo(PremiumRegistration::class);
+        return $this->belongsTo(PremiumRegistration::class, 'premium_registration_id');
     }
+
 }

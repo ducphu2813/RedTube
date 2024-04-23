@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\PremiumRegistration;
+use App\Models\SharePremium;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -90,6 +92,14 @@ class UsersController extends Controller{
         $data = [
             'user' => Users::getUserById(session('loggedInUser')),
         ];
+
+        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistration(session('loggedInUser'));
+
+        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrations(session('loggedInUser'));
+
+        $data['current_shared_premium'] = SharePremium::getCurrentSharedPremium(session('loggedInUser'));
+
+        $data['expired_shared_premium'] = SharePremium::getExpiredSharedPremiums(session('loggedInUser'));
 
         return view('users.user-dashboard', $data);
     }

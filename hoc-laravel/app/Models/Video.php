@@ -49,7 +49,7 @@ class Video extends Model
             ->whereNull('reply_id');
     }
 
-    public function categories(): HasManyThrough{
+    public function getCategories(): HasManyThrough{
         return $this->hasManyThrough(
             Category::class,
             VideoCategory::class,
@@ -60,7 +60,7 @@ class Video extends Model
         );
     }
 
-    public function tags(): HasManyThrough{
+    public function getTags(): HasManyThrough{
         return $this->hasManyThrough(
             Tag::class,
             VideoTag::class,
