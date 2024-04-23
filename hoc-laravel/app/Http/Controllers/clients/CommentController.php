@@ -22,6 +22,8 @@ class CommentController extends Controller{
 //        return response()->json($comments);
     }
 
+
+
     public function getReplyCommentsByCommentId(int $comment_id){
         $comments = Comment::getReplyCommentsByCommentId($comment_id);
 

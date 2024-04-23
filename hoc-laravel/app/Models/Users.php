@@ -40,9 +40,13 @@ class Users extends Model
         return self::query()->where('user_id', $id)->first();
     }
 
-    public static function getUsersByName($name)
-    {
+    public static function getUsersByName($name){
+
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
+    }
+
+    public function getPlaylists(){
+        return $this->hasMany(Playlist::class, 'user_id', 'user_id');
     }
 
     public function createUser($data){

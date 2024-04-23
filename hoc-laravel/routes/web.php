@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\HomeController;
+use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\SchoolsController;
 use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
@@ -131,6 +132,14 @@ Route::post('comments/save', [CommentController::class, 'saveRootComment'])
 //save reply comment
 Route::post('comments/reply/save', [CommentController::class, 'saveReplyComment'])
     ->name('comments.reply.save');
+
+//test playlist
+Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
+    ->name('user.playlist');
+
+//update video playlist
+Route::post('playlist/update', [PlaylistController::class, 'updateVideoPlaylist'])
+    ->name('playlist.update');
 
 
 

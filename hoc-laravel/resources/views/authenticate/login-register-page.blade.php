@@ -131,12 +131,12 @@
 
                             if(redirectUrl) {
                                 //chuyển về trang trước đó khi chưa đăng nhập
-                                // window.location.href = redirectUrl;
-                                // localStorage.removeItem('redirect_after_login');
+                                window.location.href = redirectUrl;
+                                localStorage.removeItem('redirect_after_login');
                             }
                             else{
                                 //nếu không có url trước đó, chuyển về trang dashboard
-                                {{--window.location.href = '{{ route('users.dashboard') }}';--}}
+                                window.location.href = '{{ route('users.dashboard') }}';
                             }
                         }
 
@@ -172,19 +172,7 @@
 
                     if(response.status === 200) {
                         //khi đăng ký thành công
-
-                        //lấy ra url mà người dùng muốn truy cập trước khi đăng nhập/đăng ký
-                        let redirectUrl = localStorage.getItem('redirect_after_login');
-
-                        if(redirectUrl) {
-                            //chuyển về trang trước đó khi chưa đăng ký
-                            window.location.href = redirectUrl;
-                            localStorage.removeItem('redirect_after_login');
-                        }
-                        else{
-                            //nếu không có url trước đó, chuyển về trang dashboard
-                            window.location.href = '{{ route('users.dashboard') }}';
-                        }
+                        window.location.href = '{{ route('login-register') }}';
                     }
 
                     if(response.status === 400) {
