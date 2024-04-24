@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller{
@@ -21,6 +22,8 @@ class CommentController extends Controller{
 //        return response()->json($comments);
     }
 
+
+
     public function getReplyCommentsByCommentId(int $comment_id){
         $comments = Comment::getReplyCommentsByCommentId($comment_id);
 
@@ -37,7 +40,7 @@ class CommentController extends Controller{
 
         else{
             $data['user_id'] = $request->session()->get('loggedInUser');
-            $data['user_name'] = 'Bạn';
+            $data['user_name'] = Users::getUserById($data['user_id'])->user_name;
             $data['created_date'] = date('Y-m-d H:i:s');
 //        unset($data['_token']);
             $data['reply_id'] = null;
@@ -85,7 +88,7 @@ class CommentController extends Controller{
             $data = request()->all();
 
             $data['user_id'] = $request->session()->get('loggedInUser');
-            $data['user_name'] = 'Bạn';
+            $data['user_name'] = Users::getUserById($data['user_id'])->user_name;
             $data['created_date'] = date('Y-m-d H:i:s');
             unset($data['_token']);
 

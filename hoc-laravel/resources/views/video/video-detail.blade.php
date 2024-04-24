@@ -15,6 +15,18 @@
             <a href="{{ route('users.user-detail', $video->user->user_id) }}">{{ $video->user->channel_name }}</a>
         </p>
 
+        <p>
+            Thể loại:
+            @if( $video->getCategories->count() > 0 )
+                @foreach( $video->getCategories as $category )
+                    <a href="">{{ $category->name }}</a>
+
+                @endforeach
+
+            @endif
+
+        </p>
+
         <hr>
         <h4>Comment Section</h4>
 {{--        comment form, root comment--}}
@@ -28,10 +40,61 @@
         <hr>
         @component('comments.root-cmt', ['comments' => $video->getRootComments])
         @endcomponent
+
+    </div>
+
+    <div class="playlist">
+        @if( !session('loggedInUser'))
+            <p>Bạn cần đăng nhập để thêm video vào playlist</p>
+        @elseif( $playlists->count() == 0 )
+            <p>Chưa có playlist nào</p>
+
+        @else
+            @foreach($playlists as $playlist)
+                <div>
+                    <input type="checkbox"
+                           class="playlist-checkbox"
+                           data-playlist-id="{{ $playlist->playlist_id }}"
+                           data-video-id="{{ $video->video_id }}"
+                        {{ $playlist->isVideoInPlaylist($video->video_id) ? 'checked' : '' }}
+                    >
+                    <a href="">{{ $playlist->name }}</a>
+                </div>
+            @endforeach
+        @endif
+
+
     </div>
 
     <script>
+
         $(document).ready(function () {
+
+            $('.playlist-checkbox').click(function () {
+                var playlistId = $(this).data('playlist-id');
+                var videoId = $(this).data('video-id');
+                var isChecked = $(this).is(':checked');
+
+                $.ajax({
+                    url: '{{ route('playlist.update') }}',
+                    type: 'POST',
+                    data: {
+                        playlist_id: playlistId,
+                        video_id: videoId,
+                        is_checked: isChecked,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+
+                });
+            });
+
+
             $('#root-comment').submit(function (e) {
                 e.preventDefault();
                 let form = $(this);

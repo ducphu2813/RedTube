@@ -12,7 +12,7 @@ class CommentRequest extends FormRequest
             'comment_id' => ['required', 'integer'],
             'user_id' => ['required', 'exists:users'],
             'video_id' => ['required', 'exists:video'],
-            'reply_id' => ['nullable', 'exists:comment'],
+            'reply_id' => ['nullable'],
             'content' => ['required'],
             'created_date' => ['required', 'date'],
         ];

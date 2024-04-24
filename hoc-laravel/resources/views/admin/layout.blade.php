@@ -60,7 +60,7 @@
 
             </div>
             <div id="leftsection">
-                {{-- <canvas id="myChart1" style="width:100%;max-width:100%;"></canvas> --}}
+
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -98,7 +98,7 @@
                         });
                         event.preventDefault();
                     } else if (index == 2) {
-                        $.ajax({
+                s       $.ajax({
                             url: '{{ route('admin.commentManager') }}',
                             type: 'GET',
                             dataType: 'html',

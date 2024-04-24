@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Users;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +11,15 @@ return new class extends Migration {
             $table->id();
             $table->integer('video_id');
             $table->string('title');
-            $table->foreignIdFor(Users::class, 'user_id')->constrained('users');
-            $table->timestamps();
+            $table->foreignId('user_id');
+            $table->dateTime('created_date');
+            $table->integer('view');
+            $table->longText('description')->nullable();
+            $table->boolean('display_mode');
+            $table->boolean('membership');
+            $table->boolean('active');
+            $table->string('video_path');
+            $table->string('thumbnail_path');
         });
     }
 

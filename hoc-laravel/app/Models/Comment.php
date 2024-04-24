@@ -16,8 +16,18 @@ class Comment extends Model
 
     protected $table = 'comment';
 
+    protected $primaryKey = 'comment_id';
+
     protected $casts = [
         'created_date' => 'datetime',
+    ];
+
+    protected $fillable = [
+        'content',
+        'created_date',
+        'user_id',
+        'video_id',
+        'reply_id',
     ];
 
     public function user(): BelongsTo
@@ -32,7 +42,7 @@ class Comment extends Model
 
     public function reply(): BelongsTo
     {
-        return $this->belongsTo(Comment::class, 'reply_id', 'comment_id');
+        return $this->belongsTo(Comment::class, 'reply_id');
     }
 
     public function getReplyComments(): HasMany{
@@ -59,6 +69,29 @@ class Comment extends Model
 
     public static function lastInsertId(){
         return self::query()->latest('comment_id')->first();
+    }
+
+    public static function getCountCommentByVideoId(int $videoId){
+        return self::where('video_id', $videoId)->count();
+    }
+
+    public static function getCountReplyCommentByCommentId(int $commentId){
+        return self::where('reply_id', $commentId)->count();
+    }
+
+    public static function deleteComment(int $commentId){
+        return self::where('comment_id', $commentId)->delete();
+    }
+
+    public static function updateComment(int $commentId, $data){
+        return self::where('comment_id', $commentId)->update($data);
+    }
+
+    public static function getRootCommentByUserId(int $userId){
+        return self::where('user_id', $userId)
+            ->whereNull('reply_id')
+            ->orderBy('created_date', 'DESC')
+            ->get();
     }
 
 }

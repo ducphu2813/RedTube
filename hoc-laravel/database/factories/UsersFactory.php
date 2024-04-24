@@ -13,8 +13,6 @@ class UsersFactory extends Factory
     public function definition(): array
     {
         return [
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
             'user_id' => $this->faker->randomNumber(),
             'user_name' => $this->faker->userName(),
             'channel_name' => $this->faker->name(),
@@ -23,6 +21,8 @@ class UsersFactory extends Factory
             'description' => $this->faker->text(),
             'created_date' => Carbon::now(),
             'active' => $this->faker->boolean(),
+            'picture_url' => $this->faker->url(),
+            'role' => $this->faker->randomNumber(),
         ];
     }
 }

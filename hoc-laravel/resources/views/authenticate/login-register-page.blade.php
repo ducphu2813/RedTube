@@ -137,8 +137,6 @@
                     dataType: 'json', //chuyển dữ liệu về dạng json
 
                     success: function(response) {
-
-
                         if (response.status === 200) {
                             //khi đăng ký thành công
 
@@ -160,9 +158,10 @@
                             
 
                             //khi đăng ký thất bại, hiện các message validate lên
-
-
                         }
+                    if(response.status === 200) {
+                        //khi đăng ký thành công
+                        window.location.href = '{{ route('login-register') }}';
                     }
                 });
 
