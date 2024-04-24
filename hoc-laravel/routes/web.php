@@ -76,6 +76,18 @@ Route::prefix('admin')->group(function (){
     
     Route::get('layout', [AdminController::class, 'showAll'])->name('admin.layout');
 
+    // --------------------Phần này của Dương --------------------//
+    // Show video
+    Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
+    // Show user
+    Route::get('userManager', [AdminController::class, 'showUserList'])->name('admin.userManager');
+    // Show test
+    Route::get('checkManager', [AdminController::class, 'showCheckList'])->name('admin.checkManager');
+    // Show comment
+    Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
+    // Show chart
+    Route::get('chartManager', [AdminController::class, 'showChartList'])->name('admin.chartManager');
+    // --------------------Hết phần của Dương --------------------//
 });
 
 

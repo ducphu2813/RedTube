@@ -43,7 +43,7 @@ class LoginController extends Controller{
 
             if($user->password == $request->password){
 
-                // $request->session()->put('loggedInUser', $user->user_id);
+                $request->session()->put('loggedInUser', $user->user_id);
 
                 return response()->json([
                     'status' => 200,
