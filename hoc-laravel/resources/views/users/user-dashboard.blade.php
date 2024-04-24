@@ -66,12 +66,14 @@
 
                 <a href="">
                     {{ $current_premium->package->name }}
-                </a>
+                </a><br>
+
+                Trạng thái: {{ $current_premium->isPremiumExpired($current_premium->registration_id) ? 'Đã hết hạn' : 'Còn hiệu lực' }}<br>
 
                 Mua ngày {{ $current_premium->start_date }}<br>
                 Kết thúc vào ngày {{ $current_premium->end_date }}<br>
-
-                Những người mà bạn chia sẻ premium:
+                Gói này đang có {{ $current_premium->getCurrentUsersCount() }} người sử dụng<br>
+                Những người mà đã bạn chia sẻ premium:
                 <ul>
                     @if($current_premium->sharedUsers->count() == 0)
                         <li>Không có ai</li>
@@ -81,6 +83,19 @@
                                 {{ $shared_premium->user->user_name }}, vào ngày {{ $shared_premium->created_date }}
                             </li>
                         @endforeach
+
+                            <br>Những người dđược chia sẻ đang dùng premium này:
+                            <ul>
+                                @if($current_premium->getCurrentSharedUsers()->count() == 0)
+                                    <li>Không có ai</li>
+                                @else
+                                    @foreach($current_premium->getCurrentSharedUsers() as $current_user)
+                                        <li>
+                                            {{ $current_user->user->user_name }}
+                                        </li>
+                                    @endforeach
+                                @endif
+                            </ul>
                     @endif
                 </ul>
 
@@ -97,10 +112,14 @@
                     <li>
                         <a href="">
                             {{ $premium->package->name }}
-                        </a>
+                        </a><br>
+
+                        Trạng thái: {{ $premium->isPremiumExpired($premium->registration_id) ? 'Đã hết hạn' : 'Còn hiệu lực' }}<br>
+
                         Mua ngày {{ $premium->start_date }}<br>
                         Kết thúc vào ngày {{ $premium->end_date }}<br>
-                        Những người mà bạn chia sẻ premium:
+                        Gói này có tổng cộng {{ $premium->getAllSharedUsersCount() + 1 }} người sử dụng<br>
+                        Những người mà bạn đã chia sẻ premium:
                         <ul>
                             @if($premium->sharedUsers->count() == 0)
                                 <li>Không có ai</li>
@@ -128,7 +147,7 @@
                         {{ $current_shared_premium->premiumRegistration->package->name }}
                     </a>
                     Được chia sẻ vào ngày {{ $current_shared_premium->created_date }}<br>
-                    Kết thúc vào ngày {{  $current_shared_premium->premiumRegistration->end_date  }}<br>
+                    Kết thúc vào ngày {{  $current_shared_premium->expiry_date  }}<br>
                     Người chia sẻ: {{ $current_shared_premium->premiumRegistration->user->user_name }}
                 </li>
             @endif
@@ -146,7 +165,7 @@
                             {{ $shared_premium->premiumRegistration->package->name }}
                         </a>
                         Được chia sẻ vào ngày {{ $shared_premium->created_date }}<br>
-                        Kết thúc vào ngày {{  $shared_premium->premiumRegistration->end_date  }}<br>
+                        Kết thúc vào ngày {{  $shared_premium->expiry_date  }}<br>
                         Người chia sẻ: {{ $shared_premium->premiumRegistration->user->user_name }}
                     </li>
                 @endforeach
@@ -157,6 +176,10 @@
 
     <div>
         User role : {{ session('userPermission') }}
+    </div>
+
+    <div>
+        <h4><a href="{{ route('premium.noti') }}">Thông báo</a></h4>
     </div>
 
 {{--    <div class="video-list">--}}

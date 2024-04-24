@@ -15,6 +15,7 @@ class VideoController extends Controller{
     }
 
     public function videoDetail($id){
+
         $video = Cache::remember('video_' . $id, 60, function () use ($id) {
             return Video::find($id);
         });
@@ -28,5 +29,7 @@ class VideoController extends Controller{
         return view('video.video-detail', ['video' => $video, 'playlists' => $playlists]);
 
     }
+
+
 
 }

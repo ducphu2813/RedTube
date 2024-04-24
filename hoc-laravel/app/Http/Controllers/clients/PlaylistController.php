@@ -18,6 +18,7 @@ class PlaylistController extends Controller
     }
 
     public function updateVideoPlaylist(Request $request){
+
         $playlistId = $request->input('playlist_id');
         $videoId = $request->input('video_id');
         $isChecked = $request->input('is_checked');
@@ -60,6 +61,7 @@ class PlaylistController extends Controller
 
         }
 
+        //cái này để debug
 //        return response()->json([
 //            'playlist_id' => $playlistId,
 //            'video_id' => $videoId,

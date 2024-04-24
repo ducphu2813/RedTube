@@ -50,14 +50,13 @@ class SharePremium extends Model
         return $result;
     }
 
+    //lấy gói premium đang chia sẻ của user
     public static function getCurrentSharedPremiumByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');
         $result = self::query()
             ->where('user_id', $userId)
-            ->whereHas('premiumRegistration', function ($query) use ($currentDate) {
-                $query->where('end_date', '>', $currentDate);
-            })
+            ->where('expiry_date', '>', $currentDate)
             ->first();
 
         return $result;

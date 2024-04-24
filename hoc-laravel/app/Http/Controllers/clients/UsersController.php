@@ -94,14 +94,19 @@ class UsersController extends Controller{
             'user' => Users::getUserById(session('loggedInUser')),
         ];
 
-        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
-
-        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrationsByUser(session('loggedInUser'));
-
+        //tất cả record premium của user
         $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
 
+        //record premium đang sử dụng
+        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        //record premium đã hết hạn
+        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrationsByUser(session('loggedInUser'));
+
+        //record shared premium đang được share
         $data['current_shared_premium'] = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
 
+        //record shared premium đã hết hạn
         $data['all_shared_premium'] = SharePremium::getAllSharedPremiumsByUser(session('loggedInUser'));
 
         return view('users.user-dashboard', $data);

@@ -5,7 +5,9 @@ use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\PlaylistController;
+use App\Http\Controllers\clients\PremiumController;
 use App\Http\Controllers\clients\SchoolsController;
+use App\Http\Controllers\clients\ShareNotiController;
 use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
@@ -133,6 +135,8 @@ Route::post('comments/save', [CommentController::class, 'saveRootComment'])
 Route::post('comments/reply/save', [CommentController::class, 'saveReplyComment'])
     ->name('comments.reply.save');
 
+
+
 //test playlist
 Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
     ->name('user.playlist');
@@ -140,6 +144,33 @@ Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
 //update video playlist
 Route::post('playlist/update', [PlaylistController::class, 'updateVideoPlaylist'])
     ->name('playlist.update');
+
+
+
+//test share premium
+Route::get('premium/share', [PremiumController::class, 'sharePage'])
+    ->name('premium.share')
+    ->middleware('CheckLogin');
+
+//tìm user để share
+Route::get('premium/find-user', [PremiumController::class, 'findUser'])
+    ->name('premium.search-user')
+    ->middleware('CheckLogin');
+
+//xử lý send yêu cầu share premium
+Route::post('premium/handle-send', [PremiumController::class, 'handleSend'])
+    ->name('premium.handle-send')
+    ->middleware('CheckLogin');
+
+//hiện các thông báo share
+Route::get('premium/noti', [ShareNotiController::class, 'notiPage'])
+    ->name('premium.noti')
+    ->middleware('CheckLogin');
+
+//lấy thông báo share
+Route::get('premium/get-noti', [ShareNotiController::class, 'getNoti'])
+    ->name('premium.get-noti')
+    ->middleware('CheckLogin');
 
 
 

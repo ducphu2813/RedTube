@@ -41,7 +41,6 @@ class Users extends Model
     }
 
     public static function getUsersByName($name){
-
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
     }
 
