@@ -2,7 +2,9 @@
 @section('title', 'Studio')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
 @endsection
+
 @section('search')
     <div id="top">
         <div class="logo">
@@ -127,4 +129,57 @@
             </li>
         </ul>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.create-item').on('click', function() {
+                var index = $(this).index();
+                if (index == 0) {
+
+                } else if (index == 1) {
+                    $.ajax({
+                        url: '{{ route('playlist.createPlaylist') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            // Thêm dữ liệu vào #modal
+                            $('#modal').html(data);
+
+                            // Hiển thị .modal-pl
+                            $('.modal-pl').css('display', 'flex');
+
+                            // Thêm sự kiện click vào nút hủy
+                            $('#modal-info-btn--cancel').on('click', function() {
+                                // Xóa tất cả nội dung trong #modal
+                                $('#modal').empty();
+
+                                // Loại bỏ tất cả các sự kiện đã được gắn kết với .modal-pl
+                                // $('.modal-pl').off();
+                            });
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: '{{ route('membership.createMemberPackage') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                            // Thêm sự kiện click vào nút hủy
+                            $('#modal-info-btn--cancel').on('click', function() {
+                                // Xóa tất cả nội dung trong #modal
+                                $('#modal').empty();
+
+                                // Loại bỏ tất cả các sự kiện đã được gắn kết với .modal-pl
+                                // $('.modal-pl').off();
+                            });
+                        }
+                    })
+                }
+            });
+        });
+    </script>
 @endsection

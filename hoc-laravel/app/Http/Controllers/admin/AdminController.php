@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Users;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -15,7 +17,11 @@ class AdminController extends Controller
 
     // hàm hiển thị trang danh sách user
     public function showUserList(){
-        return view('admin.userWrapper');
+        $listUser = Cache::remember('list_user', 60, function () {
+            return Users::getAllUsers();
+        });
+
+        return view('admin.userWrapper', ['listUser' => $listUser]);
     }
 
     // hàm hiển thị trang danh sách comment

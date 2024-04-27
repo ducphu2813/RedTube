@@ -2,11 +2,11 @@
 <div id="item-container">
     <div class="item-account">
         <a href="">
-            <img src="{{ asset('resources/img/ocean.jpg') }}" alt="" class="logo">
+            <img src="{{ $user->picture_url }}" alt="" class="logo">
         </a>
     </div>
     <div class="item-name">
-        <p>Name</p>
+        <p>{{ $user->user_name }}</p>
     </div>
     <div class="item-btn">
         <label class="container">

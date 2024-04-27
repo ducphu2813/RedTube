@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
+use App\Http\Controllers\clients\MemberShipController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\SchoolsController;
 use App\Http\Controllers\clients\StudioController;
@@ -75,6 +76,8 @@ Route::prefix('admin')->group(function (){
     Route::middleware('ProductPermisson')->resource('products', ProductsController::class);
 
     // --------------------Phần này của Dương --------------------//
+    // Show all
+    Route::get('adminLayout', [AdminController::class, 'showAll'])->name('admin.all');
     // Show video
     Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
     // Show user
@@ -89,7 +92,8 @@ Route::prefix('admin')->group(function (){
 });
 
 // Cái này của Dương nhưng là Home Page + Studio
-Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 // Hết của Dương

@@ -1,6 +1,6 @@
 <div id="userWrapper">
-    @for ($i = 0; $i < 5; $i++)
-        @component('admin.userItem')
+    @foreach ($listUser as $user)
+        @component('admin.userItem', ['user' => $user])
         @endcomponent
-    @endfor
+    @endforeach
 </div>

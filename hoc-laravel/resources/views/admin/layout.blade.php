@@ -98,7 +98,7 @@
                         });
                         event.preventDefault();
                     } else if (index == 2) {
-                s       $.ajax({
+                        $.ajax({
                             url: '{{ route('admin.commentManager') }}',
                             type: 'GET',
                             dataType: 'html',
