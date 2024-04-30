@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
@@ -14,23 +17,23 @@
     <div id="wrap">
         <div id="leftmenu" class="">
             <div class="logo">
-                <a href=""><img src="./assets/img/youtube.svg" alt="BinaryBook" /></a>
+                <a href=""><img src="{{ asset('resources/img/youtube.svg') }}" alt="BinaryBook" /></a>
             </div>
             <ul>
                 <li>
-                    <img src="./assets/img/video.svg" /><a href="{{ route('') }}">Video</a>
+                    <img src="{{ asset('resources/img/video.svg') }}" /><a href="">Video</a>
                 </li>
                 <li>
-                    <img src="./assets/img/user.svg" /><a href="./pages/userItem.php">Người dùng</a>
+                    <img src="{{ asset('resources/img/user.svg') }}" /><a href="">Người dùng</a>
                 </li>
                 <li>
-                    <img src="./assets/img/chat.svg" /><a href="">Bình luận</a>
+                    <img src="{{ asset('resources/img/chat.svg') }}" /><a href="">Bình luận</a>
                 </li>
                 <li>
-                    <img src="./assets/img/videotest.svg" /><a href="">Kiểm duyệt</a>
+                    <img src="{{ asset('resources/img/videotest.svg') }}" /><a href="">Kiểm duyệt</a>
                 </li>
                 <li>
-                    <img src="./assets/img/analytics.svg" /><a href="">Thống kê</a>
+                    <img src="{{ asset('resources/img/analytics.svg') }}" /><a href="">Thống kê</a>
                 </li>
             </ul>
         </div>
@@ -57,7 +60,7 @@
 
             </div>
             <div id="leftsection">
-                <canvas id="myChart1" style="width:100%;max-width:100%;"></canvas>
+
             </div>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
@@ -66,19 +69,76 @@
         <script src="admin.js"></script>
         <script>
             $(document).ready(function() {
+                $('#leftmenu li').on('click', function() {
+                    var index = $(this).index();
+                    if (index == 0) {
                         $.ajax({
-                            url: '{{ route('admin.abc') }}',
+                            url: '{{ route('admin.videoManager') }}',
                             type: 'GET',
                             dataType: 'html',
                             success: function(data) {
-                                $('#leftsection').append(data);
-                                console.log(data);
+                                $('#leftsection').html(data);
                             },
                             error: function(error) {
                                 console.log(error);
                             }
                         });
-                    });
+                        event.preventDefault();
+                    } else if (index == 1) {
+                        $.ajax({
+                            url: '{{ route('admin.userManager') }}',
+                            type: 'GET',
+                            dataType: 'html',
+                            success: function(data) {
+                                $('#leftsection').html(data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                        event.preventDefault();
+                    } else if (index == 2) {
+                        $.ajax({
+                            url: '{{ route('admin.commentManager') }}',
+                            type: 'GET',
+                            dataType: 'html',
+                            success: function(data) {
+                                $('#leftsection').html(data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                        event.preventDefault();
+                    } else if (index == 3) {
+                        $.ajax({
+                            url: '{{ route('admin.checkManager') }}',
+                            type: 'GET',
+                            dataType: 'html',
+                            success: function(data) {
+                                $('#leftsection').html(data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                        event.preventDefault();
+                    } else if (index == 4) {
+                        $.ajax({
+                            url: '{{ route('admin.chartManager') }}',
+                            type: 'GET',
+                            dataType: 'html',
+                            success: function(data) {
+                                $('#leftsection').html(data);
+                            },
+                            error: function(error) {
+                                console.log(error);
+                            }
+                        });
+                        event.preventDefault();
+                    }
+                });
+            });
         </script>
 </body>
 

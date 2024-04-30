@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
 use App\Models\PremiumRegistration;
 use App\Models\SharePremium;
 use App\Models\Users;
@@ -139,6 +140,23 @@ class UsersController extends Controller{
             'message' => 'Cập nhật ảnh đại diện thành công',
         ]);
 
+    }
+
+    public function showPlaylist(){
+
+        $id = session('loggedInUser');
+
+        $user = Users::getUserById($id);
+
+        if($user == null){
+            return redirect(route('login-register'));
+        }
+
+        $playlists = Playlist::getPlaylistByUserId($id);
+
+//        dd($playlists);
+
+        return view('playlist.user-playlist', ['playlists' => $playlists]);
     }
 
 

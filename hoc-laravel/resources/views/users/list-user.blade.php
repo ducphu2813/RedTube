@@ -12,11 +12,13 @@
     <h1>Danh sách người dùng</h1>
     <input id="search-bar" type="text" placeholder="Tìm theo id">
     <input id="search-bar2" type="text" placeholder="Tìm theo tên">
+
     <div id="list-users">
 
     </div>
 <script>
     $(document).ready(function() {
+
         $.ajax({
             url: '{{ route('users.all') }}',
             type: 'GET',
@@ -60,6 +62,7 @@
                     type: 'GET',
                     dataType: 'html',
                     success: function(data) {
+                        console.log(data);
                         $('#list-users').html(data);
                     },
                     error: function(error) {

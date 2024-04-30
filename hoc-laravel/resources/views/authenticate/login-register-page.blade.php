@@ -98,11 +98,11 @@
                             
                             if (redirectUrl) {
                                 //chuyển về trang trước đó khi chưa đăng nhập
-                                // window.location.href = redirectUrl;
-                                // localStorage.removeItem('redirect_after_login');
+                                window.location.href = redirectUrl;
+                                localStorage.removeItem('redirect_after_login');
                             } else {
                                 //nếu không có url trước đó, chuyển về trang dashboard
-                                {{--window.location.href = '{{ route('users.dashboard') }}';--}}
+                                window.location.href = '{{ route('users.dashboard') }}';
                             }
                         }
                         
@@ -137,8 +137,6 @@
                     dataType: 'json', //chuyển dữ liệu về dạng json
 
                     success: function(response) {
-
-
                         if (response.status === 200) {
                             //khi đăng ký thành công
 
@@ -160,9 +158,10 @@
                             
 
                             //khi đăng ký thất bại, hiện các message validate lên
-
-
                         }
+                    if(response.status === 200) {
+                        //khi đăng ký thành công
+                        window.location.href = '{{ route('login-register') }}';
                     }
                 });
 
