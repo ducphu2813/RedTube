@@ -2,10 +2,6 @@ button:hover {
     cursor: pointer;
 }
 
-.content {
-
-}
-
 .content__title {
     font-size: 24px;
     font-weight: bold;

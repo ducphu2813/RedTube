@@ -92,7 +92,7 @@ button:hover {
 .modal__form {
     height: 580px;
     width: 400px;
-    background-color: black;
+    background-color: #444444;
     color: white;
     border-radius: 8px;
 }
