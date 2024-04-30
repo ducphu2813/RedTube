@@ -15,6 +15,18 @@
             <a href="{{ route('users.user-detail', $video->user->user_id) }}">{{ $video->user->channel_name }}</a>
         </p>
 
+        <p>
+            Thể loại:
+            @if( $video->getCategories->count() > 0 )
+                @foreach( $video->getCategories as $category )
+                    <a href="">{{ $category->name }}</a>
+
+                @endforeach
+
+            @endif
+
+        </p>
+
         <hr>
         <h4>Comment Section</h4>
 {{--        comment form, root comment--}}

@@ -14,12 +14,18 @@ class VideoFactory extends Factory
     public function definition(): array
     {
         return [
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
             'video_id' => $this->faker->randomNumber(),
             'title' => $this->faker->word(),
+            'created_date' => Carbon::now(),
+            'view' => $this->faker->randomNumber(),
+            'description' => $this->faker->text(),
+            'display_mode' => $this->faker->boolean(),
+            'membership' => $this->faker->boolean(),
+            'active' => $this->faker->boolean(),
+            'video_path' => $this->faker->word(),
+            'thumbnail_path' => $this->faker->word(),
 
-            'user_id' => Users::factory(),
+            'users_id' => Users::factory(),
         ];
     }
 }

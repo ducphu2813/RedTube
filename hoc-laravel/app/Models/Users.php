@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Users extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 
     protected $casts = [
         'created_date' => 'datetime',
@@ -23,16 +24,12 @@ class Users extends Model
         'channel_name',
         'email',
         'password',
+        'description',
         'created_date',
         'active',
-        'description',
         'picture_url',
-        'token',
-        'token_expire',
+        'role',
     ];
-
-    public $timestamps = false;
-
 
     public static function getAllUsers(){
         return self::query()->get();
