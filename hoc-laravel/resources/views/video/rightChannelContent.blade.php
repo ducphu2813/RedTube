@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/rightChannelContent.css') }}">
 
 <div class="content__title">Channel content</div>
 
@@ -287,5 +288,35 @@
 
 @component('video.pagination')
 @endcomponent
+
+<div id="modal" class="modal--popup">
+    <div class="modal__overlay">
+        <div class="modal__content">
+            <div class="modal__header">
+                <div class="modal__header-title">
+                    Upload video
+                </div>
+
+                <button id="close--btn" class="modal__header-close--btn">
+                    <i class="fa-solid fa-x"></i>
+                </button>
+            </div>
+
+            <div class="modal__form">
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+
+                <label for="videoInput" class="modal__form-upload--btn">UPLOAD</label>
+                <input type="file" id="videoInput" accept="video/*">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>    
+    closeBtn = document.getElementById('close--btn').onclick = function() {
+            modal = document.getElementById('modal')
+            modal.style.display = "none";
+        };
+</script>
 
 

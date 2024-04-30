@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="{{ asset('css/mainpage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/channelPage.css') }}">
     <link rel="stylesheet" href="{{ asset('css/manageChannelContent.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/manageVideoDetails.css') }}">
     <link rel="stylesheet" href="{{ asset('icon/fontawesome-free-6.5.1-web/css/all.min.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

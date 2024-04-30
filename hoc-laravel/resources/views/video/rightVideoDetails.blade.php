@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/rightVideoDetails.css') }}">
+
 <div class="content__header">
     <div class="content__title">Video details</div>
 
