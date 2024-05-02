@@ -1,5 +1,5 @@
 {{-- Sử dụng cho video/comment/check --}}
-<div id="item-container">
+<div class="item-container">
     <div class="item-account">
         <a href="">
             <img src="{{ asset('resources/img/ocean.jpg') }}" alt="" class="logo">

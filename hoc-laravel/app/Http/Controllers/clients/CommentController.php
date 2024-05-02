@@ -11,8 +11,9 @@ class CommentController extends Controller{
 
     public function index(){
         $allComments = Comment::all();
-
     }
+
+    
 
     public function getCommentByVideoId(int $video_id){
         $comments = Comment::getRootCommentsByVideoId($video_id);

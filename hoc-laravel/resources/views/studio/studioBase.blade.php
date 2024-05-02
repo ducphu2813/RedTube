@@ -134,6 +134,8 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
+
+            // handle creator list
             $('.create-item').on('click', function() {
                 var index = $(this).index();
                 if (index == 0) {
@@ -178,6 +180,34 @@
                             });
                         }
                     })
+                }
+            });
+
+            // handle left navigator
+            $('.list-item').on('click', function() {
+                var index = $(this).index();
+                if (index == 0) {
+                    console.log('Nội dung');
+                    event.preventDefault();
+                } else if (index == 1) {
+                    console.log('Số liệu phân tích');
+                    event.preventDefault();
+                } else if (index == 2) {
+                    console.log('Thông tin kênh');
+                    event.preventDefault();
+                } else if (index == 3) {
+                    $.ajax({
+                        url: '{{ route('membership.membershipManager') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
+                    event.preventDefault();
+                } else {
+                    console.log('Premium');
+                    event.preventDefault();
                 }
             });
         });

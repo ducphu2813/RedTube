@@ -12,15 +12,26 @@
             </div>
 
             <div class="modal-info-content--item">
-                <label for="modal-name">Phí thành viên</label>
-                <input type="text" name="modal-name" id="modal-name" placeholder="Phí thành viên">
+                <label for="modal-description">Mô tả</label>
+                <textarea name="modal-description" id="modal-description" placeholder="Mô tả""></textarea>
             </div>
 
-            <div class="modal-info-content--item">
-                <label for="modal-description">Mô tả</label>
-                <textarea name="modal-description" id="modal-description" placeholder="Mô tả"></textarea>
+            <div class="wrap-data">
+                <div class="modal-info-content--item modal-fee">
+                    <label for="modal-name">Phí thành viên</label>
+                    <input type="text" name="modal-name" id="modal-name" placeholder="Phí thành viên">
+                </div>
+                <div class="modal-info-content--item modal-duration">
+                    <label for="modal-name">Thời hạn gói</label>
+                    <div class="wrap-value">
+                        <input type="text" name="modal-name" id="modal-name" placeholder="Thời hạn gói">
+                        <span>tháng</span>
+                    </div>
+
+                </div>
             </div>
         </div>
+
 
         <div id="modal-info-btn">
             <button class="modal-btn" id="modal-info-btn--cancel">Hủy</button>
@@ -31,14 +42,9 @@
 
 <script>
     var modalPl = document.querySelector('.modal-pl');
-    var modalInfoBtnCancel = document.getElementById('modal-info-btn--cancel');
     var modalInfoBtnCreate = document.getElementById('modal-info-btn--create');
 
-    // modalInfoBtnCancel.addEventListener('click', function(){
-        
-    // });
-
     modalInfoBtnCreate.addEventListener('click', function() {
-        
+
     });
 </script>

@@ -26,9 +26,9 @@
                 <li>
                     <img src="{{ asset('resources/img/user.svg') }}" /><a href="">Người dùng</a>
                 </li>
-                <li>
+                {{-- <li>
                     <img src="{{ asset('resources/img/chat.svg') }}" /><a href="">Bình luận</a>
-                </li>
+                </li> --}}
                 <li>
                     <img src="{{ asset('resources/img/videotest.svg') }}" /><a href="">Kiểm duyệt</a>
                 </li>
@@ -66,7 +66,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-        <script src="admin.js"></script>
+        {{-- <script src="admin.js"></script> --}}
         <script>
             $(document).ready(function() {
                 $('#leftmenu li').on('click', function() {
@@ -97,20 +97,22 @@
                             }
                         });
                         event.preventDefault();
-                    } else if (index == 2) {
-                        $.ajax({
-                            url: '{{ route('admin.commentManager') }}',
-                            type: 'GET',
-                            dataType: 'html',
-                            success: function(data) {
-                                $('#leftsection').html(data);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                        event.preventDefault();
-                    } else if (index == 3) {
+                    } 
+                    // else if (index == 2) {
+                    //     $.ajax({
+                    //         url: '{{ route('admin.commentManager') }}',
+                    //         type: 'GET',
+                    //         dataType: 'html',
+                    //         success: function(data) {
+                    //             $('#leftsection').html(data);
+                    //         },
+                    //         error: function(error) {
+                    //             console.log(error);
+                    //         }
+                    //     });
+                    //     event.preventDefault();
+                    // } 
+                    else if (index == 2) {
                         $.ajax({
                             url: '{{ route('admin.checkManager') }}',
                             type: 'GET',
@@ -123,7 +125,7 @@
                             }
                         });
                         event.preventDefault();
-                    } else if (index == 4) {
+                    } else if (index == 3) {
                         $.ajax({
                             url: '{{ route('admin.chartManager') }}',
                             type: 'GET',

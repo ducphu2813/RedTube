@@ -34,6 +34,34 @@
     padding: 7px;
     border-radius: 4px;
 }
+.modal-fee{
+    flex: 4;
+}
+
+.modal-duration{
+    flex: 3;
+    margin-left: 5px;
+}
+
+.wrap-data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrap-value{
+    
+}
+
+.modal-membership-duration{
+    display: flex;
+    margin: auto;
+    flex: 1;
+    flex-direction: row-reverse;
+}
+
+#ms-duration{
+    /* height: 100%; */
+}
 
 .modal-info-content--item label{
     font-size: 14px;
@@ -69,7 +97,7 @@
 }
 
 #modal-info-content {
-    height: 60%;
+    height: 65%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -99,3 +127,9 @@
 }
 
 /* End modal */
+
+/* Modal of membership */
+
+
+
+/* Modal of playlists */

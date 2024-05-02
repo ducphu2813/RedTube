@@ -242,12 +242,12 @@ input:hover {
 	height: 1rem;
 }
 
-div#item-container {
+div.item-container {
 	display: flex;
 	align-items: center;
 }
 
-div#item-container {
+div.item-container {
 	border-bottom: 1px solid #000;
 }
 
@@ -256,6 +256,7 @@ img.logo {
 	height: 70px;
 }
 
+.item-role,
 .item-account,
 .item-thumb,
 .item-btn {

@@ -39,6 +39,44 @@ class PremiumRegistration extends Model
             ->exists();
     }
 
+
+    //kiểm tra gói đăng ký premium có còn hạn không dựa vào id của gói đăng ký
+    public static function isPremiumExpired(int $registrationId): bool
+    {
+        $currentDate = date('Y-m-d H:i:s');
+        return self::query()
+            ->where('registration_id', $registrationId)
+            ->where('end_date', '<', $currentDate)
+            ->exists();
+    }
+
+    //lấy số user đang sử dụng gói premium kể cả chủ sở hữu dựa vào id của gói đăng ký
+    public function getCurrentUsersCount(): int
+    {
+        // Đếm bên share
+        $sharedUsersCount = SharePremium::where('premium_registration_id', $this->registration_id)
+            ->where('expiry_date', '>', date('Y-m-d H:i:s'))
+            ->count();
+
+        // Cộng 1 cho chủ sở hữu
+        return $sharedUsersCount + 1;
+    }
+
+    //lấy tất cả những user từng được share gói premium
+    public function getAllSharedUsersCount(): int
+    {
+        return SharePremium::where('premium_registration_id', $this->registration_id)
+            ->count();
+    }
+
+    //lấy số user còn có thể được share gói premium
+    public function getAvailableShares(): int
+    {
+        $currentUsersCount = $this->getCurrentUsersCount();
+        $package = $this->package;
+        return $package->share_limit - $currentUsersCount;
+    }
+
     //lấy tất cả các gói premium đã hết hạn của user
     public static function getExpiredPremiumRegistrationsByUser(int $userId)
     {
@@ -79,6 +117,16 @@ class PremiumRegistration extends Model
     public function sharedUsers()
     {
         return $this->hasMany(SharePremium::class, 'premium_registration_id', 'registration_id');
+    }
+
+    //lấy những user được share premium mà gói premium đó đang sử dụng
+    public function getCurrentSharedUsers(){
+
+        return $this->sharedUsers()
+            ->whereHas('user', function ($query) {
+                $query->where('expiry_date', '>', date('Y-m-d H:i:s'));
+            })
+            ->get();
     }
 
     public function user(): BelongsTo

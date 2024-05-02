@@ -28,4 +28,16 @@ class Membership extends Model
     {
         return $this->belongsTo(Users::class, 'user_id');
     }
+
+    // Code của Dương
+    public static function getAllMembership(){
+        return self::query()->get();
+    }
+
+    public static function getMembershipById($id)
+    {
+        return self::query()->where('membership_id', $id)->first();
+    }
+
+    // Dương không muốn code nữa
 }
