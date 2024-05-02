@@ -92,10 +92,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    $(document).html(
-                        @component('studio.videoDetailsModal', ['data' => 'video'])
-                        @endcomponent
-                    )
+                    $('#modal').
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);
