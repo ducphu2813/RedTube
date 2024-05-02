@@ -96,13 +96,15 @@ Route::prefix('admin')->group(function (){
 // Cái này của Dương nhưng là Home Page + Studio
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
 Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
-Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
+Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage')->middleware('CheckLogin');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 // Hết của Dương
 
-Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos');
-Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium');
-Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile');
+Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
+Route::get('studioPage/contents/videos/{pageNumber}', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
+Route::get('studioPage/contents/playlists/{pageNumber}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
+Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
+Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

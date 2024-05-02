@@ -53,7 +53,7 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item" data-url="{{ route('studio.contents.videos') }}">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -162,6 +162,7 @@
             });
         });
     </script>
+
 
     <script>
         $(document).ready(function() {

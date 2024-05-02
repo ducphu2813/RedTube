@@ -11,6 +11,7 @@ button:hover {
 .content__option {
     display: flex;
     flex-direction: row;
+    list-style: none;
 }
 
 .content__option--item {
@@ -163,6 +164,7 @@ button:hover {
     bottom: 0px;
     z-index: 100;
     color: white;
+    display: none;
 }
 
 .modal__overlay {
