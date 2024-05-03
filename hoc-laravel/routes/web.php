@@ -1,12 +1,16 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\HomeController;
+use App\Http\Controllers\clients\HomePageController;
+use App\Http\Controllers\clients\MemberShipController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
 use App\Http\Controllers\clients\SchoolsController;
+use App\Http\Controllers\clients\StudioController;
 use App\Http\Controllers\clients\ShareNotiController;
 use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
@@ -72,10 +76,39 @@ Route::prefix('admin')->group(function (){
     //Laravel sẽ tự sinh ra các route cho các phương thức trong controller
     Route::middleware('ProductPermisson')->resource('products', ProductsController::class);
 
-    Route::get('', [DashBoardController::class, 'index'])->name('admin.index');
-
+    // --------------------Phần này của Dương --------------------//
+    // Show all
+    Route::get('adminLayout', [AdminController::class, 'showAll'])->name('admin.all');
+    // Show video
+    Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
+    Route::post('changeStatusVideo', [AdminController::class, 'changeStatusVideo'])->name('admin.changeStatusVideo');
+    // Show user
+    Route::get('userManager', [AdminController::class, 'showUserList'])->name('admin.userManager');
+    // Show test
+    Route::get('checkManager', [AdminController::class, 'showCheckList'])->name('admin.checkManager');
+    // Show comment
+    Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
+    // Show chart
+    Route::get('chartManager', [AdminController::class, 'showChartList'])->name('admin.chartManager');
+    // Change role user
+    Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
+    // Change status user
+    Route::post('changeStatusUser', [AdminController::class, 'changeStatusUser'])->name('admin.changeStatusUser');
+    // --------------------Hết phần của Dương --------------------//
 });
 
+// --------------------Cái này của Dương -------------------- //
+// Membership
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
+Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
+// end Membership
+
+Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
+Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
+Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
+// -------------------- Hết của Dương -------------------- //
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

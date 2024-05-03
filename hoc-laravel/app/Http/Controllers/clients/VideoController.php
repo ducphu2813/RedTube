@@ -29,7 +29,4 @@ class VideoController extends Controller{
         return view('video.video-detail', ['video' => $video, 'playlists' => $playlists]);
 
     }
-
-
-
 }

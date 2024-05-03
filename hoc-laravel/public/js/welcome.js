@@ -18,6 +18,7 @@ function changeStatus() {
             }).then(function () {
                 formSignUp.style.display = 'flex';
                 formSignUp.classList.add('show');
+                document.querySelector('.modal').style.boxShadow = '-16px 9px 8px -6px rgba(0, 0, 0, .1)';
             });
         input.value = 'ĐĂNG NHẬP';
         document.getElementById('sign-up-btn').innerText = 'Đăng ký';
@@ -32,6 +33,7 @@ function changeStatus() {
             }).then(function () {
                 formSignIn.style.display = 'flex';
                 formSignIn.classList.add('show');
+                document.querySelector('.modal').style.boxShadow = '16px 9px 8px -6px rgba(0, 0, 0, .1)';
             });
         input.value = 'ĐĂNG KÝ';
 

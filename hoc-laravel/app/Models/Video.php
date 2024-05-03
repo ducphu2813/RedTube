@@ -88,4 +88,16 @@ class Video extends Model
     public static function getVideoByUserId($user_id){
         return self::query()->where('user_id', $user_id)->get();
     }
+
+
+    // Dương code ở này
+    public static function getAllVideo(){
+        return self::query()->get();
+    }
+
+    public function updateVideo($id, $data){
+        return $this->where('video_id', $id)->update($data);
+    }
+
+    // Dương không code nữa
 }
