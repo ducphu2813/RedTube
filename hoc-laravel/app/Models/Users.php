@@ -59,4 +59,11 @@ class Users extends Model
     public function deleteUser($id){
         return $this->where('user_id', $id)->delete();
     }
+
+    // Đếm ngày user
+    public static function countUser($year){
+        return self::whereYear('created_Date', $year)->count();
+    }
+
+    
 }

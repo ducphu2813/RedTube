@@ -94,4 +94,10 @@ class PremiumController extends Controller
 
 
     }
+
+    public function getAllRegistrations(){
+        // $listRegistrations = PremiumRegistration::getAllNoCondition();
+
+        return view('premium.premiumWrapper');
+    }
 }
