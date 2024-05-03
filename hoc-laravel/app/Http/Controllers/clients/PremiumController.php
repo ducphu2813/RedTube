@@ -21,6 +21,9 @@ class PremiumController extends Controller
 
         $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
 
+        //danh sách những người đã mời chia sẻ
+//        $receiverList =
+
         if($currentUserPremium == null){
             return view('premium.no-premium');
         }
@@ -39,6 +42,8 @@ class PremiumController extends Controller
         $listUsers = Users::getUsersByName($nameFind);
 
         foreach ($listUsers as $user){
+
+            //kiểm tra xem user có thể gửi thông báo chia sẻ không
             if(ShareNoti::isSendable(session('loggedInUser'), $user->user_id)){
                 $user->isSendable = true;
             }
