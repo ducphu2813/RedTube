@@ -139,6 +139,9 @@
     
 @endsection
 
+@component('studio.videoDetailsModal')
+@endcomponent
+
 @section('scripts')
 
     <script>

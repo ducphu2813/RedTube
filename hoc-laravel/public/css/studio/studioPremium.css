@@ -76,14 +76,7 @@ button:hover {
 }
 
 
-.modal--popup {
-    position: fixed;
-    right: 0px;
-    left: 0px;
-    top: 0px;
-    bottom: 0px;
-    z-index: 100;
-}
+
 
 .modal__overlay {
     background-color: rgba(0, 0, 0, 0.8);

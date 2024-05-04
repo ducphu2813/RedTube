@@ -74,6 +74,8 @@
     @endforeach
 </ul>
 
+
+
 @component('studio.pagination')
 @endcomponent
 

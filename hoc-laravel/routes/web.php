@@ -106,7 +106,7 @@ Route::get('studioPage/contents/playlists/{pageNumber}', [StudioController::clas
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
-Route::get('studioPage/videoDertails', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+Route::get('studioPage/videoDetails', [StudioController::class, 'profile'])->name('studio.videoDetails')->middleware('CheckLogin');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

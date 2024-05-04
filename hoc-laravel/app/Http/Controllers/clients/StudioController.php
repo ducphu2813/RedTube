@@ -30,6 +30,14 @@ class StudioController extends Controller
         return view('studio.studioContentsPlaylists', ['playlists' => $playlists]);
     }
 
+    public function videoDetails($video_id = null) {
+        if ($video_id != null) {
+
+        } else {
+            return view('studio.videoDetailsModal');
+        }
+    }
+
     public function premium() {
         return view('studio.studioPremium');
     }
