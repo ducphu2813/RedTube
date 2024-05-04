@@ -74,8 +74,8 @@
 
                     <div class="form-group">
                         <div class="option">
-                            <button class="close--btn">Hủy</button>
-                            <button class="save--btn">Lưu</button>
+                            <button class="close--btn" id="close--btn">Hủy</button>
+                            <button class="save--btn" id="save--btn">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -97,5 +97,15 @@
         reader.onload = () => {
             previewImg.src = reader.result;
         };
+    });
+
+    $(document).ready(function() {
+        $('#close--btn').on('click', function(event) {
+            $('#modal').remove()
+        });
+
+        $('save--btn').on('click', function(event) {
+
+        });
     });
 </script>

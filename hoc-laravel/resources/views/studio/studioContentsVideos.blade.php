@@ -75,30 +75,20 @@
 </ul>
 
 
-
 @component('studio.pagination')
 @endcomponent
 
 
 <script>
     $(document).ready(function() {
-        $('#close--btn').on('click', function(event) {
-            $('#modal').css({
-                display: 'none'
-            });
-        });
-
         $('#edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `videos/${video_id}`,
+                url: `/studioPage/videoDetails/${video_id}`,
                 type: 'GET',
-                dataType: 'json',
+                dataType: 'html',
                 success: function(data) {
-                    $('#modal').html(
-                        @component('studio.pagination')
-                        @endcomponent
-                    )
+                    $('#modal').html(data);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);
