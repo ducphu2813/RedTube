@@ -4,7 +4,7 @@
         <div class="content__title">Video details</div>
     
         <div class="content__option">
-            <button class="content__option--btn" id="save">SAVE</button>
+            <button class="content__option--btn" id="save">Lưu</button>
         </div>
     </div>
     
@@ -13,19 +13,19 @@
         <form action="" class="videoDetails-form" method="post" enctype="multipart/form-data">
             <div class="form-left">
                 <div class="form-group">
-                    <label for="title">Title (required)</label>
+                    <label for="title">Tiêu đề (required)</label>
                     <textarea name="title" rows="2"></textarea>
                 </div>
     
                 <div class="form-group">
-                    <label for="description">Description</label>
+                    <label for="description">Mô tả</label>
                     <textarea name="description" rows="18"></textarea>
                 </div>
             </div>
     
             <div class="form-right">
                 <div class="form-group">
-                    <label for="thumbnail">Upload Thumbnail:</label>
+                    <label for="thumbnail">Đăng tải ảnh bìa:</label>
                     <input type="file" id="thumbnail" name="thumbnail">
     
                     <div class="review__thumbnail">
@@ -34,7 +34,7 @@
                 </div>
     
                 <div class="form-group">
-                    <label for="playlist">Playlist</label>
+                    <label for="playlist">Danh sách phát</label>
                     <select id="playlist" name="playlist">
                         <option value="A">Playlist A</option>
                         <option value="B">Playlist B</option>
@@ -42,15 +42,15 @@
                 </div>
     
                 <div class="form-group">
-                    <label for="privacy">Privacy</label>
+                    <label for="privacy">Chế độ</label>
                     <select id="privacy" name="privacy">
-                        <option value="public">Public</option>
-                        <option value="private">Private</option>
+                        <option value="public">Công khai</option>
+                        <option value="private">Riêng tư</option>
                     </select>
                 </div>
     
                 <div class="form-group">
-                    <label for="categogy">Catelogy</label>
+                    <label for="categogy">Thể loại</label>
                     <select id="categogy" name="categogy">
                         <option value="Tag A">Tag A</option>
                         <option value="Tag B">Tag B</option>

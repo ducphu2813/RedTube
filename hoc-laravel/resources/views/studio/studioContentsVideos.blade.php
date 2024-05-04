@@ -12,18 +12,18 @@
         </div>
 
         <div class="item__display">
-            Visibility
+            Chế độ
         </div>
 
         <div class="item__createdate">
-            Date
+            Ngày tạo
         </div>
 
-        <div class="item__view">Views</div>
+        <div class="item__view">Lượt xem</div>
 
-        <div class="item__comment">Comments</div>
+        <div class="item__comment">Bình luận</div>
 
-        <div class="item__like">Likes</div>
+        <div class="item__like">Lượt thích</div>
     </li>
 
     <!-- items -->
@@ -74,7 +74,6 @@
 
 @component('studio.pagination')
 @endcomponent
-
 
 
 <script>
