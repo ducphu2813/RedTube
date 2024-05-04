@@ -3,6 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
+
 @endsection
 
 @section('search')
@@ -53,7 +55,7 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.contents.videos') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -86,7 +88,7 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -114,7 +116,7 @@
                     Gói thành viên
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.premium') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
@@ -131,7 +133,16 @@
     </div>
 @endsection
 
+@section('content')
+    <div id="right">
+
+    </div>
+
+
+@endsection
+
 @section('scripts')
+
     <script>
         $(document).ready(function() {
 
@@ -193,7 +204,18 @@
                     console.log('Số liệu phân tích');
                     event.preventDefault();
                 } else if (index == 2) {
-                    console.log('Thông tin kênh');
+                    // console.log('Thông tin kênh');
+                    $.ajax({
+                        url: '{{ route('studio.profile') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        },
+                        // error: function(xhr, status, error) {
+                        //     console.error('Error fetching content:', error);
+                        // }
+                    });
                     event.preventDefault();
                 } else if (index == 3) {
                     $.ajax({

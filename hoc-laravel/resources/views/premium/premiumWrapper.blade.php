@@ -10,7 +10,7 @@
 
 
 <div class="content__body">
-    @component('premium.premiumHistoryWrapper')
+    @component('premium.premiumHistoryWrapper', ['listRegistrations' => $listRegistrations])
     @endcomponent
 </div>
 </div>
@@ -23,12 +23,12 @@
             $('.content__body').empty();
             if ($(this).text() === 'Premium') {
                 $('.content__body').append(`
-                    @component('premium.premiumHistoryWrapper')
+                    @component('premium.premiumHistoryWrapper', ['listRegistrations' => $listRegistrations])
                     @endcomponent
                 `);
             } else {
                 $('.content__body').append(`
-                    @component('premium.premiumShareWrapper')
+                    @component('premium.premiumShareWrapper', ['listPackages' => $listPackages])
                     @endcomponent
                 `);
             }

@@ -155,10 +155,11 @@
 
                         if (response.status === 400) {
                             $('#sign-up-btn').text('Đăng ký');
-                            
+                            console.log(response.message);
 
                             //khi đăng ký thất bại, hiện các message validate lên
                         }
+                    }
                     if(response.status === 200) {
                         //khi đăng ký thành công
                         window.location.href = '{{ route('login-register') }}';

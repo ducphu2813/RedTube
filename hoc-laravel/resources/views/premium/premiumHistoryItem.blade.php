@@ -1,13 +1,13 @@
 <a class="my-premium-info" href="">
     <div class="my-premium-name">
-        Gói dữ dằn
+        {{ $registration->package->name}}
     </div>
 
     <div class="my-premium-start">
-        11/11/2022
+        {{ $registration->start_date->format('d/m/Y') }}
     </div>
 
     <div class="my-premium-end">
-        11/2/2023
+        {{ $registration->end_date->format('d/m/Y') }}
     </div>
 </a>

@@ -14,8 +14,8 @@
         </div>
     </div>
 
-    @for ($i = 0; $i < 5; $i++)
-        @component('premium.premiumHistoryItem')
+    @foreach ($listRegistrations as $registration)
+        @component('premium.premiumHistoryItem', ['registration' => $registration])
         @endcomponent
-    @endfor
+    @endforeach
 </div>
