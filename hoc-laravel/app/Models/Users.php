@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Users extends Model
 {
@@ -69,6 +70,14 @@ class Users extends Model
 
         return $this->hasMany(Comment::class, 'user_id');
     }
+
+    public function videoNoti(): HasMany{
+        return $this->hasMany(VideoNotifications::class, 'user_id');
+    }
+    //đây là hàm lấy các thông báo duyệt video của user
+    //ví dụ lấy thông báo của user có id = 1
+    // $user = Users::find(1);
+    // $videoNoti = $user->videoNoti;
 
     public static function lastInsertId(){
         return self::query()->latest('user_id')->first();

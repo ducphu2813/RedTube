@@ -3,6 +3,8 @@
   <component name="LaravelIdeaPersonalSettings">
     <option name="generationStringOptionValues">
       <map>
+        <entry key="newModelSimpleOption:addFillable" value="1" />
+        <entry key="newModelSimpleOption:idField" value="" />
         <entry key="newModelSimpleOption:timestampsFields" value="" />
         <entry key="postGeneration:databaseClassFactory" value="1" />
         <entry key="postGeneration:formRequest" value="1" />
