@@ -36,7 +36,7 @@
             $(this).addClass('selected');
             var url = $(this).data('url');
             $.ajax({
-                url: '{{ route('playlist.createPlaylist') }}',
+                url: url,
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {

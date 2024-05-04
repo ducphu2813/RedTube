@@ -92,7 +92,7 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    $('#modal').
+                    // $('#modal').
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);

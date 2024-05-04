@@ -127,9 +127,10 @@ button:hover {
 
 .item__createdate {
     font-weight: bold;
-    width: 10%;
+    width: 14%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .item__view {
@@ -139,13 +140,13 @@ button:hover {
 }
 
 .item__comment {
-    width: 10%;
+    width: 8%;
     display: flex;
     justify-content: center;
 }
 
 .item__like {
-    width: 10%;
+    width: 8%;
     display: flex;
     justify-content: center;
 }
