@@ -98,15 +98,28 @@ Route::prefix('admin')->group(function (){
 });
 
 // --------------------Cái này của Dương -------------------- //
+//cái này của user
 // Membership
-Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
-Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
-Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])
+    ->middleware('CheckLogin')
+    ->name('membership.createMemberPackage');
+
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])
+    ->middleware('CheckLogin')
+    ->name('membership.membershipManager');
+
+Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])
+    ->name('membership.membershipEdit')
+    ->middleware('CheckLogin');
 // end Membership
 
 Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
-Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
+
+Route::get('studioPage', [StudioController::class, 'index'])
+    ->middleware('CheckLogin')
+    ->name('clients.studioPage');
+
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 // -------------------- Hết của Dương -------------------- //
 

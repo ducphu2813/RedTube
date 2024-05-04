@@ -201,6 +201,7 @@
                         type: 'GET',
                         dataType: 'html',
                         success: function(data) {
+                            console.log(data);
                             $('#content').html(data);
                         }
                     });

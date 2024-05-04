@@ -18,7 +18,7 @@ class MemberShipController extends Controller
 
     public function showAllMembership()
     {
-        $listMembership = Cache::remember('list_membership', 60, function () {
+        $listMembership = Cache::remember('list_membership', 0, function () {
             return Membership::getAllMembership();
         });
 

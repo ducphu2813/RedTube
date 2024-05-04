@@ -91,11 +91,11 @@
                     success: function(response) {
                         console.log(response);
                         if (response.status === 200) {
-                            
+
                             //khi đăng nhập thành công
                             //lấy ra url mà người dùng muốn truy cập trước khi đăng nhập/đăng ký
                             let redirectUrl = localStorage.getItem('redirect_after_login');
-                            
+
                             if (redirectUrl) {
                                 //chuyển về trang trước đó khi chưa đăng nhập
                                 window.location.href = redirectUrl;
@@ -105,7 +105,7 @@
                                 window.location.href = '{{ route('users.dashboard') }}';
                             }
                         }
-                        
+
                         if (response.status === 400) {
                             $('#sign-in-btn').text('Đăng nhập');
                             //khi đăng nhập thất bại, hiện các message validate lên
@@ -137,6 +137,8 @@
                     dataType: 'json', //chuyển dữ liệu về dạng json
 
                     success: function(response) {
+
+                        console.log(response);
                         if (response.status === 200) {
                             //khi đăng ký thành công
 
@@ -155,16 +157,16 @@
 
                         if (response.status === 400) {
                             $('#sign-up-btn').text('Đăng ký');
-                            
+
 
                             //khi đăng ký thất bại, hiện các message validate lên
                         }
-                    if(response.status === 200) {
-                        //khi đăng ký thành công
-                        window.location.href = '{{ route('login-register') }}';
+                        if (response.status === 200) {
+                            //khi đăng ký thành công
+                            window.location.href = '{{ route('login-register') }}';
+                        }
                     }
                 });
-
             });
         });
     </script>
