@@ -91,10 +91,11 @@ textarea {
 
 .form-input {
     width: 100%;
-    background-color: #0f0f0f;
+    background-color: #3e3e3e;
     padding-left: 12px;
     border: none;
     color: white;
+    border-radius: 2px;
 }
 
 .channel__name {

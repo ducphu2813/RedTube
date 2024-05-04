@@ -21,6 +21,11 @@ button:hover {
 
 }
 
+#details--btn {
+    background-color: black;
+    color: white;
+}
+
 .content__body--list {
     display: flex;
     flex-direction: column;

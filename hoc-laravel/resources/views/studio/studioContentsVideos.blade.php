@@ -52,13 +52,15 @@
             </div>
 
             <div class="item__display">
-                @if ($video->title == 0)
+                @if ($video->display_mode == 0)
                     <i class="fa-solid fa-earth-americas"></i>
+                    <div class="item__display--text">Riêng tư</div>
                 @else
                     <i class="fa-solid fa-lock"></i>
+                    <div class="item__display--text">Công khai</div>
                 @endif
 
-                <div class="item__display--text">{{ $video->title }}</div>
+
             </div>
 
             <div class="item__createdate">{{ $video->created_date }}</div>
@@ -91,7 +93,10 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(data) {
-                    // $('#modal').
+                    $('#modal').html(
+                        @component('studio.pagination')
+                        @endcomponent
+                    )
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);
