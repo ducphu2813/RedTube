@@ -16,7 +16,9 @@ use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\RedirectResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -122,6 +124,10 @@ Route::get('studioPage', [StudioController::class, 'index'])
 
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 // -------------------- Hết của Dương -------------------- //
+
+Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos');
+Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium');
+Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

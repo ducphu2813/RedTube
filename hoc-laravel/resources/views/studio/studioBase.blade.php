@@ -53,7 +53,7 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.contents.videos') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -86,7 +86,7 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -114,7 +114,7 @@
                     Gói thành viên
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.premium') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
@@ -131,7 +131,38 @@
     </div>
 @endsection
 
+@section('content')
+    <div id="right">
+
+    </div>
+
+    
+@endsection
+
 @section('scripts')
+
+    <script>
+        // ajax calls #right
+        $(document).ready(function() {
+            $('.list-item').on('click', function(event) {
+                event.preventDefault();
+                var url = $(this).data('url');
+
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#right').html(data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching content:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function() {
 
