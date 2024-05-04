@@ -59,4 +59,19 @@ class Users extends Model
     public function deleteUser($id){
         return $this->where('user_id', $id)->delete();
     }
+
+    public function videos(): HasMany{
+
+        return $this->hasMany(Video::class, 'user_id');
+    }
+
+    public function comments(): HasMany{
+
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
+    public static function lastInsertId(){
+        return self::query()->latest('user_id')->first();
+    }
+
 }
