@@ -127,7 +127,7 @@
                         event.preventDefault();
                     } else if (index == 3) {
                         $.ajax({
-                            url: '{{ route('admin.chartManager') }}',
+                            url: '{{ route('admin.showChart') }}',
                             type: 'GET',
                             dataType: 'html',
                             success: function(data) {
