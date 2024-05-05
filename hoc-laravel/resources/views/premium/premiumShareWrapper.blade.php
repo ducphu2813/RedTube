@@ -17,8 +17,8 @@
         </div>
     </div>
 
-    @for ($i = 0; $i < 5; $i++)
-        @component('premium.premiumShareItem')
+    @foreach($listShares as $share)
+        @component('premium.premiumShareItem', ['share'=>$share])
         @endcomponent
-    @endfor
+    @endforeach
 </div>

@@ -28,7 +28,7 @@
                 `);
             } else {
                 $('.content__body').append(`
-                    @component('premium.premiumShareWrapper', ['listPackages'=>$listPackages])
+                    @component('premium.premiumShareWrapper', ['listShares'=>$listShares])
                     @endcomponent
                 `);
             }

@@ -109,6 +109,9 @@ Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])-
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 
+// Test screen video
+Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
 
