@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
+use App\Models\PremiumRegistration;
+use App\Models\SharePremium;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -91,6 +94,21 @@ class UsersController extends Controller{
             'user' => Users::getUserById(session('loggedInUser')),
         ];
 
+        //tất cả record premium của user
+        $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
+
+        //record premium đang sử dụng
+        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        //record premium đã hết hạn
+        $data['expired_premium'] = PremiumRegistration::getExpiredPremiumRegistrationsByUser(session('loggedInUser'));
+
+        //record shared premium đang được share
+        $data['current_shared_premium'] = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
+
+        //record shared premium đã hết hạn
+        $data['all_shared_premium'] = SharePremium::getAllSharedPremiumsByUser(session('loggedInUser'));
+
         return view('users.user-dashboard', $data);
     }
 
@@ -127,6 +145,23 @@ class UsersController extends Controller{
             'message' => 'Cập nhật ảnh đại diện thành công',
         ]);
 
+    }
+
+    public function showPlaylist(){
+
+        $id = session('loggedInUser');
+
+        $user = Users::getUserById($id);
+
+        if($user == null){
+            return redirect(route('login-register'));
+        }
+
+        $playlists = Playlist::getPlaylistByUserId($id);
+
+//        dd($playlists);
+
+        return view('playlist.user-playlist', ['playlists' => $playlists]);
     }
 
 

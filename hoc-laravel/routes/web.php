@@ -1,10 +1,17 @@
 <?php
 
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\HomeController;
+use App\Http\Controllers\clients\HomePageController;
+use App\Http\Controllers\clients\MemberShipController;
+use App\Http\Controllers\clients\PlaylistController;
+use App\Http\Controllers\clients\PremiumController;
 use App\Http\Controllers\clients\SchoolsController;
+use App\Http\Controllers\clients\StudioController;
+use App\Http\Controllers\clients\ShareNotiController;
 use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
@@ -69,10 +76,46 @@ Route::prefix('admin')->group(function (){
     //Laravel sẽ tự sinh ra các route cho các phương thức trong controller
     Route::middleware('ProductPermisson')->resource('products', ProductsController::class);
 
-    Route::get('', [DashBoardController::class, 'index'])->name('admin.index');
-
+    // --------------------Phần này của Dương --------------------//
+    // Show all
+    Route::get('adminLayout', [AdminController::class, 'showAll'])->name('admin.all');
+    // Show video
+    Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
+    Route::post('changeStatusVideo', [AdminController::class, 'changeStatusVideo'])->name('admin.changeStatusVideo');
+    // Show user
+    Route::get('userManager', [AdminController::class, 'showUserList'])->name('admin.userManager');
+    // Show test
+    Route::get('checkManager', [AdminController::class, 'showCheckList'])->name('admin.checkManager');
+    // Show comment
+    Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
+    // Show chart
+    Route::get('showChart', [AdminController::class, 'showChartList'])->name('admin.showChart');
+    // Change role user
+    Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
+    // Change status user
+    Route::post('changeStatusUser', [AdminController::class, 'changeStatusUser'])->name('admin.changeStatusUser');
+    // --------------------Hết phần của Dương --------------------//
 });
 
+// --------------------Cái này của Dương -------------------- //
+// Membership
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
+Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
+// end Membership
+
+Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
+Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
+Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
+
+// Test screen video
+Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+
+// Premium Registaration
+Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
+
+// -------------------- Hết của Dương -------------------- //
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');
@@ -131,6 +174,43 @@ Route::post('comments/save', [CommentController::class, 'saveRootComment'])
 //save reply comment
 Route::post('comments/reply/save', [CommentController::class, 'saveReplyComment'])
     ->name('comments.reply.save');
+
+
+
+//test playlist
+Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
+    ->name('user.playlist');
+
+//update video playlist
+Route::post('playlist/update', [PlaylistController::class, 'updateVideoPlaylist'])
+    ->name('playlist.update');
+
+
+
+//test share premium
+Route::get('premium/share', [PremiumController::class, 'sharePage'])
+    ->name('premium.share')
+    ->middleware('CheckLogin');
+
+//tìm user để share
+Route::get('premium/find-user', [PremiumController::class, 'findUser'])
+    ->name('premium.search-user')
+    ->middleware('CheckLogin');
+
+//xử lý send yêu cầu share premium
+Route::post('premium/handle-send', [PremiumController::class, 'handleSend'])
+    ->name('premium.handle-send')
+    ->middleware('CheckLogin');
+
+//hiện các thông báo share
+Route::get('premium/noti', [ShareNotiController::class, 'notiPage'])
+    ->name('premium.noti')
+    ->middleware('CheckLogin');
+
+//lấy thông báo share
+Route::get('premium/get-noti', [ShareNotiController::class, 'getNoti'])
+    ->name('premium.get-noti')
+    ->middleware('CheckLogin');
 
 
 

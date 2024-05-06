@@ -10,6 +10,8 @@ class Users extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $casts = [
         'created_date' => 'datetime',
     ];
@@ -23,16 +25,12 @@ class Users extends Model
         'channel_name',
         'email',
         'password',
+        'description',
         'created_date',
         'active',
-        'description',
         'picture_url',
-        'token',
-        'token_expire',
+        'role',
     ];
-
-    public $timestamps = false;
-
 
     public static function getAllUsers(){
         return self::query()->get();
@@ -43,9 +41,12 @@ class Users extends Model
         return self::query()->where('user_id', $id)->first();
     }
 
-    public static function getUsersByName($name)
-    {
+    public static function getUsersByName($name){
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
+    }
+
+    public function getPlaylists(){
+        return $this->hasMany(Playlist::class, 'user_id', 'user_id');
     }
 
     public function createUser($data){
@@ -60,6 +61,11 @@ class Users extends Model
         return $this->where('user_id', $id)->delete();
     }
 
+    // Đếm ngày user
+    public static function countUser($year){
+        return self::whereYear('created_Date', $year)->count();
+    }
+
     public function videos(): HasMany{
 
         return $this->hasMany(Video::class, 'user_id');
@@ -70,8 +76,8 @@ class Users extends Model
         return $this->hasMany(Comment::class, 'user_id');
     }
 
-    public function lastInsertId(){
-        return self::query()->latest('user_id')->first();
-    }
+//     public static function lastInsertId(){
+//         return self::query()->latest('user_id')->first();
+//     }
 
 }

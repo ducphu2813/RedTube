@@ -16,12 +16,12 @@ class CommentFactory extends Factory
     {
         return [
             'comment_id' => $this->faker->randomNumber(),
+            'reply_id' => $this->faker->randomNumber(),
             'content' => $this->faker->word(),
             'created_date' => Carbon::now(),
 
             'user_id' => Users::factory(),
             'video_id' => Video::factory(),
-            'reply_id' => Comment::factory(),
         ];
     }
 }

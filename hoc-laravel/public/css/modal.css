@@ -1,0 +1,135 @@
+/* modal */
+.modal-pl{
+    height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	left: 0;
+    display: none;
+	z-index: 0;
+}
+
+.modal-info-wrapper {
+    width: 40%;
+    height: 70%;
+    background-color: white;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    z-index: 1;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.modal-info-content--item{
+    border: 1px solid #444;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 7px;
+    border-radius: 4px;
+}
+.modal-fee{
+    flex: 4;
+}
+
+.modal-duration{
+    flex: 3;
+    margin-left: 5px;
+}
+
+.wrap-data{
+    display: flex;
+    justify-content: space-between;
+}
+
+.wrap-value{
+    
+}
+
+.modal-membership-duration{
+    display: flex;
+    margin: auto;
+    flex: 1;
+    flex-direction: row-reverse;
+}
+
+#ms-duration{
+    /* height: 100%; */
+}
+
+.modal-info-content--item label{
+    font-size: 14px;
+}
+
+.modal-info-content--item input{
+    border: none;
+    padding-left: 2px;
+}
+
+#modal-name{
+    height: 30px;
+}
+
+#modal-description{
+    height: 100px;
+    resize: none;
+    border: none;
+}
+
+.modal-info-content--item input:focus,
+.modal-info-content--item textarea:focus{
+    outline: none;
+}
+
+.modal-info-content--item input:focus label{
+    color:blue;
+}
+
+#modal-info-header{
+    padding: 5px 10px;
+    border-bottom: 1px solid #000;
+}
+
+#modal-info-content {
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0 20px;
+}
+
+#modal-info-btn {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid;
+    padding-top: 1%;
+}
+
+.modal-btn{
+    margin-right: 20px;
+    border: none;
+    background-color: #000;
+    border-radius: 5px;
+    width: 60px;
+    height: 40px;
+    color: #fff;
+}
+
+.modal-btn:hover{
+    background-color: #333;
+    transition: .2s;
+}
+
+/* End modal */
+
+/* Modal of membership */
+
+
+
+/* Modal of playlists */
