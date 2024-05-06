@@ -113,6 +113,12 @@ class PremiumRegistration extends Model
             ->get();
     }
 
+    public static function getAllNoCondition()
+    {
+        return self::query()->get();
+    }
+
+    //lấy những user được share gói premium theo id của premium registration
     //lấy những tất cả user được share gói premium theo id của premium registration
     public function sharedUsers()
     {

@@ -83,4 +83,10 @@ class Users extends Model
         return self::query()->latest('user_id')->first();
     }
 
+
+    // Đếm ngày user
+    public static function countUser($year){
+        return self::whereYear('created_Date', $year)->count();
+    }
+
 }

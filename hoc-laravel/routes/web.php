@@ -91,7 +91,7 @@ Route::prefix('admin')->group(function (){
     // Show comment
     Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
     // Show chart
-    Route::get('chartManager', [AdminController::class, 'showChartList'])->name('admin.chartManager');
+    Route::get('showChart', [AdminController::class, 'showChartList'])->name('admin.showChart');
     // Change role user
     Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
     // Change status user
@@ -123,6 +123,13 @@ Route::get('studioPage', [StudioController::class, 'index'])
     ->name('clients.studioPage');
 
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
+
+// Test screen video
+Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+
+// Premium Registaration
+Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
+
 // -------------------- Hết của Dương -------------------- //
 
 Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos');

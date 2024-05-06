@@ -109,11 +109,16 @@
                         if (response.status === 400) {
                             $('#sign-in-btn').text('Đăng nhập');
                             //khi đăng nhập thất bại, hiện các message validate lên
-                            if(!response.message.user_name){
-                                document.getElementById('login_password').nextElementSibling.innerHTML = response.message.password[0];
+                            if (!response.message.user_name) {
+                                document.getElementById('login_password').nextElementSibling
+                                    .innerHTML = response.message.password[0];
                             }
-                            document.getElementById('login_username').nextElementSibling.innerHTML = response.message.user_name ? response.message.user_name[0] : '';
-                            document.getElementById('login_password').nextElementSibling.innerHTML = response.message.password ? response.message.password[0] : '';
+                            document.getElementById('login_username').nextElementSibling
+                                .innerHTML = response.message.user_name ? response.message
+                                .user_name[0] : '';
+                            document.getElementById('login_password').nextElementSibling
+                                .innerHTML = response.message.password ? response.message
+                                .password[0] : '';
                         }
                     }
 

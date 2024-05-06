@@ -238,7 +238,14 @@
                     });
                     event.preventDefault();
                 } else {
-                    console.log('Premium');
+                    $.ajax({
+                        url: '{{ route('premium.premiumManager') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                     event.preventDefault();
                 }
             });
