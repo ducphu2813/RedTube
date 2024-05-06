@@ -74,7 +74,7 @@
                     <button id="btn-expand">Xem thêm</button>
                 </div>
 {{--                Phần này là phần comment--}}
-                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments])
+                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments, 'video' => $video])
                 @endcomponent
             </div>
 

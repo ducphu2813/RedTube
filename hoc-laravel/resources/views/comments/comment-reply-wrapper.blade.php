@@ -5,7 +5,8 @@
 
     {{-- Chổ này cho comment-reply-item --}}
 {{--    show tất cả reply của 1 comment--}}
-    <div class="show-comment">
+    <div class="show-comment" id="reply-section-{{ $comment->comment_id }}">
+
         @foreach ($replies as $reply)
             @component('comments.comment-reply-item', ['reply' => $reply])
             @endcomponent

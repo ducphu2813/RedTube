@@ -1,3 +1,4 @@
+{{--cái này là 1 reply--}}
 <div id="user-comment-reply">
     <div>
         <a id="user-comment-info" href="">

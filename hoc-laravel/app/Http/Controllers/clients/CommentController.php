@@ -13,7 +13,7 @@ class CommentController extends Controller{
         $allComments = Comment::all();
     }
 
-    
+
 
     public function getCommentByVideoId(int $video_id){
         $comments = Comment::getRootCommentsByVideoId($video_id);
@@ -31,6 +31,7 @@ class CommentController extends Controller{
         return response()->json($comments);
     }
 
+    //lưu comment gốc
     public function saveRootComment(Request $request){
 
         $data = request()->all();
@@ -64,9 +65,11 @@ class CommentController extends Controller{
                 'reply_id' => $data['reply_id']
             ];
 
-            Comment::saveComment($comment);
+//            Comment::saveComment($comment);
 
-            $data['comment_id'] = Comment::lastInsertId()['comment_id'];
+//            $data['comment_id'] = Comment::lastInsertId()['comment_id'];
+            $data['comment_id'] = 100;
+            $data['status'] = 'success';
 
             return response()->json($data);
         }
@@ -80,6 +83,7 @@ class CommentController extends Controller{
 //        Comment::saveComment($data);
     }
 
+    //lưu comment trả lời
     public function saveReplyComment(Request $request)
     {
         if(!$request->session()->has('loggedInUser')){
@@ -93,6 +97,10 @@ class CommentController extends Controller{
             $data['created_date'] = date('Y-m-d H:i:s');
             unset($data['_token']);
 
+            if (!isset($data['content'])) {
+                $data['content'] = 'content is missing';
+            }
+
             $comment = [
                 'video_id' => $data['video_id'],
                 'user_id' => $data['user_id'],
@@ -101,7 +109,7 @@ class CommentController extends Controller{
                 'reply_id' => $data['reply_id']
             ];
 
-            Comment::saveComment($comment);
+//            Comment::saveComment($comment);
 
             return response()->json($data);
         }
