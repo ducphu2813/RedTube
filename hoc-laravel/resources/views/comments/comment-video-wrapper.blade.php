@@ -1,3 +1,5 @@
+{{--đây là phần tổng thể của comment--}}
+{{--function bình luận sẽ làm ở đây--}}
 <div id="row-comment" class="row">
     <div class="playvideo">
         <div id="comment" class="play-video">
@@ -11,10 +13,14 @@
                                 alt="">
                         </a>
                     </div>
+
+                    {{-- phần comment--}}
                     <div>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Viết bình luận..."
-                                aria-label="Recipient's username with two button addons">
+                                aria-label="Recipient's username with two button addons"
+                                   id="comment-input"
+                            >
                             <button class="btn btn-outline-secondary" type="button">Hủy</button>
                             <button class="btn btn-outline-secondary" type="button">Bình luận</button>
                         </div>
@@ -22,10 +28,11 @@
                 </div>
 
                 {{-- Chổ này là all comment của 1 video --}}
-                @for ($i = 0; $i < 5; $i++)
-                    @component('comments.comment-video-item')
+                {{--chạy vòng lặp foreach để hiển thị tất cả các root comment của video--}}
+                @foreach ($comments as $cmt)
+                    @component('comments.comment-video-item', ['comment' => $cmt])
                     @endcomponent
-                @endfor
+                @endforeach
 
             </div>
         </div>
@@ -37,7 +44,7 @@
     replyButtons.forEach(function(button) {
         button.addEventListener("click", function(){
             var userReply = this.parentElement.nextElementSibling;
-            userReply.style.display = "block"; 
+            userReply.style.display = "block";
         });
     });
 
@@ -49,5 +56,36 @@
             input.value = "";
             userReply.style.display = "none";
         });
+    });
+
+    //xử lý tạo 1 bình luận mới
+    $(document).ready(function() {
+
+        //check login khi bấm vào thanh comment
+        $('#comment-input').on('click', function() {
+
+            $.ajax({
+                url: '{{ route('check-login') }}', // check login
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật
+                },
+                success: function(response) {
+                    // Xử lý khi request thành công
+                    console.log(response);
+                    if(response.status === 'not_logged_in'){
+                        localStorage.setItem('redirect_after_login', window.location.href);
+                        window.location.href = '{{ route('login-register') }}';
+                    }
+                },
+                error: function(error) {
+                    // Xử lý khi có lỗi xảy ra
+                    console.log(error);
+                }
+            });
+        });
+
+
+
     });
 </script>

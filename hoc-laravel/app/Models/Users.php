@@ -80,7 +80,8 @@ class Users extends Model
     // $videoNoti = $user->videoNoti;
 
     public static function lastInsertId(){
-        return self::query()->latest('user_id')->first();
+        $lastUser = self::query()->latest('user_id')->first();
+        return $lastUser ? (int) $lastUser->user_id : null;
     }
 
 

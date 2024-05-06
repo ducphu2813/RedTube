@@ -62,8 +62,6 @@
                 </div>
             @endforeach
         @endif
-
-
     </div>
 
     <script>
@@ -94,7 +92,7 @@
                 });
             });
 
-
+            //xử lý comment
             $('#root-comment').submit(function (e) {
                 e.preventDefault();
                 let form = $(this);

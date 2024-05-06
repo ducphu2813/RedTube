@@ -166,10 +166,6 @@
 
                             //khi đăng ký thất bại, hiện các message validate lên
                         }
-                        if (response.status === 200) {
-                            //khi đăng ký thành công
-                            window.location.href = '{{ route('login-register') }}';
-                        }
                     }
                 });
             });

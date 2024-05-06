@@ -6,11 +6,9 @@
         </a>
     </div>
     <div id="channel-name-comment">
-        <a href=""><span>Monsieur Tuna</span></a>
+        <a href=""><span>{{ $reply->user->user_name }} - {{ $reply->created_date }}</span></a>
         <span>
-            Ôi đây là video hay nhất mà trước giờ được xem. Khi xem nó tôi cảm giác
-            như mình được quay về thời trẻ, nghĩ đến mình khi ấy thật là vui vẻ. Cảm
-            ơn bạn đã chia sẻ video này.
+            {{ $reply->content }}
         </span>
     </div>
 </div>

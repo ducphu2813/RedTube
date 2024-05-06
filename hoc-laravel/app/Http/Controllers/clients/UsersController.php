@@ -20,6 +20,17 @@ class UsersController extends Controller{
         return view('users.list-user');
     }
 
+    //check login .....
+    public function checkLogin(Request $request){
+
+        if(!$request->session()->has('loggedInUser')){
+            return response()->json(['status' => 'not_logged_in']);
+        }
+        else{
+            return response()->json(['status' => 'logged_in']);
+        }
+    }
+
     //show form login register
     public function loginRegister(){
         return view('authenticate.login-register-page');
@@ -93,6 +104,8 @@ class UsersController extends Controller{
         $data = [
             'user' => Users::getUserById(session('loggedInUser')),
         ];
+
+        $user = Users::getUserById(session('loggedInUser'));
 
         //tất cả record premium của user
         $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));

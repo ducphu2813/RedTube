@@ -17,6 +17,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+
+{{--    jquery và ajax--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -29,12 +32,12 @@
                 <div class="tag">
                     <a href="">#Music</a> <a href="">#Trending</a>
                 </div>
-                <h3 id="title-video">NHỮNG LỜI HỨA BỎ QUÊN / VŨ. x DEAR JANE (Official MV)</h3>
+                <h3 id="title-video">{{ $video->title }}</h3>
                 <div class="play-video-infor">
                     <div class="publisher">
                         <img src="OIP.jpg" alt="">
                         <div id="channel-title">
-                            <span id="channel-name" class="play-video">VŨ</span>
+                            <span id="channel-name" class="play-video">{{ $video->user->channel_name }}</span>
                             <span id="channel-subcride" class="play-video">500K Subscribers</span>
                         </div>
                     </div>
@@ -64,48 +67,22 @@
                     <div id="outer">
                         <span id="status-video">31 Tr lượt xem 3 tháng trước</span>
                         <p class="less">
-                            "Tôi là VŨ"
-                            "Đây là bài hát mới trong Album abc của tôi"
-                            "Cảm ơn các bạn đã ủng hộ"
-                            "Hãy đăng ký và like để ủng hộ tôi"
-                            "Liên hệ tôi thông qua số điện thoại 0123456789"
-                            "Chân thành cảm ơn mọi người!!!!!!!!!!!!!!!!!"
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                            {{ $video->description }}
                         </p>
                     </div>
                     </p>
                     <button id="btn-expand">Xem thêm</button>
                 </div>
-                @component('comments.comment-video-wrapper')
+{{--                Phần này là phần comment--}}
+                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments])
                 @endcomponent
             </div>
+
+{{--            Phần này là phần sidebar, chứa playlist và video đề xuất--}}
             <div class="sidebar">
                 {{-- Cái này là cái danh sách hiển thị khi người dùng xem DANH SÁCH PHÁT --}}
-                @component('video.playlist-in-video-wrapper')
+{{--                Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện--}}
+                @component('video.playlist-in-video-wrapper');
                 @endcomponent
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
@@ -115,7 +92,8 @@
         </div>
     </div>
 
-    @component('video.video-modal')
+{{--    đây là phần thêm video vào playlist--}}
+    @component('video.video-modal', ['playlists' => $playlists, 'video' => $video])
     @endcomponent
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"

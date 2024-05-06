@@ -6,10 +6,9 @@
         </a>
     </div>
     <div id="channel-name-comment">
-        <a href=""><span>Monsieur Tuna</span></a>
+        <a href=""><span>{{ $comment->user->user_name }} - {{ $comment->created_date }}</span></a>
         <span>
-            Ôi đây là video hay nhất mà trước giờ được xem. Khi xem nó tôi cảm giác như mình được quay về thời trẻ, nghĩ
-            đến mình khi ấy thật là vui vẻ. Cảm ơn bạn đã chia sẻ video này.
+            {{ $comment->content }}
         </span>
         <div id="handle-comment">
             <i id="likes" class="fa-regular fa-thumbs-up"></i>
@@ -25,8 +24,10 @@
             </div>
         </div>
 
-        {{-- reply chổ này là reply-wrapper --}}
-        @component('comments.comment-reply-wrapper')
-        @endcomponent
+        {{-- reply chổ này là reply-wrapper, truyền list các reply của comment này --}}
+        @if($comment->getReplyCommentsByCommentId($comment->comment_id))
+            @component('comments.comment-reply-wrapper', ['replies' => $comment->getReplyCommentsByCommentId($comment->comment_id)])
+            @endcomponent
+        @endif
     </div>
 </div>

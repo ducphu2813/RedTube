@@ -37,36 +37,36 @@ Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->nam
 //client route, school
 Route::middleware('CheckLogin')->prefix('schools')->group(function(){
 
-    //lấy ra danh sách trường học(GET)
-    Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
-
-    //lấy ra 1 trường học theo id(GET) áp dụng cho show form cập nhật thông tin trường học(GET)
-    Route::get('/{id}', [SchoolsController::class, 'getSchool'])
-        ->name('schools.detail')
-        ->where('id', '[0-9]+');
-
-    //show form cập nhật thông tin trường học(GET)
-    Route::get('/edit/{id}', [SchoolsController::class, 'showFormUpdateSchool'])
-        ->name('schools.edit')
-        ->where('id', '[0-9]+');
-
-    //xử lý cập nhật thông tin trường học(PUT)
-    Route::put('/edit/{id}', [SchoolsController::class, 'handleUpdateSchool'])
-        ->name('schools.update')
-        ->where('id', '[0-9]+');
-
-    //show form thêm mới trường học(GET)
-    Route::get('/add', [SchoolsController::class, 'showFormAddSchool'])
-        ->name('schools.add');
-
-    //xử lý thêm mới trường học(POST)
-    Route::post('/add', [SchoolsController::class, 'handleAddSchool'])
-        ->name('schools.store');
-
-    //xóa trường học(DELETE)
-    Route::delete('/delete/{id}', [SchoolsController::class, 'deleteSchool'])
-        ->name('schools.delete')
-        ->where('id', '[0-9]+');
+//    //lấy ra danh sách trường học(GET)
+//    Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
+//
+//    //lấy ra 1 trường học theo id(GET) áp dụng cho show form cập nhật thông tin trường học(GET)
+//    Route::get('/{id}', [SchoolsController::class, 'getSchool'])
+//        ->name('schools.detail')
+//        ->where('id', '[0-9]+');
+//
+//    //show form cập nhật thông tin trường học(GET)
+//    Route::get('/edit/{id}', [SchoolsController::class, 'showFormUpdateSchool'])
+//        ->name('schools.edit')
+//        ->where('id', '[0-9]+');
+//
+//    //xử lý cập nhật thông tin trường học(PUT)
+//    Route::put('/edit/{id}', [SchoolsController::class, 'handleUpdateSchool'])
+//        ->name('schools.update')
+//        ->where('id', '[0-9]+');
+//
+//    //show form thêm mới trường học(GET)
+//    Route::get('/add', [SchoolsController::class, 'showFormAddSchool'])
+//        ->name('schools.add');
+//
+//    //xử lý thêm mới trường học(POST)
+//    Route::post('/add', [SchoolsController::class, 'handleAddSchool'])
+//        ->name('schools.store');
+//
+//    //xóa trường học(DELETE)
+//    Route::delete('/delete/{id}', [SchoolsController::class, 'deleteSchool'])
+//        ->name('schools.delete')
+//        ->where('id', '[0-9]+');
 });
 
 
@@ -125,7 +125,6 @@ Route::get('studioPage', [StudioController::class, 'index'])
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 
 // Test screen video
-Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
@@ -170,6 +169,11 @@ Route::post('users/add', [UsersController::class, 'addUser'])
 //hiện chi tiết video của user
 Route::get('videos/{video_id}', [VideoController::class, 'videoDetail'])
     ->name('video.detail')
+    ->where('id', '[0-9]+');
+
+//xem video
+Route::get('playVideo/{video_id}', [VideoController::class, 'playVideo'])
+    ->name('clients.playVideo')
     ->where('id', '[0-9]+');
 
 //update ảnh đại diện
@@ -262,6 +266,10 @@ Route::get('users/dashboard', [UsersController::class, 'showUserDashboard'])
 
 //logout
 Route::get('auth/logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+
+//check login không thông qua middleware
+Route::post('check-login', [UsersController::class, 'checkLogin'])->name('check-login');
 
 //
 //Route::get('/category/{category}', [HomeController::class, 'getCategory'])->name('category');

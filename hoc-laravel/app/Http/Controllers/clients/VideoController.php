@@ -16,7 +16,7 @@ class VideoController extends Controller{
 
     public function videoDetail($id){
 
-        $video = Cache::remember('video_' . $id, 60, function () use ($id) {
+        $video = Cache::remember('video_' . $id, 0, function () use ($id) {
             return Video::find($id);
         });
 
@@ -30,7 +30,16 @@ class VideoController extends Controller{
 
     }
 
-    public function playVideo(){
-        return view('video.play-video');
+    public function playVideo($id){
+
+        $video = Cache::remember('video_' . $id, 0, function () use ($id) {
+            return Video::find($id);
+        });
+
+        $id = session('loggedInUser');
+
+        $playlists = Playlist::getPlaylistByUserId($id);
+
+        return view('video.play-video', ['video' => $video, 'playlists' => $playlists]);
     }
 }
