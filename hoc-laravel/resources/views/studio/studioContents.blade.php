@@ -17,9 +17,8 @@
 
 <script>
     $(document).ready(function() {
-
         $.ajax({
-            url: '/studioPage/contents/videos/1',
+            url: '{{ route('studio.contents.videos', [1 => ':pageNumber']) }}'.replace(':pageNumber', 1),
             type: 'GET',
             dataType: 'html',
             success: function(data) {
@@ -31,7 +30,6 @@
         });
 
         $('.content__option--item').on('click', function(event) {
-            event.preventDefault();
             $('.content__option--item').removeClass('selected');
             $(this).addClass('selected');
             var url = $(this).data('url');
@@ -46,6 +44,8 @@
                     console.error('Error fetching content:', error);
                 }
             });
+
+            event.preventDefault();
         });
     });
 </script>

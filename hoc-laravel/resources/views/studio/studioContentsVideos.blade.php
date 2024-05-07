@@ -30,11 +30,11 @@
     @foreach ($videos as $video)
         <li class="content__body--item">
             <div class="item__optionbox">
-                <button class="item__optionbox--btn" id="edit--btn" video_id='{{ $video->video_id }}'>
-                    <i class="fa-solid fa-pen-to-square" id="delete--btn"></i>
+                <button class="item__optionbox--btn edit--btn" video_id='{{ $video->video_id }}'>
+                    <i class="fa-solid fa-pen-to-square"></i>
                 </button>
 
-                <button class="item__optionbox--btn" video_id='{{ $video->video_id }}'>
+                <button class="item__optionbox--btn delete--btn" video_id='{{ $video->video_id }}'>
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -50,6 +50,8 @@
                     <div class="item__description">{{ $video->description }}</div>
                 </div>
             </div>
+
+            
 
             <div class="item__display">
                 @if ($video->display_mode == 0)
@@ -80,20 +82,37 @@
 
 
 <script>
-    $(document).ready(function() {
-        $('#edit--btn').on('click', function(event) {
+    $('.content__body--list').ready(function() {
+        $('.edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
                 url: `/studioPage/videoDetails/${video_id}`,
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
-                    $('#modal').html(data);
+                    $('#modal').html(data)
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);
                 }
             });
+            event.preventDefault();
+        });
+
+        $('.delete--btn').on('click', function(event) {
+            var video_id = $(this).attr('video_id')
+            $.ajax({
+                url: `/studioPage/videoDetails/${video_id}`,
+                type: 'GET',
+                dataType: 'html',
+                success: function(data) {
+                    $('#modal').html(data)
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching content:', error);
+                }
+            });
+            event.preventDefault();
         });
     });
 </script>

@@ -61,6 +61,11 @@ class Users extends Model
         return $this->where('user_id', $id)->delete();
     }
 
+    // Đếm ngày user
+    public static function countUser($year){
+        return self::whereYear('created_Date', $year)->count();
+    }
+
     public function videos(): HasMany{
 
         return $this->hasMany(Video::class, 'user_id');
@@ -71,8 +76,8 @@ class Users extends Model
         return $this->hasMany(Comment::class, 'user_id');
     }
 
-    public static function lastInsertId(){
-        return self::query()->latest('user_id')->first();
-    }
+//     public static function lastInsertId(){
+//         return self::query()->latest('user_id')->first();
+//     }
 
 }

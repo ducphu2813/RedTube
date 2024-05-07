@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\PremiumPackage;
 use App\Models\PremiumRegistration;
 use App\Models\ShareNoti;
 use App\Models\Users;
@@ -98,5 +99,14 @@ class PremiumController extends Controller
         unset($data['_token']);
 
 
+    }
+
+    public function getAllRegistrations(){
+
+        return view('premium.premiumWrapper', 
+    [
+        'listRegistrations' => PremiumRegistration::getAllNoCondition(),
+        'listPackages' => PremiumPackage::getAllPackages(),
+    ]);
     }
 }
