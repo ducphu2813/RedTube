@@ -12,7 +12,7 @@
                     <div class="form-left">
                         <div class="form-group">
                             <label for="video">Đăng tải video</label>
-                            <input type="file" id="video" name="video" accept="video/*" value="{{ $video->video_path }}" >
+                            <input type="file" id="video" name="video" accept="video/*" value="{{ $video->video_path }}" readonly>
                         </div>
 
                         <div class="form-group">
@@ -29,20 +29,12 @@
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
-                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*" value="{{ $video->thumbnail_path }}">
             
                             <div class="review__thumbnail">
                                 <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
                             </div>
                         </div>
-            
-                        {{-- <div class="form-group">
-                            <label for="playlist">Danh sách phát</label>
-                            <select id="playlist" name="playlist">
-                                <option value="A">Playlist A</option>
-                                <option value="B">Playlist B</option>
-                            </select>
-                        </div> --}}
 
                         <div class="form-group">
                             <label for="categogy">Thể loại</label>
@@ -146,11 +138,12 @@
         
         $('#modal__videoDetails').ready(function() {
             $('#close--btn-{{ $video->video_id }}').on('click', function(event) {
-                event.preventDefault();
                 $('#modal').empty();
+                event.preventDefault();
             });
     
             $('#save--btn').on('click', function(event) {
+                
                 event.preventDefault();
             });
         });

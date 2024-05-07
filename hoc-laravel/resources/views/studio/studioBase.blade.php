@@ -202,6 +202,8 @@
                         }
                     });
                 } else if (index == 1) {
+
+                } else if (index == 2) {
                     $.ajax({
                         url: '{{ route('studio.profile') }}',
                         type: 'GET',
@@ -210,8 +212,6 @@
                             $('#content').html(data);
                         }
                     });
-                } else if (index == 2) {
-
                 } else if (index == 3) {
                     $.ajax({
                         url: '{{ route('membership.membershipManager') }}',
