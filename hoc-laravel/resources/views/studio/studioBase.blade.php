@@ -53,7 +53,7 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -86,7 +86,7 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -114,7 +114,7 @@
                     Gói thành viên
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item" data-url="{{ route('studio.premium') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
@@ -131,12 +131,16 @@
     </div>
 @endsection
 
+@section('content')
+@endsection
+
 @section('scripts')
+
     <script>
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
 
@@ -181,20 +185,33 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
-            $('.list-item').on('click', function() {
+            $('.list-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
+                    $.ajax({
+                        url: '{{ route('studio.contents') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                 } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
+                    $.ajax({
+                        url: '{{ route('studio.profile') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                 } else if (index == 2) {
-                    console.log('Thông tin kênh');
-                    event.preventDefault();
+
                 } else if (index == 3) {
                     $.ajax({
                         url: '{{ route('membership.membershipManager') }}',
@@ -204,7 +221,6 @@
                             $('#content').html(data);
                         }
                     });
-                    event.preventDefault();
                 } else {
                     $.ajax({
                         url: '{{ route('premium.premiumManager') }}',
@@ -214,8 +230,11 @@
                             $('#content').html(data);
                         }
                     });
-                    event.preventDefault();
+
                 }
+
+                $('#content').empty()
+                event.preventDefault();
             });
         });
     </script>

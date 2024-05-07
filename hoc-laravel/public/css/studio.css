@@ -486,3 +486,8 @@ button:hover {
     margin: 16px 16px 32px 0px;
 }
 
+
+#content {
+    background-color: #0f0f0f;
+    color: white;
+}
