@@ -217,7 +217,7 @@ button:hover {
 }
 
 input[type="file"] {
-    display: none;
+    /* display: none; */
 }
 
 .modal__form-upload--btn {

@@ -133,9 +133,15 @@ Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])-
 
 // -------------------- Hết của Dương -------------------- //
 
-Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos');
-Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium');
-Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile');
+// -------------------- Hết của Dương -------------------- //
+
+Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
+Route::get('studioPage/contents/videos/{pageNumber}', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
+Route::get('studioPage/contents/playlists/{pageNumber}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
+Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
+Route::get('studioPage/profile/{id}', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+
+Route::get('studioPage/videoDetails/{video_id}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

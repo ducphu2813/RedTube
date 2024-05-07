@@ -132,43 +132,15 @@
 @endsection
 
 @section('content')
-    <div id="right">
-
-    </div>
-
-    
 @endsection
 
 @section('scripts')
 
     <script>
-        // ajax calls #right
-        $(document).ready(function() {
-            $('.list-item').on('click', function(event) {
-                event.preventDefault();
-                var url = $(this).data('url');
-
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    dataType: 'html',
-                    success: function(data) {
-                        $('#right').html(data);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching content:', error);
-                    }
-                });
-            });
-        });
-    </script>
-
-
-    <script>
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
 
@@ -213,20 +185,33 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
-            $('.list-item').on('click', function() {
+            $('.list-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
+                    $.ajax({
+                        url: '{{ route('studio.contents') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                 } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
+
                 } else if (index == 2) {
-                    console.log('Thông tin kênh');
-                    event.preventDefault();
+                    $.ajax({
+                        url: '{{ route('studio.profile') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                 } else if (index == 3) {
                     $.ajax({
                         url: '{{ route('membership.membershipManager') }}',
@@ -237,7 +222,6 @@
                             $('#content').html(data);
                         }
                     });
-                    event.preventDefault();
                 } else {
                     $.ajax({
                         url: '{{ route('premium.premiumManager') }}',
@@ -247,8 +231,11 @@
                             $('#content').html(data);
                         }
                     });
-                    event.preventDefault();
+
                 }
+
+                $('#content').empty()
+                event.preventDefault();
             });
         });
     </script>
