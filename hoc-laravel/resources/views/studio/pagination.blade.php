@@ -42,4 +42,27 @@
             <i class="fa-solid fa-angles-right"></i>
         </button>
     </div>
+
+    {{-- <div class="pagination">
+        <!-- Render pagination buttons based on total pages -->
+        @for ($i = 1; $i <= $totalPages; $i++)
+            <button class="page-link" onclick="selectPage({{ $i }})" @if($i == $currentPage) disabled @endif>{{ $i }}</button>
+        @endfor
+    </div>
+    
+    <script>
+        function selectPage(pageNumber) {
+            $.ajax({
+                url: '',
+                type: 'GET',
+                dataType: 'html',
+                success: function(data) {
+                    $('#right').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching content:', error);
+                }
+            });
+        }
+    </script> --}}
 </div>

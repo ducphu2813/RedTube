@@ -39,36 +39,36 @@ Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->nam
 //client route, school
 Route::middleware('CheckLogin')->prefix('schools')->group(function(){
 
-//    //lấy ra danh sách trường học(GET)
-//    Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
-//
-//    //lấy ra 1 trường học theo id(GET) áp dụng cho show form cập nhật thông tin trường học(GET)
-//    Route::get('/{id}', [SchoolsController::class, 'getSchool'])
-//        ->name('schools.detail')
-//        ->where('id', '[0-9]+');
-//
-//    //show form cập nhật thông tin trường học(GET)
-//    Route::get('/edit/{id}', [SchoolsController::class, 'showFormUpdateSchool'])
-//        ->name('schools.edit')
-//        ->where('id', '[0-9]+');
-//
-//    //xử lý cập nhật thông tin trường học(PUT)
-//    Route::put('/edit/{id}', [SchoolsController::class, 'handleUpdateSchool'])
-//        ->name('schools.update')
-//        ->where('id', '[0-9]+');
-//
-//    //show form thêm mới trường học(GET)
-//    Route::get('/add', [SchoolsController::class, 'showFormAddSchool'])
-//        ->name('schools.add');
-//
-//    //xử lý thêm mới trường học(POST)
-//    Route::post('/add', [SchoolsController::class, 'handleAddSchool'])
-//        ->name('schools.store');
-//
-//    //xóa trường học(DELETE)
-//    Route::delete('/delete/{id}', [SchoolsController::class, 'deleteSchool'])
-//        ->name('schools.delete')
-//        ->where('id', '[0-9]+');
+    //lấy ra danh sách trường học(GET)
+    Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
+
+    //lấy ra 1 trường học theo id(GET) áp dụng cho show form cập nhật thông tin trường học(GET)
+    Route::get('/{id}', [SchoolsController::class, 'getSchool'])
+        ->name('schools.detail')
+        ->where('id', '[0-9]+');
+
+    //show form cập nhật thông tin trường học(GET)
+    Route::get('/edit/{id}', [SchoolsController::class, 'showFormUpdateSchool'])
+        ->name('schools.edit')
+        ->where('id', '[0-9]+');
+
+    //xử lý cập nhật thông tin trường học(PUT)
+    Route::put('/edit/{id}', [SchoolsController::class, 'handleUpdateSchool'])
+        ->name('schools.update')
+        ->where('id', '[0-9]+');
+
+    //show form thêm mới trường học(GET)
+    Route::get('/add', [SchoolsController::class, 'showFormAddSchool'])
+        ->name('schools.add');
+
+    //xử lý thêm mới trường học(POST)
+    Route::post('/add', [SchoolsController::class, 'handleAddSchool'])
+        ->name('schools.store');
+
+    //xóa trường học(DELETE)
+    Route::delete('/delete/{id}', [SchoolsController::class, 'deleteSchool'])
+        ->name('schools.delete')
+        ->where('id', '[0-9]+');
 });
 
 

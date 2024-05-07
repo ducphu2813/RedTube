@@ -11,6 +11,7 @@ button:hover {
 .content__option {
     display: flex;
     flex-direction: row;
+    list-style: none;
 }
 
 .content__option--item {
@@ -116,7 +117,8 @@ button:hover {
 .item__display {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: start;
+    align-items: center;
     width: 10%;
 }
 
@@ -126,9 +128,10 @@ button:hover {
 
 .item__createdate {
     font-weight: bold;
-    width: 10%;
+    width: 14%;
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .item__view {
@@ -138,13 +141,13 @@ button:hover {
 }
 
 .item__comment {
-    width: 10%;
+    width: 8%;
     display: flex;
     justify-content: center;
 }
 
 .item__like {
-    width: 10%;
+    width: 8%;
     display: flex;
     justify-content: center;
 }
@@ -163,6 +166,7 @@ button:hover {
     bottom: 0px;
     z-index: 100;
     color: white;
+    display: none;
 }
 
 .modal__overlay {
