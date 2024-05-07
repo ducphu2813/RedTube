@@ -1,5 +1,10 @@
 /* -----Playvideo------  */
 
+.container.play-container {
+    position: relative;
+    top: 40px;
+}
+
 .play-container {
     padding-left: 2%;
 }
