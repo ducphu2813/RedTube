@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -12,7 +13,12 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 class StudioController extends Controller
 {
     public function index(){
-        return view('studio.studioBase');
+
+        $data = [
+            'user' => Users::getUserById(session('loggedInUser')),
+        ];
+
+        return view('studio.studioBase', $data);
     }
 
     public function contents() {
@@ -47,8 +53,13 @@ class StudioController extends Controller
         return view('studio.studioPremium');
     }
 
-    public function profile() {
-        return view('studio.studioProfile');
+    public function profile(Request $request) {
+
+        $data = [
+            'user' => Users::getUserById(session('loggedInUser')),
+        ];
+
+        return view('studio.studioProfile', $data);
     }
 
     public function channel() {

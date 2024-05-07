@@ -139,7 +139,7 @@ Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('
 Route::get('studioPage/contents/videos/{pageNumber}', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
 Route::get('studioPage/contents/playlists/{pageNumber}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
-Route::get('studioPage/profile/{id}', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
 Route::get('studioPage/videoDetails/{video_id}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails');
 

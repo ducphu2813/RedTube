@@ -90,11 +90,6 @@ class Users extends Model
     }
 
 
-    // Đếm ngày user
-    public static function countUser($year){
-        return self::whereYear('created_Date', $year)->count();
-    }
-
     //Đếm số người follower của user
     public function followersCount()
     {
