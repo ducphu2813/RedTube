@@ -83,7 +83,6 @@ Route::prefix('admin')->group(function (){
     Route::get('adminLayout', [AdminController::class, 'showAll'])->name('admin.all');
     // Show video
     Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
-    Route::post('changeStatusVideo', [AdminController::class, 'changeStatusVideo'])->name('admin.changeStatusVideo');
     // Show user
     Route::get('userManager', [AdminController::class, 'showUserList'])->name('admin.userManager');
     // Show test
@@ -92,25 +91,15 @@ Route::prefix('admin')->group(function (){
     Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
     // Show chart
     Route::get('chartManager', [AdminController::class, 'showChartList'])->name('admin.chartManager');
-    // Change role user
-    Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
-    // Change status user
-    Route::post('changeStatusUser', [AdminController::class, 'changeStatusUser'])->name('admin.changeStatusUser');
     // --------------------Hết phần của Dương --------------------//
 });
 
-// --------------------Cái này của Dương -------------------- //
-// Membership
-Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
-Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
-Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
-// end Membership
-
-Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+// Cái này của Dương nhưng là Home Page + Studio
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
-// -------------------- Hết của Dương -------------------- //
+// Hết của Dương
 
 Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium');
@@ -174,8 +163,6 @@ Route::post('comments/save', [CommentController::class, 'saveRootComment'])
 Route::post('comments/reply/save', [CommentController::class, 'saveReplyComment'])
     ->name('comments.reply.save');
 
-
-
 //test playlist
 Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
     ->name('user.playlist');
@@ -183,33 +170,6 @@ Route::get('users/playlist', [UsersController::class, 'showPlaylist'])
 //update video playlist
 Route::post('playlist/update', [PlaylistController::class, 'updateVideoPlaylist'])
     ->name('playlist.update');
-
-
-
-//test share premium
-Route::get('premium/share', [PremiumController::class, 'sharePage'])
-    ->name('premium.share')
-    ->middleware('CheckLogin');
-
-//tìm user để share
-Route::get('premium/find-user', [PremiumController::class, 'findUser'])
-    ->name('premium.search-user')
-    ->middleware('CheckLogin');
-
-//xử lý send yêu cầu share premium
-Route::post('premium/handle-send', [PremiumController::class, 'handleSend'])
-    ->name('premium.handle-send')
-    ->middleware('CheckLogin');
-
-//hiện các thông báo share
-Route::get('premium/noti', [ShareNotiController::class, 'notiPage'])
-    ->name('premium.noti')
-    ->middleware('CheckLogin');
-
-//lấy thông báo share
-Route::get('premium/get-noti', [ShareNotiController::class, 'getNoti'])
-    ->name('premium.get-noti')
-    ->middleware('CheckLogin');
 
 
 

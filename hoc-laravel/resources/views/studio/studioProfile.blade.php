@@ -7,7 +7,7 @@
     <div class="content__body-info">
         <div class="section_1 w-30">
             <div class="img__wrap">
-                <img src="../assets/img/ocean.jpg" alt="XXX">
+                <img src="{{ asset('resources/img/ocean.jpg') }}" alt="XXX">
             </div>
 
             <input type="file" id="imageInput" accept="image/*">

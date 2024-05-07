@@ -9,8 +9,8 @@
         <!-- header -->
         <li class="content__body--item list--header" style="font-weight: 700;">
             <div class="item__col w-10">id</div>
-            <div class="item__col w-15">Email</div>
-            <div class="item__col w-15">Plan</div>
+            <div class="item__col w-20">Email</div>
+            <div class="item__col w-10">Plan</div>
             <div class="item__col w-20">Subscribed date</div>
             <div class="item__col w-20">Expired date</div>
             <div class="item__col w-20">Details</div>
@@ -19,21 +19,8 @@
         <!-- items -->
         <li class="content__body--item">
             <div class="item__col w-10">1</div>
-            <div class="item__col w-15">minewaku.minewaku.minewaku.minewaku.minewaku@gmail.com</div>
-            <div class="item__col w-15">Family</div>
-            <div class="item__col w-20">1/1/2023</div>
-            <div class="item__col w-20">1/2/2023</div>
-            <div class="item__col w-20">
-                <button id="details--btn" style="border: none;">
-                    <i class="fa-solid fa-circle-info"></i>
-                </button>
-            </div>
-        </li>
-
-        <li class="content__body--item">
-            <div class="item__col w-10">1</div>
-            <div class="item__col w-15">minewaku@gmail.com</div>
-            <div class="item__col w-15">Family</div>
+            <div class="item__col w-20">minewaku.minewaku.minewaku.minewaku.minewaku@gmail.com</div>
+            <div class="item__col w-10">Family</div>
             <div class="item__col w-20">1/1/2023</div>
             <div class="item__col w-20">1/2/2023</div>
             <div class="item__col w-20">
