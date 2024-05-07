@@ -65,10 +65,9 @@ class CommentController extends Controller{
                 'reply_id' => $data['reply_id']
             ];
 
-//            Comment::saveComment($comment);
+            Comment::saveComment($comment);
 
-//            $data['comment_id'] = Comment::lastInsertId()['comment_id'];
-            $data['comment_id'] = 100;
+            $data['comment_id'] = Comment::lastInsertId();
             $data['status'] = 'success';
 
             return response()->json($data);
@@ -109,7 +108,7 @@ class CommentController extends Controller{
                 'reply_id' => $data['reply_id']
             ];
 
-//            Comment::saveComment($comment);
+            Comment::saveComment($comment);
 
             return response()->json($data);
         }

@@ -8,7 +8,7 @@
         <h4>Lưu video vào</h4>
 
         @if( !session('loggedInUser'))
-            Bạn cần <a href="#">đăng nhập</a> để thêm video vào danh sách phát
+            Bạn cần <a href="{{ route('login-register') }}">đăng nhập</a> để thêm video vào danh sách phát
         @elseif( $playlists->count() == 0 )
             Chưa có danh sách phát nào
             <div id="new-playlist">

@@ -38,32 +38,34 @@
     <script>
         $(document).ready(function() {
 
-            //xử lý kiểm tra đăng nhập khi bấm vào thanh reply
-            $('.reply-tf').on('click', function() {
+            {{--//xử lý kiểm tra đăng nhập khi bấm vào thanh reply--}}
+            {{--$('.reply-tf').on('click', function() {--}}
 
-                $.ajax({
-                    url: '{{ route('check-login') }}', // check login
-                    type: 'POST',
-                    data: {
-                        _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật
-                    },
-                    success: function(response) {
-                        // Xử lý khi request thành công
-                        console.log(response);
-                        if(response.status === 'not_logged_in'){
-                            localStorage.setItem('redirect_after_login', window.location.href);
-                            window.location.href = '{{ route('login-register') }}';
-                        }
-                    },
-                    error: function(error) {
-                        // Xử lý khi có lỗi xảy ra
-                        console.log(error);
-                    }
-                });
-            });
+            {{--    $.ajax({--}}
+            {{--        url: '{{ route('check-login') }}', // check login--}}
+            {{--        type: 'POST',--}}
+            {{--        data: {--}}
+            {{--            _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật--}}
+            {{--        },--}}
+            {{--        success: function(response) {--}}
+            {{--            // Xử lý khi request thành công--}}
+            {{--            console.log(response);--}}
+            {{--            if(response.status === 'not_logged_in'){--}}
+            {{--                localStorage.setItem('redirect_after_login', window.location.href);--}}
+            {{--                window.location.href = '{{ route('login-register') }}';--}}
+            {{--            }--}}
+            {{--        },--}}
+            {{--        error: function(error) {--}}
+            {{--            // Xử lý khi có lỗi xảy ra--}}
+            {{--            console.log(error);--}}
+            {{--        }--}}
+            {{--    });--}}
+            {{--});--}}
 
             //xử lý reply
             $('#reply-btn-{{ $comment->comment_id }}').on('click', function() {
+
+            // $('.reply-btn').on('click', function() {
 
                 // lấy giá trị input gần nhất
 
@@ -108,6 +110,7 @@
                             `;
                             //lấy element có id là reply-section-id-của-comment-cha và append reply vào
                             $('#reply-section-{{ $comment->comment_id }}').append(reply);
+                            $(this).siblings('.reply-tf').val('');
                         }
                     },
                     error: function(error) {

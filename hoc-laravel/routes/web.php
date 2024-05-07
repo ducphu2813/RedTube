@@ -4,8 +4,10 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
+use App\Http\Controllers\clients\FollowController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
+use App\Http\Controllers\clients\InteractionController;
 use App\Http\Controllers\clients\MemberShipController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
@@ -270,6 +272,22 @@ Route::get('auth/logout', [LoginController::class, 'logout'])->name('auth.logout
 
 //check login không thông qua middleware
 Route::post('check-login', [UsersController::class, 'checkLogin'])->name('check-login');
+
+
+//làm phần follow
+
+//xử lý khi bấm subscribe
+Route::post('follow', [FollowController::class, 'handleFollow'])
+    ->name('follow.handle');
+
+
+//làm phần like
+
+//xử lý khi bấm like/dislike
+Route::post('like', [InteractionController::class, 'handleLike'])
+    ->name('like.handle');
+
+
 
 //
 //Route::get('/category/{category}', [HomeController::class, 'getCategory'])->name('category');

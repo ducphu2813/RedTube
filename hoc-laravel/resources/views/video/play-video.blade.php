@@ -38,17 +38,29 @@
                         <img src="OIP.jpg" alt="">
                         <div id="channel-title">
                             <span id="channel-name" class="play-video">{{ $video->user->channel_name }}</span>
-                            <span id="channel-subcride" class="play-video">500K Subscribers</span>
+                            <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }} Subscribers</span>
                         </div>
                     </div>
-                    <button type="button">Đăng ký</button>
+                    @if(!session('loggedInUser'))
+                        <button type="button" id="sub-btn">Đăng ký</button>
+
+                    @elseif(session('loggedInUser') == $video->user->user_id)
+                        {{--nếu là chính mình thì không hiện nút đăng ký--}}
+
+                    @elseif(session('loggedInUser') && $video->user->isFollowed(session('loggedInUser')))
+                        <button type="button" id="sub-btn">Đã Đăng ký</button>
+
+                    @elseif(session('loggedInUser') && !$video->user->isFollowed(session('loggedInUser')))
+                        <button type="button" id="sub-btn">Đăng ký</button>
+
+                    @endif
                     <div class="icon">
-                        <div class="change-status">
+                        <div class="change-status interact" id="like">
                             <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
                             </i>
                         </div>
                         <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        <div class="change-status">
+                        <div class="change-status interact" id="dislike">
                             <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
                             </i>
                         </div>
@@ -65,7 +77,7 @@
                         <span>
                         </span>
                     <div id="outer">
-                        <span id="status-video">31 Tr lượt xem 3 tháng trước</span>
+                        <span id="status-video"></span>
                         <p class="less">
                             {{ $video->description }}
                         </p>
@@ -117,7 +129,7 @@
         //     this.classList.toggle("clicked");
         // });
         // var lastClicked = null;
-
+        //
         // function buttonClickHandler() {
         //   if (lastClicked === this) {
         //     // Nếu nút đã được nhấn lần trước là nút này, thì xóa lớp "clicked"
@@ -145,6 +157,209 @@
         // dislikeButtons.forEach(function(button) {
         //   button.addEventListener('click', buttonClickHandler);
         // });
+
+
+        $(document).ready(function() {
+
+            //thêm sự kiện ajax khi bấm vào thanh input reply
+            $('.reply-tf').one('click', function(event) {
+                var currentInput = $(event.target);
+                $.ajax({
+                    url: '{{ route('check-login') }}', // check login
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật
+                    },
+                    success: function(response) {
+                        // Xử lý khi request thành công
+                        console.log(response);
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        requestSent = true;
+                    },
+                    error: function(error) {
+                        // Xử lý khi có lỗi xảy ra
+                        console.log(error);
+                        requestSent = true;
+                    }
+                });
+            });
+
+
+            //sự kiện cho nút subscribe
+            $('#sub-btn').on('click', function() {
+
+                let follower_id = '{{ session('loggedInUser') ? session('loggedInUser') : null }}';
+                let user_id = '{{ $video->user->user_id }}';
+                $.ajax({
+                    url: '{{ route('follow.handle') }}',
+                    type: 'POST',
+                    data: {
+                        user_id: user_id,
+                        follower_id: follower_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        else{
+                            if(response.status === 'followed'){
+                                $('#sub-btn').text('Đã Đăng ký');
+                            }
+                            else if(response.status === 'unfollow'){
+                                $('#sub-btn').text('Đăng ký');
+                            }
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            //like và dislike
+            $('.interact').on('click', function() {
+                var react = this.id;
+                console.log(react);
+                let video_id = '{{ $video->video_id }}';
+                let user_id = '{{ session('loggedInUser') ? session('loggedInUser') : null }}';
+                $.ajax({
+                    url: '{{ route('like.handle') }}',
+                    type: 'POST',
+                    data: {
+                        video_id: video_id,
+                        user_id: user_id,
+                        react: react,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        else if(response.status === 'liked'){
+                            //khi like
+                        }
+                        else if(response.status === 'disliked'){
+                            //khi dislike
+                        }
+                        else if(response.status === 'unset_react'){
+                            //khi hủy like/dislike
+                        }
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
+            });
+        });
+
+        //xử lý reply
+        {{--$('.reply-btn').on('click', function() {--}}
+
+        {{--    // lấy giá trị input gần nhất--}}
+        {{--    let content = $(this).siblings('.reply-tf').val();--}}
+        {{--    let comment_id = '{{ $comment->comment_id }}';--}}
+        {{--    let video_id = '{{ $video->video_id }}';--}}
+        {{--    let url = '{{ route('comments.reply.save') }}';--}}
+        {{--    let _token = '{{ csrf_token() }}';--}}
+
+        {{--    $.ajax({--}}
+        {{--        url: url,--}}
+        {{--        type: 'POST',--}}
+        {{--        data: {--}}
+        {{--            content: content,--}}
+        {{--            reply_id: comment_id,--}}
+        {{--            video_id: video_id,--}}
+        {{--            _token: _token--}}
+        {{--        },--}}
+        {{--        success: function(response) {--}}
+        {{--            console.log(response);--}}
+        {{--            if(response.status === 'not_logged_in'){--}}
+        {{--                localStorage.setItem('redirect_after_login', window.location.href);--}}
+        {{--                window.location.href = '{{ route('login-register') }}';--}}
+        {{--            }--}}
+        {{--            else{--}}
+        {{--                //trong này, lấy ra 1 element có class là show-comment nằm ngay dưới nó, append thêm 1 reply-item vào--}}
+        {{--                let reply = `--}}
+        {{--                        <div id="user-comment-reply">--}}
+        {{--                            <div>--}}
+        {{--                                <a id="user-comment-info" href="">--}}
+        {{--                                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"--}}
+        {{--                                        alt="">--}}
+        {{--                                </a>--}}
+        {{--                            </div>--}}
+        {{--                            <div id="channel-name-comment">--}}
+        {{--                                <a href=""><span>${response.user_name} - ${response.created_date}</span></a>--}}
+        {{--                                <span>--}}
+        {{--                                    ${response.content}--}}
+        {{--                                </span>--}}
+        {{--                            </div>--}}
+        {{--                        </div>--}}
+        {{--                    `;--}}
+        {{--                //lấy element có id là reply-section-id-của-comment-cha và append reply vào--}}
+        {{--                $('#reply-section-{{ $comment->comment_id }}').append(reply);--}}
+        {{--            }--}}
+        {{--        },--}}
+        {{--        error: function(error) {--}}
+        {{--            console.log(error);--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
+
+        //định dạng view
+        function formatViews(views) {
+
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
+        }
+
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffMonths = Math.ceil(diffDays / 30);
+
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 30) {
+                return diffDays + ' ngày trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
+        }
+
+        // Sử dụng các hàm này để định dạng lượt xem và thời gian tạo video
+        let views = formatViews({{ $video->view }});
+        let time = formatTime('{{ $video->created_date }}');
+
+        // Hiển thị lượt xem và thời gian tạo video
+        document.getElementById('status-video').textContent = views + ' lượt xem - ' + time;
+
     </script>
 </body>
 

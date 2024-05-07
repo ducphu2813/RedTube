@@ -90,4 +90,58 @@ class Users extends Model
         return self::whereYear('created_Date', $year)->count();
     }
 
+    //Đếm số người follower của user
+    public function followersCount()
+    {
+        return $this->hasMany(Follow::class, 'user_id')->count();
+    }
+    //đếm số lượng follow(subcribe) của user
+    //cách dùng: $user = Users::find(1);
+    //$followersCount = $user->followersCount();
+
+    //lấy danh sách các follower
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'user_id')->get();
+    }
+    //lấy danh sách các follower của user
+    //cách dùng: $user = Users::find(1);
+    // $followers = $user->followers();
+    //$followers->isEmpty() để kiểm tra xem user có follower nào không
+
+    //đếm số người mà user đang follow
+    public function followingCount()
+    {
+        return $this->hasMany(Follow::class, 'follower_id')->count();
+    }
+    //đếm số lượng người mà user đang follow
+    //cách dùng: $user = Users::find(1);
+    //$followingCount = $user->followingCount();
+
+    //lấy danh sách các user mà user đó đang follow
+    public function following()
+    {
+        return $this->hasMany(Follow::class, 'follower_id')->get();
+    }
+    //lấy danh sách các người mà user đang follow
+    //cách dùng: $user = Users::find(1);
+    // $following = $user->following();
+    //$following->isEmpty() để kiểm tra xem user có đang follow ai không
+
+    //kiểm tra xem user có follow user khác không
+    public function isFollowing($user_id){
+
+        return $this->hasMany(Follow::class, 'follower_id')->where('user_id', $user_id)->exists();
+
+    }
+    //cách dùng: $user = Users::find(1);
+    // $user->isFollowing(2) để kiểm tra xem user có follow user có id = 2 không
+
+    //kiểm tra xem user có được user khác follow không
+    public function isFollowed($user_id){
+
+        return $this->hasMany(Follow::class, 'user_id')->where('follower_id', $user_id)->exists();
+    }
+    //cách dùng: $user = Users::find(1);
+    // $user->isFollowed(2) để kiểm tra xem user có được user có id = 2 follow không
 }

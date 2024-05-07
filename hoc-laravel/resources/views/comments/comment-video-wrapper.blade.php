@@ -114,10 +114,11 @@
                     }
 
                     if (response.status === 'success') {
+
                         //thêm comment mới vào list comment
                         var newComment = `
 
-                            <div class="body-comment">
+                            <div id="body-comment">
                                 <div>
                                     <a id="user-comment-info" href="">
                                         <img src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"
@@ -125,8 +126,9 @@
                                     </a>
                                 </div>
                                 <div id="channel-name-comment">
+                                    <a href=""><span>${response.user_name} - ${response.created_date}</span></a>
                                     <span>
-                                        test
+                                        ${response.content}
                                     </span>
                                     <div id="handle-comment">
                                         <i id="likes" class="fa-regular fa-thumbs-up"></i>
@@ -140,15 +142,26 @@
                                                 aria-label="Recipient's username with two button addons">
 
                                             <button class="button-cancle" class="btn btn-outline-secondary" type="button">Hủy</button>
-                                            <button class="btn btn-outline-secondary" type="button" id="reply-btn-${response.reply_id}">Phản hồi</button>
+                                            <button class="btn btn-outline-secondary reply-btn" type="button" id="reply-btn-${response.comment_id}">Phản hồi</button>
                                         </div>
                                     </div>
 
 <!--                                    khúc này là bắt đầu reply của root comment-->
+                                    <div id="expanded-reply">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-primary">Phản hồi</button>
+                                        </div>
 
-                                </div>
-                            </div>
-                        `;
+                                        <div class="show-comment" id="reply-section-${response.comment_id}">
+
+                                        </div>
+                                    </div>
+<!--                                    Kết thúc phần reply-->
+
+
+                                  </div>
+                              </div>
+`;
                         $('#comment-section').prepend(newComment);
                         $('#comment-input').val('');
 
@@ -171,53 +184,23 @@
                             });
                         });
 
-                        var requestSent = false;
-                        //thêm sự kiện ajax cho các input reply
-                        $('.reply-tf').one('click', function(event) {
-
-                            if(requestSent){
-                                var currentInput = $(event.target);
-                                $.ajax({
-                                    url: '{{ route('check-login') }}', // check login
-                                    type: 'POST',
-                                    data: {
-                                        _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật
-                                    },
-                                    success: function(response) {
-                                        // Xử lý khi request thành công
-                                        console.log(response);
-                                        if(response.status === 'not_logged_in'){
-                                            localStorage.setItem('redirect_after_login', window.location.href);
-                                            window.location.href = '{{ route('login-register') }}';
-                                        }
-                                        requestSent = true;
-                                    },
-                                    error: function(error) {
-                                        // Xử lý khi có lỗi xảy ra
-                                        console.log(error);
-                                        requestSent = true;
-                                    }
-                                });
-
-                            }
-
-
-                        });
 
                         //thêm sự kiện ajax cho các button reply
-                        {{--$('#reply-btn-'+response.comment_id).on('click', function() {--}}
-                        {{--    var content = $(this).parent().prev().val();--}}
-                        {{--    var comment_id = response.comment_id;--}}
-                        {{--    var video_id = '{{ $video->video_id }}';--}}
-                        {{--    var url = '{{ route('comments.reply.save') }}';--}}
-                        {{--    var _token = '{{ csrf_token() }}';--}}
+                        {{--$('#reply-btn-' + response.reply_id).on('click', function() {--}}
+
+                        {{--    // lấy giá trị input gần nhất--}}
+                        {{--    let content = $(this).siblings('.reply-tf').val();--}}
+                        {{--    let comment_id = response.reply_id;--}}
+                        {{--    let video_id = '{{ $video->video_id }}';--}}
+                        {{--    let url = '{{ route('comments.reply.save') }}';--}}
+                        {{--    let _token = '{{ csrf_token() }}';--}}
 
                         {{--    $.ajax({--}}
                         {{--        url: url,--}}
                         {{--        type: 'POST',--}}
                         {{--        data: {--}}
                         {{--            content: content,--}}
-                        {{--            comment_id: comment_id,--}}
+                        {{--            reply_id: comment_id,--}}
                         {{--            video_id: video_id,--}}
                         {{--            _token: _token--}}
                         {{--        },--}}
@@ -228,15 +211,29 @@
                         {{--                window.location.href = '{{ route('login-register') }}';--}}
                         {{--            }--}}
                         {{--            else{--}}
-                        {{--                // let comment = `--}}
-                        {{--                //     <div>--}}
-                        {{--                //         <p>${response.user_name} - ${response.created_date}</p>--}}
-                        {{--                //         <p>${response.content}</p><br>--}}
-                        {{--                //     </div>--}}
-                        {{--                // `;--}}
-                        {{--                //--}}
-                        {{--                // $(this).parent().parent().prev().append(comment);--}}
+                        {{--                //trong này, lấy ra 1 element có class là show-comment nằm ngay dưới nó, append thêm 1 reply-item vào--}}
+                        {{--                let reply = `--}}
+                        {{--                    <div id="user-comment-reply">--}}
+                        {{--                        <div>--}}
+                        {{--                            <a id="user-comment-info" href="">--}}
+                        {{--                                <img src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"--}}
+                        {{--                                    alt="">--}}
+                        {{--                            </a>--}}
+                        {{--                        </div>--}}
+                        {{--                        <div id="channel-name-comment">--}}
+                        {{--                            <a href=""><span>${response.user_name} - ${response.created_date}</span></a>--}}
+                        {{--                            <span>--}}
+                        {{--                                ${response.content}--}}
+                        {{--                            </span>--}}
+                        {{--                        </div>--}}
+                        {{--                    </div>--}}
+                        {{--                `;--}}
+                        {{--                //lấy element có id là reply-section-id-của-comment-cha và append reply vào--}}
+                        {{--                $('#reply-section-' + response.reply_id).append(reply);--}}
                         {{--            }--}}
+                        {{--        },--}}
+                        {{--        error: function(error) {--}}
+                        {{--            console.log(error);--}}
                         {{--        }--}}
                         {{--    });--}}
                         {{--});--}}

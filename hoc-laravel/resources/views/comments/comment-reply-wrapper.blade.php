@@ -13,8 +13,7 @@
         @endforeach
     </div>
 
+    <script>
+        // Xử lý nút phản hồi
+    </script>
 </div>
-
-<script>
-    // Xử lý nút phản hồi
-</script>
