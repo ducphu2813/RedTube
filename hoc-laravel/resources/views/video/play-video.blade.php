@@ -24,6 +24,49 @@
 </head>
 
 <body>
+
+<script>
+    //định dạng view
+    function formatViews(views) {
+
+        if (views >= 1000000000) {
+            return (views / 1000000000).toFixed(1) + ' Tỷ';
+        } else if (views >= 1000000) {
+            return (views / 1000000).toFixed(1) + ' Tr';
+        } else if (views >= 10000) {
+            return (views / 1000).toFixed(1) + ' N';
+        } else {
+            return views.toString();
+        }
+    }
+
+    //định dạng thời gian
+    function formatTime(time) {
+        const now = new Date();
+        const videoTime = new Date(time);
+        const diffTime = Math.abs(now - videoTime);
+        const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffWeeks = Math.ceil(diffDays / 7);
+        const diffMonths = Math.ceil(diffDays / 30);
+
+        if (diffMinutes < 60) {
+            return diffMinutes + ' phút trước';
+        } else if (diffHours < 24) {
+            return diffHours + ' tiếng trước';
+        } else if (diffDays <= 13) {
+            return diffDays + ' ngày trước';
+        } else if (diffWeeks <= 4) {
+            return diffWeeks + ' tuần trước';
+        } else if (diffDays <= 365) {
+            return diffMonths + ' tháng trước';
+        } else {
+            return videoTime.toLocaleDateString();
+        }
+    }
+</script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon"
@@ -72,8 +115,16 @@
             </button>
         </div>
 
+        {{--phần icon nhỏ phía trên bên phải--}}
         <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
+        {{--<img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32">--}}
+
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
         </div>
     </div>
 
@@ -89,7 +140,13 @@
                 <h3 id="title-video">{{ $video->title }}</h3>
                 <div class="play-video-infor">
                     <div class="publisher">
-                        <img src="OIP.jpg" alt="">
+                        {{--avatar của chủ kênh--}}
+                        @if($video->user->picture_url)
+                            <img src="{{ asset('storage/img/' . $video->user->picture_url) }}" alt="" width="40" height="40">
+                        @else
+                            <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="40" height="40">
+
+                        @endif
                         <div id="channel-title">
                             <span id="channel-name" class="play-video">{{ $video->user->channel_name }}</span>
                             <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }} Subscribers</span>
@@ -139,8 +196,8 @@
                     </p>
                     <button id="btn-expand">Xem thêm</button>
                 </div>
-{{--                Phần này là phần comment--}}
-                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments, 'video' => $video])
+                {{--Phần này là phần comment--}}
+                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments, 'video' => $video, 'currentUserProfile' => $currentUserProfile])
                 @endcomponent
             </div>
 
@@ -368,43 +425,6 @@
         {{--        }--}}
         {{--    });--}}
         {{--});--}}
-
-        //định dạng view
-        function formatViews(views) {
-
-            if (views >= 1000000000) {
-                return (views / 1000000000).toFixed(1) + ' Tỷ';
-            } else if (views >= 1000000) {
-                return (views / 1000000).toFixed(1) + ' Tr';
-            } else if (views >= 10000) {
-                return (views / 1000).toFixed(1) + ' N';
-            } else {
-                return views.toString();
-            }
-        }
-
-        //định dạng thời gian
-        function formatTime(time) {
-            const now = new Date();
-            const videoTime = new Date(time);
-            const diffTime = Math.abs(now - videoTime);
-            const diffMinutes = Math.floor(diffTime / (1000 * 60));
-            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            const diffMonths = Math.ceil(diffDays / 30);
-
-            if (diffMinutes < 60) {
-                return diffMinutes + ' phút trước';
-            } else if (diffHours < 24) {
-                return diffHours + ' tiếng trước';
-            } else if (diffDays <= 30) {
-                return diffDays + ' ngày trước';
-            } else if (diffDays <= 365) {
-                return diffMonths + ' tháng trước';
-            } else {
-                return videoTime.toLocaleDateString();
-            }
-        }
 
         // Sử dụng các hàm này để định dạng lượt xem và thời gian tạo video
         let views = formatViews({{ $video->view }});

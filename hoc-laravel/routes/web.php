@@ -142,6 +142,7 @@ Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('st
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
 Route::get('studioPage/videoDetails/{video_id}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails');
+Route::post('studioPage/profileEdit', [StudioController::class, 'profileEdit'])->name('studio.profileEdit');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');

@@ -38,9 +38,9 @@
 
         <div class="acc-box ">
             @if($user->picture_url)
-                <img src="{{ asset('storage/img/' . $user->picture_url) }}" alt="XXX" height="32" width="32">
+                <img id="avatar-right-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" alt="XXX" height="32" width="32">
             @else
-                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="XXX" height="32" width="32">
+                <img id="avatar-right-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="XXX" height="32" width="32">
             @endif
         </div>
     </div>
@@ -52,9 +52,9 @@
         <div class="account-box">
             <div class="account-box-avatar">
                 @if($user->picture_url)
-                    <img src="{{ asset('storage/img/' . $user->picture_url) }}" height="112" width="112" alt="XXX">
+                    <img id="avatar-left-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" height="112" width="112" alt="XXX">
                 @else
-                    <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" height="112" width="112" alt="XXX">
+                    <img id="avatar-left-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" height="112" width="112" alt="XXX">
                 @endif
             </div>
             <div class="account-box-name">{{ $user->channel_name }}</div>

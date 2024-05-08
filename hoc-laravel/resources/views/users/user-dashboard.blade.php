@@ -209,11 +209,14 @@
            $('#picture_update_btn').change(function (e){
                const file = e.target.files[0];
                let url = window.URL.createObjectURL(file);
-               $('#user_img').attr('src', url);
+               let abc = $('#user_img').attr('src', url);
                let formData = new FormData();
                formData.append('picture_url', file);
                formData.append('user_id', $('#user_id').val());
                formData.append('_token', '{{ csrf_token() }}');
+               console.log(file);
+               console.log(url);
+               console.log(abc);
 
                $.ajax({
                    url: '{{ route('users.update-picture') }}',
@@ -226,9 +229,10 @@
 
                    success:function (response){
                        console.log(response);
+                   },
+                   error: function (error){
+                       console.log(error);
                    }
-
-
                 });
            });
         });

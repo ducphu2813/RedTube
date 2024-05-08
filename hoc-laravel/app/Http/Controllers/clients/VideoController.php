@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Support\Facades\Cache;
 
@@ -39,7 +40,9 @@ class VideoController extends Controller{
 
         $playlists = Playlist::getPlaylistByUserId($id);
 
-        return view('video.play-video', ['video' => $video, 'playlists' => $playlists]);
+        $currentUserProfile = Users::getUserById($id);
+
+        return view('video.play-video', ['video' => $video, 'playlists' => $playlists, 'currentUserProfile' => $currentUserProfile]);
     }
 
 }

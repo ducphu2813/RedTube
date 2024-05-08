@@ -9,8 +9,20 @@
                 <div id="header-comment">
                     <div>
                         <a id="user-comment-info" href="">
-                            <img src="https://yt3.ggpht.com/yti/ANjgQV-Ho8lAt34jsHEkE6q-KoYttjZutllNyE_xoOQmCoo=s88-c-k-c0x00ffffff-no-rj"
-                                alt="">
+                            {{--này là cái chỗ icon của mình--}}
+                            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" height="50"
+                                     width="50">
+                            @else
+                                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" height="50"
+                                     width="50">
+
+                            @endif
+{{--                            <img src="https://yt3.ggpht.com/yti/ANjgQV-Ho8lAt34jsHEkE6q-KoYttjZutllNyE_xoOQmCoo=s88-c-k-c0x00ffffff-no-rj"--}}
+{{--                                 alt=""--}}
+{{--                                 height="50"--}}
+{{--                                 width="50"--}}
+{{--                            >--}}
                         </a>
                     </div>
 
