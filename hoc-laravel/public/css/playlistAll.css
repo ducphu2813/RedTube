@@ -1,0 +1,60 @@
+.all-playlist-container{
+    display: flex;
+    padding: 10px;
+    flex-wrap: wrap;
+}
+
+.all-playlist-item{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+.all-playlist-img img{
+    width: 295px;
+    height: 160px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.all-playlist-img::after {
+    display: none;
+    content: "Phát tất cả";
+    width: 295px;
+    height: 160px;
+    background-color: rgba(0, 0, 0, .5);
+    position: absolute;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 160px;
+    cursor: pointer;
+    margin-top: -160px;
+    color: #fff;
+}
+
+.all-playlist-img:hover::after {
+    display: block;
+}
+
+.all-playlist-info{
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 10px;
+    align-items: center;
+}
+
+.all-playlist-name{
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.all-playlist-btn{
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}

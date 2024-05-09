@@ -145,7 +145,12 @@ input.search-bar {
     font-size: 18px;
 }
 
-.list-icon {
+.list-icon img {
+    border-radius: 12px;
+}
+
+.list-icon img,
+.list-icon{
     width: 24px;
     height: 24px;
     display: inline-block;
