@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
+use App\Http\Controllers\clients\History;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
 use App\Http\Controllers\clients\MemberShipController;
@@ -108,6 +109,24 @@ Route::get('homePage', [HomePageController::class, 'index'])->name('clients.home
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
+
+// Hiển thị danh sách xem sau
+Route::get('showWatchLater', [PlaylistController::class, 'showWatchLater'])->name('clients.watchLater');
+
+// Hiển thị tất cả danh sách phát ở trang chủ
+Route::get('showAllPlaylist', [PlaylistController::class, 'showAllPlaylist'])->name('clients.playlistAll');
+
+// Hiển thị danh sách lịch sử xem
+Route::get('showHistory', [History::class, 'showHistory'])->name('clients.videoHistory');
+
+// Hiển thị danh sách video tìm kiếm
+Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('clients.searchVideo');
+
+// Hiển thị lại trang video
+Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('clients.videoReload');
+
+// Modal premium
+Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
 
 // Test screen video
 Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');

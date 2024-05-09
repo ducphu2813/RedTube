@@ -13,12 +13,44 @@
         </div>
 
         <div class="pre-share-quantity">
-            <h5>Số lượng người được share</h5>
+            <h5>Thông tin chi tiết</h5>
         </div>
     </div>
 
-    @foreach($listShares as $share)
-        @component('premium.premiumShareItem', ['share'=>$share])
+    @for ($i = 0; $i < 5; $i++)
+        @component('premium.premiumShareItem')
         @endcomponent
-    @endforeach
+    @endfor
+
+    {{-- @foreach ($listShares as $share)
+        @component('premium.premiumShareItem', ['share' => $share])
+        @endcomponent
+    @endforeach --}}
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.btn-detail-share').click(function() {
+            // console.log('click')
+            $.ajax({
+                url: '{{ route('clients.modalPremium') }}',
+                type: 'GET',
+                success: function(data) {
+                    $('#modal').append(data);
+                    $('.modal-share-premium').css('display', 'flex');
+                    $('.close-modal').click(function() {
+                        $('#modal').empty();
+                    });
+                }
+            })
+        });
+
+        $(document).click(function(event) {
+            var target = $(event.target);
+            if(!target.closest('.modal-share-content').length && $('.modal-share-premium').is(":visible")) {
+                $('#modal').empty();
+            }        
+        });
+
+    });
+</script>

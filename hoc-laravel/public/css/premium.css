@@ -131,3 +131,120 @@ div#preimum-container {
     cursor: pointer;
     opacity: .8;
 }
+
+/* Modal list */
+.modal-share-premium {
+    display: none;
+    position: absolute;
+    background: rgba(0, 0, 0, .3);
+    width: 100%;
+    height: 100%;
+    top: 0;
+    margin: auto;
+}
+
+.modal-share-content {
+    background-color: #fff;
+    flex-direction: column;
+    display: flex;
+    width: 50%;
+    height: 70%;
+    margin: auto;
+    border-radius: 4px;
+}
+
+.modal-share-header {
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.modal-share-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-modal {
+    position: absolute;
+    right: 0px;
+    margin-right: 10px;
+    border: none;
+    background-color: transparent;
+}
+
+.modal-share-body {
+    margin-top: 50px;
+    overflow: auto;
+}
+
+.modal-share-body--item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dbdbdb;
+    height: 50px;
+}
+
+.modal-share-body--item > div {
+    flex: 1;
+    /* text-align: center; */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.modal-share-body--item > button{
+    text-align: center;
+}
+
+.modal-share-body--item--name {
+    line-height: 37px
+}
+
+.noti-invate {
+    color: red;
+    line-height: 37px;
+}
+
+.invated {
+    color: rgb(44, 221, 44) !important;
+}
+
+.del-share {
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    border: none;
+    margin-top: 3.5px;
+    transition: .3s;
+    filter: grayscale(100%);
+}
+
+.del-share:hover {
+    opacity: .8;
+    transform: scale(1.05);
+    filter: grayscale(0%);
+    background-color: red;
+}
+
+.btn-detail-share{
+    background-color: #c8c8c8;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
+    filter: grayscale(100%);
+    transition: .3s;
+}
+
+.btn-detail-share:hover{
+    opacity: .8;
+    background-color: orangered;
+    transform: scale(1.05);
+    filter: grayscale(0%);
+}
+

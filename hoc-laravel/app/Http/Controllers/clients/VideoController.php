@@ -30,7 +30,19 @@ class VideoController extends Controller{
 
     }
 
+    // Hàm phát video
     public function playVideo(){
         return view('video.play-video');
     }
+
+    // Hàm load video trang chủ
+    public function reloadVideoList(){
+        return view('video.video-in-main-wrapper');
+    }
+
+    // Hàm tìm kiếm
+    public function searchVideo(){
+        return view('video.video-search');
+    }
+    
 }

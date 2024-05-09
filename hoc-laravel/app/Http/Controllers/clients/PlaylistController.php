@@ -54,11 +54,23 @@ class PlaylistController extends Controller
     //     }
     // }
 
+    // Hiển thị danh sách xem sau (nó cũng là 1 danh sách phát, nhưng không được xóa)
+    public function showWatchLater(){
+        return view('playlist.later-playlist');
+    }
+
+    // Tạo danh sách phát
     public function showCreatePlaylist()
     {
         return view('playlist.playlistModal');
     }
 
+    // Hiển thị danh sách phát
+    public function showAllPlaylist()
+    {
+        return view('playlist.playlist-all');
+    }
+    
     public function playlistDetail($id){
 
     }

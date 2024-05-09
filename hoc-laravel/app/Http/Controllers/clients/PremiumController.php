@@ -102,13 +102,23 @@ class PremiumController extends Controller
 
     }
 
-    public function getAllRegistrations($data){
-        $data = 1;
-        return view('premium.premiumWrapper', 
-    [
-        'listRegistrations' => PremiumRegistration::getAllNoCondition(),
-        'listPackages' => PremiumPackage::getAllPackages(),
-        'listShare' => SharePremium::getAllSharedPremiumsByUser($data),
-    ]);
+    public function getAllRegistrations(){
+
+        // Lấy tất cả gói premium (không quan tâm user_id)
+        // $data['listRegistrations'] = PremiumRegistration::getAllPremiumRegistrationsByUser($id);
+
+        // Lấy tất cả user đã được share gói premium
+        // $data['listShares'] = $data['listRegistrations']->sharedUsers();
+        // $data[]
+
+        // đếm user được share gói premium
+        // $data['countUser'] = $data['listShares']->getAllSharedUsersCount();
+
+        $data = PremiumRegistration::getAllNoCondition();
+        return view('premium.premiumWrapper', $data);
+    }
+
+    public function showModalPremium(){
+        return view('premium.premiumShareList');
     }
 }
