@@ -29,7 +29,6 @@ textarea {
 
 .content__body {
     padding: 0 24px;
-    font-size: 20px;
 }
 
 .content__body-info {
@@ -61,6 +60,34 @@ textarea {
     align-items: center
 }
 
+.section_2 {
+
+}
+
+.section_3 {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: end;
+}
+
+.info__item {
+    display: flex;
+    align-items: center;
+    width: 60%;
+    margin-bottom: 12px;
+
+}
+
+.info__item--icon {
+    width: 14%;
+    font-size: 20px;
+}
+
+.info__item span {
+    font-size: 14px;
+}
+
 .content__body-pwd {
     margin-top: 32px;
 }
@@ -68,8 +95,8 @@ textarea {
 .img__wrap {
     display: flex;
     justify-content: center;
-    height: 220px;
-    width: 220px;
+    height: 160px;
+    width: 160px;
     overflow: hidden;
 }
 
@@ -83,24 +110,32 @@ textarea {
 .form-group {
     width: 100%;
     margin-bottom: 12px;
+    font-size: 16px;
 }
 
 .form-label {
     width: 100%;
+    margin-bottom: 4px !important;
 }
 
 .form-input {
     width: 100%;
     background-color: #3e3e3e;
-    padding-left: 12px;
+    /* background-color: #0f0f0f; */
+    padding: 4px 0px 4px 12px;
     border: none;
     color: white;
     border-radius: 2px;
 }
 
 .channel__name {
-    font-size: 32px;
-    margin-bottom: 32px;
+    font-size: 24px;
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.channel__description {
+    margin-top: 24px;
 }
 
 .username {
@@ -121,6 +156,10 @@ textarea {
 
 .w-30 {
     width: 30%;
+}
+
+.w-40 {
+    width: 40%;
 }
 
 .w-50 {

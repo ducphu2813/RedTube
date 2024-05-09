@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/studio/videoDetailsModal.css') }}">
 
 <div id="modal__videoDetails" class="modal__popup">
-    @if($video->video_id != null)
+    @if($video != null)
         <div class="modal__overlay">
             <form action="" class="modal-form" method="post" enctype="multipart/form-data">
                 <div class="form-section">
@@ -17,12 +17,12 @@
 
                         <div class="form-group">
                             <label for="title">Tiêu đề (required)</label>
-                            <textarea name="title" rows="2">{{ $video->title }}</textarea>
+                            <textarea name="title" id="title" rows="2">{{ $video->title }}</textarea>
                         </div>
             
                         <div class="form-group">
                             <label for="description">Mô tả</label>
-                            <textarea name="description" rows="18">{{ $video->description }}</textarea>
+                            <textarea name="description" id="description" rows="18">{{ $video->description }}</textarea>
                         </div>
                     </div>
             
@@ -37,8 +37,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="categogy">Thể loại</label>
-                            <input type="text" disabled value="Thể loại A">
+                            <label for="category">Thể loại</label>
+                            <input type="text" id="category" disabled value="Thể loại A">
                         </div>
             
                         <div class="form-group">
@@ -51,9 +51,8 @@
 
                         <div class="form-group">
                             <div class="option">
-                            
+                                <button class="close--btn" id="close--btn">Hủy</button>
                                 <button class="save--btn" id="save--btn" type="button">Lưu</button>
-                                <button class="close--btn" id="close--btn-{{ $video->video_id }}">Hủy</button>
                             </div>
                         </div>
                     </div>
@@ -64,31 +63,31 @@
         <div class="modal__overlay">
             <form action="" class="modal-form" enctype="multipart/form-data" method="">
                 <div class="form-section">
-                    <div class="form-top">Tao video</div>
+                    <div class="form-top">Tạo video</div>
                 </div>
 
                 <div class="form-bottom">
                     <div class="form-left">
                         <div class="form-group">
-                            <label for="thumbnail">Đăng tải video</label>
+                            <label for="video">Đăng tải video</label>
                             <input type="file" id="video" name="video" accept="video/*">
                         </div>
 
                         <div class="form-group">
                             <label for="title">Tiêu đề (required)</label>
-                            <textarea name="title" rows="2"></textarea>
+                            <textarea name="title" id="title" rows="2"></textarea>
                         </div>
             
                         <div class="form-group">
                             <label for="description">Mô tả</label>
-                            <textarea name="description" rows="18"></textarea>
+                            <textarea name="description" id="description" rows="18"></textarea>
                         </div>
                     </div>
             
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
-                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*" value="{{ $video->thumbnail_path }}">
+                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
             
                             <div class="review__thumbnail">
                                 <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
@@ -137,7 +136,7 @@
     
         
         $('#modal__videoDetails').ready(function() {
-            $('#close--btn-{{ $video->video_id }}').on('click', function(event) {
+            $('#close--btn').on('click', function(event) {
                 $('#modal').empty();
                 event.preventDefault();
             });

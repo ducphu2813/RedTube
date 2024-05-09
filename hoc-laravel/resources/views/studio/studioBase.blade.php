@@ -143,7 +143,15 @@
             $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-
+                    $.ajax({
+                        url: '{{ route('studio.videoDetails') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                        }
+                    })
                 } else if (index == 1) {
                     $.ajax({
                         url: '{{ route('playlist.createPlaylist') }}',

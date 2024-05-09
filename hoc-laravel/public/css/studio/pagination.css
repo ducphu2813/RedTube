@@ -15,6 +15,10 @@
     margin: 0px 4px;
 }
 
+.page--selected {
+    background-color: #3ea6ff;
+}
+
 .pagi--btn:hover {
     background-color: var(--button-active-color);
 }
