@@ -1,5 +1,5 @@
 <!-- Danh sách phát -->
-
+<link rel="stylesheet" href="{{ asset('css/later-playlist.css') }}">
 <!-- khung thông tin playlist -->
 <div id="panel-wrapper">
     <div id="panel">
@@ -56,42 +56,53 @@
 </div>
 <!-- video playlist -->
 <div id="playlist" class="video-playlist">
-    <div id="box-container">
-        <div id="index-container">
-            <span id="index">1</span>
-        </div>
-        <div id="box" class="video-playlist">
-            <div id="thumb-container" class="video-playlist">
-                <a href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
-                    <img id="thumb-image" class="video-playlist"
-                        src="https://i.ytimg.com/vi/YNaAyu2cOV4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCg_kUWgKXOIHp8oq0tsEAq7gouTg"
-                        alt="">
-                </a>
+    {{-- Data đặt ở đây --}}
+    @for ($i = 0; $i < 10; $i++)
+        <div class="box-container">
+            <div id="index-container">
+                <span id="index">1</span>
             </div>
-            <div id="text-wrapper" class="video-playlist">
-                <div id="meta" class="video-playlist">
-                    <div id="title-wrapper" class="video-playlist">
-                        <h3 class="title">
-                            <a id="video-title" class="video-playlist"
-                                href="https://www.youtube.com/watch?v=YNaAyu2cOV4">CHÚ TÔI DƯƠNG TÍNH VỚI
-                                MAI THÚY | HÔN NHÂN CÓ GÌ VUI #5</a>
-                        </h3>
+            <div id="box" class="video-playlist">
+                <div id="thumb-container" class="video-playlist">
+                    <a href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
+                        <img id="thumb-image" class="video-playlist"
+                            src="https://i.ytimg.com/vi/YNaAyu2cOV4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCg_kUWgKXOIHp8oq0tsEAq7gouTg"
+                            alt="">
+                    </a>
+                </div>
+                <div id="text-wrapper" class="video-playlist">
+                    <div id="meta" class="video-playlist">
+                        <div id="title-wrapper" class="video-playlist">
+                            <h3 class="title">
+                                <a id="video-title" class="video-playlist"
+                                    href="https://www.youtube.com/watch?v=YNaAyu2cOV4">CHÚ TÔI DƯƠNG TÍNH VỚI
+                                    MAI THÚY | HÔN NHÂN CÓ GÌ VUI #5</a>
+                            </h3>
+                        </div>
+                        <div id="metadata" class="video-playlist">
+                            <a id="status-video" class="video-playlist"
+                                href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
+                                <span>100 lượt xem</span>
+                                <i class="fa-solid fa-circle"></i>
+                                <span>2 tuần trước</span>
+                            </a>
+                        </div>
                     </div>
-                    <div id="metadata" class="video-playlist">
-                        <a id="status-video" class="video-playlist" href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
-                            <span>100 lượt xem</span>
-                            <i class="fa-solid fa-circle"></i>
-                            <span>2 tuần trước</span>
-                        </a>
+                    <div id="channel-info" class="video-playlist">
+                        <div id="text-container" class="video-playlist">
+                            <a id="channel-name" class="video-playlist"
+                                href="https://www.youtube.com/@TunaGamingvn">Monsieur Tuna</a>
+                        </div>
                     </div>
                 </div>
-                <div id="channel-info" class="video-playlist">
-                    <div id="text-container" class="video-playlist">
-                        <a id="channel-name" class="video-playlist"
-                            href="https://www.youtube.com/@TunaGamingvn">Monsieur Tuna</a>
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+    @endfor
 </div>
+
+{{-- Gáng mà script --}}
+<script>
+    $(document).ready(function() {
+        // Script hết trong này nha
+    });
+</script>

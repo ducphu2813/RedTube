@@ -96,7 +96,7 @@
         <ul class="list-container">
             <div class="list-title">Danh sách phát</div>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.playlistAll') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -107,7 +107,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.watchLater') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">

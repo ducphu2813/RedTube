@@ -110,6 +110,12 @@ Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])-
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 
+// Hiển thị danh sách xem sau
+Route::get('showWatchLater', [PlaylistController::class, 'showWatchLater'])->name('clients.watchLater');
+
+// Hiển thị tất cả danh sách phát ở trang chủ
+Route::get('showAllPlaylist', [PlaylistController::class, 'showAllPlaylist'])->name('clients.playlistAll');
+
 // Hiển thị danh sách lịch sử xem
 Route::get('showHistory', [History::class, 'showHistory'])->name('clients.videoHistory');
 
