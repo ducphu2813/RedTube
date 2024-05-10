@@ -150,11 +150,19 @@ Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('cl
 Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
 
 // Test screen video
+Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+// Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage')->middleware('CheckLogin');
+
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
 
-// -------------------- Hết của Dương -------------------- //
+// Show video by channel
+Route::get('showVideoByChannel', [VideoController::class, 'showVideoByChannel'])->name('clients.showVideoByChannel');
+
+// Không có premium
+Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.noPremium');
+
 
 // -------------------- Hết của Dương -------------------- //
 

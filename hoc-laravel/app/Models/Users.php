@@ -61,20 +61,25 @@ class Users extends Model
         return $this->where('user_id', $id)->delete();
     }
 
+
     // Đếm ngày user
     public static function countUser($year){
         return self::whereYear('created_Date', $year)->count();
     }
 
-    public function videos(): HasMany{
 
-        return $this->hasMany(Video::class, 'user_id');
-    }
+// =======
+//     public function videos(): HasMany{
 
-    public function comments(): HasMany{
+//         return $this->hasMany(Video::class, 'user_id');
+//     }
 
-        return $this->hasMany(Comment::class, 'user_id');
-    }
+//     public function comments(): HasMany{
+//         return $this->hasMany(Comment::class, 'user_id');
+
+//     public static function lastInsertId(){
+//         return self::query()->latest('user_id')->first();
+//     }
 
     public function videoNoti(): HasMany{
         return $this->hasMany(VideoNotifications::class, 'user_id');

@@ -93,7 +93,7 @@ class VideoController extends Controller{
     }
 
 
-    // Hàm load video trang chủ
+    // Hàm load video trang chủ, đổ data là video mới nhất và random 
     public function reloadVideoList(){
 
         $videos = Video::getAllVideo();
@@ -110,4 +110,9 @@ class VideoController extends Controller{
         return view('video.video-search');
     }
 
+    // Hàm xem video theo kênh đăng kí, đổ data là video theo kênh user đã đăng kí
+    public function showVideoByChannel(){
+        return view('video.video-in-main-wrapper');
+    }
+    
 }

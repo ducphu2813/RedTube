@@ -97,15 +97,25 @@
             </button>
         </div>
 
-        {{--phần icon user nhỏ phía trên bên phải--}}
-        <div class="acc-box">
-            @if(session('loggedInUser') && $currentUserProfile->picture_url)
-                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
-            @else
-                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-
-            @endif
+        <div class="notification">
+            <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+            <div class="new-noti"></div>
+            <div class="wrapper-notify-item-list">
+                <header class="header-notify">
+                    <h4>Thông báo</h4>
+                    <a href="">Xem tất cả</a>
+                </header>
+                <div class="wrapper-header-notify-list">
+                    {{-- Chổ này cho danh sách thông báo --}}
+                    @component('noti.noti-wrapper')
+                    @endcomponent
+                </div>
+            </div>
         </div>
+
+        {{-- <div class="acc-box">
+            <img src="{{ asset('resources/img/user.png') }}" alt="">
+        </div> --}}
     </div>
 @endsection
 
@@ -128,7 +138,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.showVideoByChannel') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -232,7 +242,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.noPremium') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
                             style="pointer-events: none; display: inherit; width: 100%; height: 100%;">

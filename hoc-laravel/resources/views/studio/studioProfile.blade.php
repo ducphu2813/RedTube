@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}"> --}}
 
 <div class="content__title">Profile</div>
 
