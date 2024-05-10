@@ -55,9 +55,25 @@
             </button>
         </div>
 
-        <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
+        <div class="notification">
+            <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+            <div class="new-noti"></div>
+            <div class="wrapper-notify-item-list">
+                <header class="header-notify">
+                    <h4>Thông báo</h4>
+                    <a href="">Xem tất cả</a>
+                </header>
+                <div class="wrapper-header-notify-list">
+                    {{-- Chổ này cho danh sách thông báo --}}
+                    @component('noti.noti-wrapper')
+                    @endcomponent
+                </div>
+            </div>
         </div>
+
+        {{-- <div class="acc-box">
+            <img src="{{ asset('resources/img/user.png') }}" alt="">
+        </div> --}}
     </div>
 @endsection
 

@@ -103,7 +103,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('membership.membershipManager') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -115,7 +115,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('premium.premiumManager') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -125,6 +125,22 @@
                         </svg>
                     </span>
                     Premium
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="">
+                    <span class="list-icon">
+                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
+                            class="style-scope tp-yt-iron-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                            <g width="24" height="24" viewBox="0 0 24 24" class="style-scope tp-yt-iron-icon">
+                                <path
+                                    d="M8 7H16V9H8V7ZM8 13H13V11H8V13ZM5 3V16H15H15.41L15.7 16.29L19 19.59V3H5ZM4 2H20V22L15 17H4V2Z"
+                                    class="style-scope tp-yt-iron-icon"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    Thông báo
                 </a>
             </li>
         </ul>
@@ -185,37 +201,16 @@
 
             // handle left navigator
             $('.list-item').on('click', function() {
-                var index = $(this).index();
-                if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
-                } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
-                } else if (index == 2) {
-                    console.log('Thông tin kênh');
-                    event.preventDefault();
-                } else if (index == 3) {
-                    $.ajax({
-                        url: '{{ route('membership.membershipManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                } else {
-                    $.ajax({
-                        url: '{{ route('premium.premiumManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                }
+                event.preventDefault();
+                var link = $(this).find('a').attr('href');
+                $.ajax({
+                    url: link,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#content').html(data);
+                    }
+                });
             });
         });
     </script>

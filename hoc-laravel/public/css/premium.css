@@ -72,8 +72,8 @@ div#preimum-container {
     margin-top: 20px;
 }
 
-/* Premium cá nhân */
-/* .pre-share-info,
+/* Premium share */
+.pre-share-info,
 .my-premium-info {
     display: flex;
     flex: 1;
@@ -130,7 +130,7 @@ div#preimum-container {
 .add-share-pre:hover {
     cursor: pointer;
     opacity: .8;
-} */
+}
 
 /* Modal list */
 .modal-share-premium {
