@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Users extends Model
 {
@@ -60,13 +61,13 @@ class Users extends Model
         return $this->where('user_id', $id)->delete();
     }
 
-// <<<<<<< HEAD
-//     // Đếm ngày user
-//     public static function countUser($year){
-//         return self::whereYear('created_Date', $year)->count();
-//     }
 
-    
+    // Đếm ngày user
+    public static function countUser($year){
+        return self::whereYear('created_Date', $year)->count();
+    }
+
+
 // =======
 //     public function videos(): HasMany{
 
@@ -74,8 +75,10 @@ class Users extends Model
 //     }
 
 //     public function comments(): HasMany{
-
 //         return $this->hasMany(Comment::class, 'user_id');
+
+//     public static function lastInsertId(){
+//         return self::query()->latest('user_id')->first();
 //     }
 
 //     public static function lastInsertId(){

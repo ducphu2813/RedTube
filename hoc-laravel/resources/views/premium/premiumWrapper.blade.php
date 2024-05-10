@@ -23,12 +23,12 @@
             $('.content__body').empty();
             if ($(this).text() === 'Premium') {
                 $('.content__body').append(`
-                    @component('premium.premiumHistoryWrapper', ['listRegistrations' => $listRegistrations])
+                    @component('premium.premiumHistoryWrapper', ['listRegistrations'=>$listRegistrations])
                     @endcomponent
                 `);
             } else {
                 $('.content__body').append(`
-                    @component('premium.premiumShareWrapper', ['listPackages' => $listPackages])
+                    @component('premium.premiumShareWrapper', ['listPackages'=>$listPackages])
                     @endcomponent
                 `);
             }

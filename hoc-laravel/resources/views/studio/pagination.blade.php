@@ -6,40 +6,69 @@
     <!-- pagination -->
     <div class="pagination">
 
-        <button class="pagi--btn" id="arrow--left">
-            <i class="fa-solid fa-angles-left"></i>
-        </button>
+        <label for="itemPerPage">Hiển thị</label>
+        <input type="text" id="itemPerPage" class="pagi">
 
-        <button class="pagi--btn" id="chevron--left">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
+        @if ($currentPage != 1)
+            <button class="pagi--btn" id="chevron--left" page={{ $currentPage - 1 }}>
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        @endif
 
-        <button class="pagi--btn page">
-            1
-        </button>
+        @if ($currentPage <= $pageDisplay)
+            @for ($i = 1; $i <= $pageDisplay; $i++)
+                @if ($i == $currentPage) 
+                    <button class="pagi--btn page page--selected" page={{ $i }}>{{ $i }}</button>
+                @else
+                    <button class="pagi--btn page" page={{ $i }}>{{ $i }}</button>
+                @endif
+            @endfor
 
-        <button class="pagi--btn page">
-            2
-        </button>
+            <button class="pagi--btn unselectable" disabled>...</button>
+            <button class="pagi--btn page" page={{ $totalPages }}>{{ $totalPages }}</button>
 
-        <button class="pagi--btn unselectable">
-            ...
-        </button>
+        @elseif ($currentPage > $pageDisplay && $currentPage < $totalPages - $pageDisplay + 1) 
+            <button class="pagi--btn page" page={{ 1 }}>1</button>
+            <button class="pagi--btn unselectable" disabled>...</button>
+            
+            @for ($i = $currentPage - floor($pageDisplay / 2); $i <= $currentPage + floor($pageDisplay / 2); $i++) 
+                @if ($i == $currentPage)
+                    <button class="pagi--btn page page--selected" page={{ $i }}>{{ $i }}</button>
+                @else 
+                    <button class="pagi--btn page" page={{ $i }}>{{ $i }}</button>
+                @endif
+            @endfor
 
-        <button class="pagi--btn page">
-            5
-        </button>
+            <button class="pagi--btn unselectable" disabled>...</button>
+            <button class="pagi--btn page">{{$totalPages}}</button>
 
-        <button class="pagi--btn page">
-            6
-        </button>
+        @elseif ($currentPage >= $totalPages - $pageDisplay + 1) 
+            <button class="pagi--btn page">1</button>
+            <button class="pagi--btn unselectable" disabled>...</button>
 
-        <button class="pagi--btn" id="chevron--right">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
+            @for ($i = $totalPages - $pageDisplay + 1; $i <= $totalPages; $i++)
+                @if ($i == $currentPage) 
+                    <button class="pagi--btn page page--selected" page={{ $i }}>{{ $i }}</button>
+                @else 
+                    <button class="pagi--btn page" page={{ $i }}>{{ $i }}</button>
+                @endif
+            @endfor
+        @endif
 
-        <button class="pagi--btn" id="arrow--right">
-            <i class="fa-solid fa-angles-right"></i>
-        </button>
+        @if ($currentPage != $totalPages)
+            <button class="pagi--btn" id="chevron--right" page={{ $currentPage + 1 }}>
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        @endif
     </div>
 </div>
+
+<script>
+    $('.content__footer').ready(function() {
+        $('.pagi--btn').on('click', function(event) {
+            var page = $(this).attr('page')
+            loadPage(page)
+        });
+    });
+</script>
+

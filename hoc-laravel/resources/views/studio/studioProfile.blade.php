@@ -5,97 +5,102 @@
 <!-- body -->
 <form class="content__body">
     <div class="content__body-info">
-        <div class="section_1 w-30">
+        <div class="section_1 w-20">
             <div class="img__wrap">
-                <img src="../assets/img/ocean.jpg" alt="XXX">
+                <img src="{{ asset('resources/img/ocean.jpg') }}" id="avatar--review" value="">
             </div>
 
-            <input type="file" id="imageInput" accept="image/*">
+            <input type="file" id="avatar" accept="image/*" value="">
         </div>
 
-        <div class="section_2 w-70">
+        <div class="section_2 w-40">
             <div class="w-100">
                 <div class="form-group channel__name">
-                    <div class="form-label">Tên kênh</div>
+                    <label class="form-label">Kênh</label>
                     <input type="text" class="form-input">
                 </div>
             </div>
 
             <div class="w-100">
                 <div class="form-group username">
-                    <div class="form-label">Tên người dùng</div>
+                    <label class="form-label" for="">Người dùng</label>
                     <input type="text" class="form-input">
                 </div>
             </div>
 
             <div class="w-100">
                 <div class="form-group">
-                    <div class="form-label">Email</div>
+                    <label  class="form-label" for="">Email</label>
                     <input type="text" class="form-input">
                 </div>
             </div>
 
             <div class="w-100">
-                <div class="form-group">
+                <div class="form-group channel__description">
                     <div class="form-label">Giới thiệu</div>
                     <textarea name="" id="" cols="30" rows="10" class="form-input"></textarea>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="content__body-save w-100">
-        <button class="save--btn">Lưu</button>
-    </div>
-
-    <!-- <form class="content__body-pwd">
-        <div class="content__title w-100">Mật khẩu</div>
-        <div class="w-100">
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Mật khẩu</div>
-                    <input type="text" class="form-input">                
-                </div>
-            </div>
-
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Mật khẩu mới</div>
-                    <input type="text" class="form-input">                
-                </div>
-            </div>
-
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Xác nhận mật khẩu</div>
-                    <input type="text" class="form-input">                
-                </div>
+            <div class="content__body-save w-100">
+                <button class="save--btn">Lưu</button>
             </div>
         </div>
-    </form> -->
+
+        <div class="section_3 w-40">
+            <div class="info__item">
+                <div class="info__item--icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+
+                <span>12000 subcribers</span>
+            </div>
+
+            <div class="info__item">
+                <div class="info__item--icon">
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+
+                <span>230 videos</span>
+            </div>
+
+            <div class="info__item">
+                <div class="info__item--icon">
+                    <i class="fa-solid fa-eye"></i>
+                </div>
+
+                <span>12000000 views</span>
+            </div>
+
+            <div class="info__item">
+                <div class="info__item--icon">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <span>3256 likes</span>
+            </div>
+
+            <div class="info__item">
+                <div class="info__item--icon">
+                    <i class="fa-solid fa-circle-info"></i>
+                </div>
+                
+                <span>tham gia 12/12/2012</span>
+            </div>
+        </div>
+    </div>
 </form>
 
-<script>    
-    document.addEventListener("DOMContentLoaded", function() {
-        const imageInput = document.getElementById("imageInput");
-        const imgWrap = document.querySelector(".img__wrap img");
+<script>   
 
-        // Add event listener to the file input
-        imageInput.addEventListener("change", function() {
-            const file = this.files[0]; // Get the selected file
 
-            if (file) {
-                // Read the file as a data URL
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    // Set the image source to the data URL
-                    imgWrap.src = e.target.result;
-                };
-
-                // Read the file as data URL
-                reader.readAsDataURL(file);
-            }
-        });
+    $('#avatar').on("change", function(event) {
+        const file = this.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        
+        reader.onload = () => {
+            $('#avatar--review').attr('src', reader.result);
+        };
     });
 </script>

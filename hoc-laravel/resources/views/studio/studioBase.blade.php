@@ -55,7 +55,7 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item" data-url="{{ route('studio.contents.videos') }}">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -138,7 +138,6 @@
 
     </div>
 
-
 @endsection
 
 @section('scripts')
@@ -147,10 +146,18 @@
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-
+                    $.ajax({
+                        url: '{{ route('studio.videoDetails') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                        }
+                    })
                 } else if (index == 1) {
                     $.ajax({
                         url: '{{ route('playlist.createPlaylist') }}',
@@ -192,31 +199,46 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
-            $('.list-item').on('click', function() {
+            $('.list-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
+                    $.ajax({
+                        url: '{{ route('studio.contents') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#content').html(data);
+                        }
+                    });
                 } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
+
                 } else if (index == 2) {
-                    // console.log('Thông tin kênh');
+// <<<<<<< HEAD
+//                     // console.log('Thông tin kênh');
+// =======
+// >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
                     $.ajax({
                         url: '{{ route('studio.profile') }}',
                         type: 'GET',
                         dataType: 'html',
                         success: function(data) {
                             $('#content').html(data);
-                        },
-                        // error: function(xhr, status, error) {
-                        //     console.error('Error fetching content:', error);
-                        // }
+// <<<<<<< HEAD
+//                         },
+//                         // error: function(xhr, status, error) {
+//                         //     console.error('Error fetching content:', error);
+//                         // }
+//                     });
+//                     event.preventDefault();
+// =======
+                        }
                     });
-                    event.preventDefault();
+// >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
                 } else if (index == 3) {
                     $.ajax({
                         url: '{{ route('membership.membershipManager') }}',
@@ -226,7 +248,6 @@
                             $('#content').html(data);
                         }
                     });
-                    event.preventDefault();
                 } else {
                     $.ajax({
                         url: '{{ route('premium.premiumManager') }}',
@@ -237,7 +258,15 @@
                         }
                     });
                     event.preventDefault();
+// <<<<<<< HEAD
+//                     event.preventDefault();
+// =======
+
+// >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
                 }
+
+                $('#content').empty()
+                event.preventDefault();
             });
         });
     </script>
