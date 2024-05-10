@@ -64,7 +64,7 @@
             error: function(xhr, status, error) {
                 console.error('Error fetching content:', error);
             }
-        });
+    });
     }
 </script>
 
