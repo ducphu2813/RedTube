@@ -3,6 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
+
 @endsection
 
 @section('search')
@@ -53,8 +55,8 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
+                <a href="{{ route('studio.contents') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -86,8 +88,8 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
+                <a href="{{ route('studio.profile') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -116,6 +118,7 @@
             </li>
             <li class="list-item">
                 <a href="{{ route('premium.premiumManager') }}">
+
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -147,15 +150,31 @@
     </div>
 @endsection
 
+@section('content')
+    <div id="right">
+
+    </div>
+
+@endsection
+
 @section('scripts')
+
     <script>
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-
+                    $.ajax({
+                        url: '{{ route('studio.videoDetails') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                        }
+                    })
                 } else if (index == 1) {
                     $.ajax({
                         url: '{{ route('playlist.createPlaylist') }}',
@@ -197,6 +216,8 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
@@ -211,6 +232,71 @@
                         $('#content').html(data);
                     }
                 });
+// =======
+//             $('.list-item').on('click', function(event) {
+//                 var index = $(this).index();
+//                 if (index == 0) {
+//                     $.ajax({
+//                         url: '{{ route('studio.contents') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                 } else if (index == 1) {
+
+//                 } else if (index == 2) {
+// // <<<<<<< HEAD
+// //                     // console.log('Thông tin kênh');
+// // =======
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                     $.ajax({
+//                         url: '{{ route('studio.profile') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+// // <<<<<<< HEAD
+// //                         },
+// //                         // error: function(xhr, status, error) {
+// //                         //     console.error('Error fetching content:', error);
+// //                         // }
+// //                     });
+// //                     event.preventDefault();
+// // =======
+//                         }
+//                     });
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                 } else if (index == 3) {
+//                     $.ajax({
+//                         url: '{{ route('membership.membershipManager') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                 } else {
+//                     $.ajax({
+//                         url: '{{ route('premium.premiumManager') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                     event.preventDefault();
+// // <<<<<<< HEAD
+// //                     event.preventDefault();
+// // =======
+
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                 }
+
+//                 $('#content').empty()
+//                 event.preventDefault();
+// >>>>>>> Dung
             });
         });
     </script>

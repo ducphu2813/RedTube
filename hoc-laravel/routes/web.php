@@ -17,7 +17,9 @@ use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+
 use Illuminate\Support\Facades\Route;
+use Illuminate\Http\RedirectResponse;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,6 +135,8 @@ Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name
 
 // Test screen video
 Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+// Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage')->middleware('CheckLogin');
+
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
@@ -145,6 +149,16 @@ Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.
 
 
 // -------------------- Hết của Dương -------------------- //
+
+Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
+Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
+Route::get('studioPage/contents/playlists/{currentPage}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
+Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
+Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+
+Route::get('studioPage/videoDetails/{video_id?}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');    
+Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');
+
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');
