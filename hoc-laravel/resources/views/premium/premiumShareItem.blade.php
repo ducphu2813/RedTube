@@ -1,4 +1,4 @@
-<a class="pre-share-info" href="">
+<div class="pre-share-info" href="">
     <div class="pre-share-name">
         Gói dữ dằn
     </div>
@@ -12,6 +12,6 @@
     </div>
 
     <div class="pre-share-quantity">
-        5
+        <button class="btn-detail-share">!</button>
     </div>
-</a>
+</div>

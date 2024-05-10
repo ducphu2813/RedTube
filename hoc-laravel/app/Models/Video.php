@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Video extends Model
 {
@@ -33,6 +34,7 @@ class Video extends Model
         'active',
         'video_path',
         'thumbnail_path',
+        'is_approved',
     ];
 
     public function user(): BelongsTo{
@@ -45,8 +47,10 @@ class Video extends Model
     }
 
     public function getRootComments(): HasMany{
+
         return $this->hasMany(Comment::class, 'video_id')
-            ->whereNull('reply_id');
+            ->whereNull('reply_id')
+            ->orderBy('created_date', 'desc');
     }
 
     public function getCategories(): HasManyThrough{
@@ -89,15 +93,34 @@ class Video extends Model
         return self::query()->where('user_id', $user_id)->get();
     }
 
+    //hàm lấy 1 review của video
+    public function review(): HasOne
+    {
+        return $this->hasOne(ReviewHistory::class, 'video_id');
+    }
+    //có thể lấy review của 1 video như sau: (dưới đây chỉ là ví dụ)
+    // $video = Video::find(id cần tìm nha);
+    // $review = $video->review;
 
     // Dương code ở này
+
+    //hàm này lấy tất cả video
     public static function getAllVideo(){
         return self::query()->get();
     }
 
+    //hàm này update video theo id
     public function updateVideo($id, $data){
         return $this->where('video_id', $id)->update($data);
     }
 
     // Dương không code nữa
+
+
+    //tăng view của video
+    public function increaseView($id){
+        $video = $this->find($id);
+        $video->view = $video->view + 1;
+        $video->save();
+    }
 }

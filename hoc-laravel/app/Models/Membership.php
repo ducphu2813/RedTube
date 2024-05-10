@@ -40,4 +40,8 @@ class Membership extends Model
     }
 
     // Dương không muốn code nữa
+
+    public function createMembership($data){
+        return $this->create($data);
+    }
 }

@@ -51,9 +51,10 @@ class Comment extends Model
 
     public static function getRootCommentsByVideoId(int $videoId): Collection{
 
-        return self::where('video_id', $videoId)
+        return self::query()
+            ->where('video_id', $videoId)
             ->whereNull('reply_id')
-            ->orderBy('created_date', 'DESC')
+            ->orderBy('created_date', 'desc')
             ->get();
     }
 
@@ -90,7 +91,7 @@ class Comment extends Model
     public static function getRootCommentByUserId(int $userId){
         return self::where('user_id', $userId)
             ->whereNull('reply_id')
-            ->orderBy('created_date', 'DESC')
+            ->orderBy('created_date', 'desc')
             ->get();
     }
 

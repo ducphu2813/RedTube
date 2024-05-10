@@ -32,17 +32,22 @@ class Playlist extends Model
         return $this->belongsTo(Users::class, 'user_id', 'user_id');
     }
 
-
+    //tạo playlist mới
     public function createPlaylist($data){
         return $this->create($data);
     }
 
     //lấy danh sách playlist theo user_id
     public static function getPlaylistByUserId($user_id){
-        return self::query()->where('user_id', $user_id)->get();
+
+        return self::query()
+            ->where('user_id', $user_id)
+            ->orderBy('created_date', 'desc')
+            ->get();
     }
 
 
+    //mối quan hệ giữa playlist và video
     public function videos(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -55,13 +60,28 @@ class Playlist extends Model
         );
     }
 
+    //
+    public function hasVideos(){
+        return $this->videos()->exists();
+    }
+
     //lấy danh sách video trong playlist
     public function getVideosInPlaylist(){
         return $this->videos()->get();
     }
 
+    //lấy video đầu tiên trong playlist
+    public function getFirstVideo(){
+        return $this->videos()->first();
+    }
+
     //kiểm tra video có ở trong playlist không
     public function isVideoInPlaylist($video_id){
         return $this->videos()->where('playlist_video.video_id', $video_id)->exists();
+    }
+
+    //kiểm tra playlist có phải của user không
+    public function isPlaylistOfUser($user_id){
+        return $this->user_id == $user_id;
     }
 }

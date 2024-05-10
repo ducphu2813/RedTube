@@ -46,7 +46,7 @@
 
                     $('.reject').on('click', function() {
                         var notiId = $(this).data('noti-id');
-                        // Handle reject action here
+                        // Xử lý từ chối
                         console.log('Rejected: ' + notiId);
                     });
                 },
