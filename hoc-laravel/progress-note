@@ -9,4 +9,25 @@ lấy giao diện của Dũng về(v)
 xử lý thay đổi ảnh đại diện(v)
 xử lý thay đổi thông tin cá nhân(v)
 xử lý ngày tháng trên play-video(v)
-đợi giao diện... (x)
+đã lấy giao diện home, playlist(của home), history(của home), premium(của home) (v)
+ hiện video trên trang chủ(hiện đầy đủ view, date, owner, title) (v)
+khi bấm các tab mà chưa login thì hiện thông báo (v)
+hiện danh sách playlist của user (v)
+phân biệt bấm video và bấm playlist (v)
+bấm vào playlist thì hiện phần playlist bên phải(v)
+thông tin playlist(v)
+danh sách video trong playlist bên phải(v)
+bấm vào video trong playlist thì chuyển sang video đó(v)
+
+lưu history khi coi(v)
+hiện history(v)
+đổ dữ liệu vào trang history(v)
+
+xử lý xóa history(x)
+
+ghi chú: comment phần lưu lịch sử coi(trong VideoController) để làm chức năng trước
+history(x)
+tự động tạo cho user 1 playlist xem sau mỗi khi đăng ký (x)
+
+cần cải tiến thanh tab bên trái ẩn đi 1 vài item khi chưa login (x)
+highlight video đang coi trong playlist(x)

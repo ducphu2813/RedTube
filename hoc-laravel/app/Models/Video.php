@@ -47,8 +47,10 @@ class Video extends Model
     }
 
     public function getRootComments(): HasMany{
+
         return $this->hasMany(Comment::class, 'video_id')
-            ->whereNull('reply_id');
+            ->whereNull('reply_id')
+            ->orderBy('created_date', 'desc');
     }
 
     public function getCategories(): HasManyThrough{
@@ -101,13 +103,24 @@ class Video extends Model
     // $review = $video->review;
 
     // Dương code ở này
+
+    //hàm này lấy tất cả video
     public static function getAllVideo(){
         return self::query()->get();
     }
 
+    //hàm này update video theo id
     public function updateVideo($id, $data){
         return $this->where('video_id', $id)->update($data);
     }
 
     // Dương không code nữa
+
+
+    //tăng view của video
+    public function increaseView($id){
+        $video = $this->find($id);
+        $video->view = $video->view + 1;
+        $video->save();
+    }
 }

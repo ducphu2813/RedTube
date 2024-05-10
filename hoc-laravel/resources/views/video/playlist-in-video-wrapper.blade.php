@@ -1,11 +1,11 @@
 <div id="container-playlist-playvideo">
     <div id="header-playlist">
         <div id="header-title">
-            <h4>Tên danh sách phát</h4>
+            <h4>{{ $videoPlaylist->name }}</h4>
             <i class="fa-solid fa-angle-up close"></i>
         </div>
         <div>
-            <span>Tên channel</span>
+            <span>{{$videoPlaylist->user->channel_name}}</span>
             <span>-</span>
             <span>1/20</span> <!-- 1/20 là số video trong playlist -->
         </div>
@@ -17,10 +17,17 @@
 
     {{-- Chổ này gọi all playlist-in-video-item --}}
     <span class="show-list">
-        @for ($i = 0; $i < 20; $i++)
-            @component('video.playlist-in-video-item')
+
+        @foreach($videosInPlayList as $videoInPL)
+            @component('video.playlist-in-video-item', ['videoInPL' => $videoInPL, 'videoPlaylist' => $videoPlaylist])
             @endcomponent
-        @endfor
+        @endforeach
+
+
+{{--        @for ($i = 0; $i < 20; $i++)--}}
+{{--            @component('video.playlist-in-video-item')--}}
+{{--            @endcomponent--}}
+{{--        @endfor--}}
     </span>
 
 </div>

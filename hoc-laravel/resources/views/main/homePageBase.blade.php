@@ -8,6 +8,48 @@
 
 {{-- Cái này là thanh tìm kiếm --}}
 @section('search')
+    <script>
+        //định dạng view
+        function formatViews(views) {
+
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
+        }
+
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.ceil(diffDays / 7);
+            const diffMonths = Math.ceil(diffDays / 30);
+
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 13) {
+                return diffDays + ' ngày trước';
+            } else if (diffWeeks <= 4) {
+                return diffWeeks + ' tuần trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
+        }
+    </script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon" viewBox="0 0 90 20"
@@ -55,8 +97,14 @@
             </button>
         </div>
 
+        {{--phần icon user nhỏ phía trên bên phải--}}
         <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
         </div>
     </div>
 @endsection
@@ -204,12 +252,13 @@
 
 {{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
 @section('content')
-    @component('video.video-in-main-wrapper')
+    @component('video.video-in-main-wrapper', ['videos' => $videos])
     @endcomponent
 @endsection
 
 @section('scripts')
     <script>
+
         // Cái này để điều hướng thanh bên trái
         $(".list-item").on('click', function(event) {
             event.preventDefault();
@@ -220,10 +269,13 @@
                 type: 'GET',
                 dataType: 'html',
                 success: function(response) {
+                    console.log(response);
+
                     $('#content').html(response);
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown, response) {
                     console.log('AJAX error:', textStatus, errorThrown);
+                    console.log(response);
                 }
             });
         });

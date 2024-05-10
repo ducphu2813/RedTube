@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
 use App\Models\PlaylistVideo;
 use Illuminate\Http\Request;
 
@@ -56,6 +57,12 @@ class PlaylistController extends Controller
 
     // Hiển thị danh sách xem sau (nó cũng là 1 danh sách phát, nhưng không được xóa)
     public function showWatchLater(){
+
+        //xử lý khi chưa login
+        if(session('loggedInUser') == null){
+            return view('playlist.login-noti');
+        }
+
         return view('playlist.later-playlist');
     }
 
@@ -65,10 +72,17 @@ class PlaylistController extends Controller
         return view('playlist.playlistModal');
     }
 
-    // Hiển thị danh sách phát
+    // Hiển thị danh sách phát trên trang chủ
     public function showAllPlaylist()
     {
-        return view('playlist.playlist-all');
+        //xử lý khi chưa login
+        if(session('loggedInUser') == null){
+            return view('playlist.login-noti');
+        }
+
+        $userPlaylist = Playlist::getPlaylistByUserId(session('loggedInUser'));
+
+        return view('playlist.playlist-all', ['userPlaylist' => $userPlaylist]);
     }
 
     public function playlistDetail($id){

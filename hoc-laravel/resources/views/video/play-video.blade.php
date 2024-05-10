@@ -115,7 +115,7 @@
             </button>
         </div>
 
-        {{--phần icon nhỏ phía trên bên phải--}}
+        {{--phần icon user nhỏ phía trên bên phải--}}
         <div class="acc-box">
         {{--<img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32">--}}
 
@@ -201,12 +201,17 @@
                 @endcomponent
             </div>
 
-{{--            Phần này là phần sidebar, chứa playlist và video đề xuất--}}
+            {{--Phần này là phần sidebar, chứa playlist và video đề xuất--}}
             <div class="sidebar">
                 {{-- Cái này là cái danh sách hiển thị khi người dùng xem DANH SÁCH PHÁT --}}
-{{--                Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện--}}
-                @component('video.playlist-in-video-wrapper');
-                @endcomponent
+                {{--Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện--}}
+                @if(isset($videoPlaylist))
+                    {{--truyền vào các video của playlist đó--}}
+                    @component('video.playlist-in-video-wrapper', ['videosInPlayList' => $videosInPlayList, 'videoPlaylist' => $videoPlaylist])
+                    @endcomponent
+                @endif
+                {{--@component('video.playlist-in-video-wrapper');--}}
+                {{--@endcomponent--}}
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
                 @component('video.video-hint-wrapper')
@@ -215,7 +220,8 @@
         </div>
     </div>
 
-{{--    đây là phần thêm video vào playlist--}}
+    {{--đây là phần thêm video vào playlist--}}
+    {{--chỗ này lấy playlist của user--}}
     @component('video.video-modal', ['playlists' => $playlists, 'video' => $video])
     @endcomponent
 

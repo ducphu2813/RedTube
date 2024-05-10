@@ -5,7 +5,7 @@ use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\FollowController;
-use App\Http\Controllers\clients\History;
+use App\Http\Controllers\clients\HistoryController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
 use App\Http\Controllers\clients\InteractionController;
@@ -117,13 +117,18 @@ Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipD
     ->middleware('CheckLogin');
 // end Membership
 
-Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+//trang chính của đồ án
+Route::get('home', [HomePageController::class, 'index'])->name('clients.homePage');
+
+//????
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
 
+//????
 Route::get('studioPage', [StudioController::class, 'index'])
     ->middleware('CheckLogin')
     ->name('clients.studioPage');
 
+//????
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 
 // Hiển thị danh sách xem sau
@@ -133,7 +138,7 @@ Route::get('showWatchLater', [PlaylistController::class, 'showWatchLater'])->nam
 Route::get('showAllPlaylist', [PlaylistController::class, 'showAllPlaylist'])->name('clients.playlistAll');
 
 // Hiển thị danh sách lịch sử xem
-Route::get('showHistory', [History::class, 'showHistory'])->name('clients.videoHistory');
+Route::get('showHistory', [HistoryController::class, 'showHistory'])->name('clients.videoHistory');
 
 // Hiển thị danh sách video tìm kiếm
 Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('clients.searchVideo');
@@ -201,6 +206,11 @@ Route::get('videos/{video_id}', [VideoController::class, 'videoDetail'])
 //xem video
 Route::get('playVideo/{video_id}', [VideoController::class, 'playVideo'])
     ->name('clients.playVideo')
+    ->where('id', '[0-9]+');
+
+//cũng là xem video nhưng từ danh sách phát
+Route::get('playVideo/{video_id}/{playlist_id}', [VideoController::class, 'playVideo'])
+    ->name('clients.playVideo.playlist')
     ->where('id', '[0-9]+');
 
 //update ảnh đại diện
