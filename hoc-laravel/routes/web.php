@@ -103,12 +103,15 @@ Route::prefix('admin')->group(function (){
 Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
 Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
 Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
-// end Membership
 
+
+// Trang chủ
 Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+
+// Danh sách phát
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
 Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
-Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
+Route::get('buyPremium', [PremiumController::class, 'buyPremium'])->name('clients.buyPremium');
 
 // Hiển thị danh sách xem sau
 Route::get('showWatchLater', [PlaylistController::class, 'showWatchLater'])->name('clients.watchLater');
@@ -133,6 +136,13 @@ Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.pl
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
+
+// Show video by channel
+Route::get('showVideoByChannel', [VideoController::class, 'showVideoByChannel'])->name('clients.showVideoByChannel');
+
+// Không có premium
+Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.noPremium');
+
 
 // -------------------- Hết của Dương -------------------- //
 

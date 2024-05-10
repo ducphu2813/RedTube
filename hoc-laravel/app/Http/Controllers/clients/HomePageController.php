@@ -11,7 +11,5 @@ class HomePageController extends Controller
         return view('main.homePageBase');
     }
     
-    public function buyPremium(){
-        return view('premium.privatePremiumBuy');
-    }
+    
 }
