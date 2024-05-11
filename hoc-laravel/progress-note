@@ -22,7 +22,7 @@ bấm vào video trong playlist thì chuyển sang video đó(v)
 lưu history khi coi(v)
 hiện history(v)
 đổ dữ liệu vào trang history(v)
-
+làm phần search(v)(tạm thời search theo tên)
 xử lý xóa history(x)
 
 ghi chú: comment phần lưu lịch sử coi(trong VideoController) để làm chức năng trước

@@ -8,6 +8,7 @@ use App\Models\Playlist;
 use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class VideoController extends Controller{
 
@@ -101,13 +102,26 @@ class VideoController extends Controller{
         $id = session('loggedInUser');
         $currentUserProfile = Users::getUserById($id);
 
-
-        return view('video.video-in-main-wrapper', ['videos' => $videos, 'currentUserProfile' => $currentUserProfile]);
+        return view('video.video-in-main-wrapper',
+            [
+                'videos' => $videos,
+                'currentUserProfile' => $currentUserProfile,
+            ]
+        );
     }
 
     // Hàm tìm kiếm
-    public function searchVideo(){
-        return view('video.video-search');
+    public function searchVideo(Request $request){
+
+        $data = $request->all();
+
+//        if(isset($data['category_id'])){
+//            $videos = Video::getVideoByCategoryId($data['category_id']);
+//            return view('video.video-search', ['videos' => $videos]);
+//        }
+
+        $videos = Video::searchVideo($data['searchValue']);
+        return view('video.video-search', ['videos' => $videos]);
     }
 
 }

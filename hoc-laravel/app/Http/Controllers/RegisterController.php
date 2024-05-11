@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Playlist;
 use App\Models\Users;
 use App\Rules\RegisterUniqueRule;
 use Illuminate\Http\Request;
@@ -73,6 +74,17 @@ class RegisterController extends Controller{
 
             //lấy ra user vừa tạo
             $newUser = Users::query()->where('user_name', $request->user_name)->first();
+
+            //sau đó tạo cho user 1 danh sách phát mặc định(xem sau)
+            $playlist = new Playlist();
+            $playlist->createPlaylist(
+                [
+                    'name' => 'Xem sau',
+                    'user_id' => $newUser->user_id,
+                    'created_date' => date('Y-m-d H:i:s'),
+                ]
+            );
+
 
             //lưu id user và role vào session
             $request->session()->put('loggedInUser', $newUser->user_id);

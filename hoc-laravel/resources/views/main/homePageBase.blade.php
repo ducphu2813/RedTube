@@ -90,8 +90,9 @@
             </svg>
         </div>
 
+        {{-- seach box--}}
         <div class="search-container ">
-            <input type="text" name="search-bar" id="" class="search-bar" placeholder="Tìm kiếm">
+            <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
             <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 14px;"></i>
             </button>
@@ -188,8 +189,11 @@
         {{-- Chổ này là DANH SÁCH kênh đăng kí nên phải tách item --}}
         {{-- Sửa lại thành foreach --}}
         {{-- Sẽ lưu trong resources/channel nhé --}}
-        @component('channel.channel-detail')
-        @endcomponent
+        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
+        @if(session('loggedInUser'))
+            @component('channel.channel-detail', ['followings' => $followings])
+            @endcomponent
+        @endif
 
         <ul class="list-container">
             <div class="list-title">Premium</div>
@@ -280,20 +284,43 @@
             });
         });
 
-        // Cái này để search nè
+        //hàm xử lý tìm kiếm
+        function handleSearch() {
+            let searchValue = $('#search-inp').val().trim().replace(/\s+/g, ' ');
+
+            if (searchValue !== '') {
+
+                $.ajax({
+                    url: '{{ route('clients.searchVideo') }}',
+                    type: 'GET',
+                    data: {
+                        searchValue: searchValue
+                    },
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#content').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+
+                console.log(searchValue);
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        // Script của search btn
         $('.search-btn').on('click', function() {
-            $.ajax({
-                url: '{{ route('clients.searchVideo') }}',
-                type: 'GET',
-                dataType: 'html',
-                success: function(response) {
-                    $('#content').html(response);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown);
-                }
-            });
-            console.log('click');
+            handleSearch();
+        });
+
+        // Script của search input
+        $('#search-inp').on('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
         });
     </script>
 @endsection
