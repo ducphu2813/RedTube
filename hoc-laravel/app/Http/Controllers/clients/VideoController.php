@@ -59,7 +59,7 @@ class VideoController extends Controller{
 //        $videoModel->increaseView($id);
 
         //playlist của user để cho chức năng thêm hoặc xóa video khỏi playlist
-        $playlists = Playlist::getPlaylistByUserId($id);
+        $playlists = Playlist::getPlaylistByUserId($userId);
 
         //lấy thông tin user đang đăng nhập
         $currentUserProfile = Users::getUserById($userId);

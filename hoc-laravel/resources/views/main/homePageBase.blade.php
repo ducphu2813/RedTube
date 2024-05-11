@@ -98,14 +98,6 @@
             </button>
         </div>
 
-        {{--phần icon user nhỏ phía trên bên phải--}}
-        <div class="acc-box">
-            @if(session('loggedInUser') && $currentUserProfile->picture_url)
-                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
-            @else
-                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-
-            @endif
         <div class="notification">
             <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
             <div class="new-noti"></div>
@@ -121,6 +113,18 @@
                 </div>
             </div>
         </div>
+
+
+        {{--phần icon user nhỏ phía trên bên phải--}}
+        <div class="acc-box">
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
+        </div>
+
     </div>
 @endsection
 
@@ -291,8 +295,7 @@
 
                     $('#content').html(response);
                 },
-                error: function(jqXHR, textStatus, errorThrown, response) {
-                    console.log('AJAX error:', textStatus, errorThrown);
+                error: function(response) {
                     console.log(response);
                 }
             });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
 use App\Models\PlaylistVideo;
+use App\Models\Users;
 use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
@@ -63,7 +64,13 @@ class PlaylistController extends Controller
             return view('playlist.login-noti');
         }
 
-        return view('playlist.later-playlist');
+        $user = Users::getUserById(session('loggedInUser'));
+
+        $watchLaterVideo = Playlist::getVideosInWatchLaterPlaylist($user->user_id);
+
+//        dd($watchLaterVideo);
+
+        return view('playlist.later-playlist', ['watchLaterVideo' => $watchLaterVideo]);
     }
 
     // Tạo danh sách phát

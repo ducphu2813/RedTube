@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\Video;
-use App\Models\Users;
 
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
 
@@ -98,6 +97,8 @@ class StudioController extends Controller
         $user = Users::getUserById(session('loggedInUser'));
         unset($data['_token']);
 
+        $newUserData = [];
+
         //kiểm tra xem có thay đổi ảnh hay không
         if($request->hasFile('picture_url') && isset($data['picture_url'])){
             $file = $request->file('picture_url');
@@ -110,6 +111,7 @@ class StudioController extends Controller
             }
             $data['picture_url_status'] = 'isChange';
             $data['new_picture_url'] = $fileName;
+            $newUserData['picture_url'] = $fileName;
         }
 
         $newUserData = [
@@ -117,7 +119,6 @@ class StudioController extends Controller
             'email' => $data['email'],
             'description' => $data['description'],
             'channel_name' => $data['channel_name'],
-            'picture_url' => $user->picture_url,
         ];
 
         $userModel = new Users;

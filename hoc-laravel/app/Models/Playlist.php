@@ -46,6 +46,28 @@ class Playlist extends Model
             ->get();
     }
 
+    //lấy playlist xem sau
+    public static function getWatchLaterPlaylist($user_id){
+        return self::query()
+            ->where('user_id', $user_id)
+            ->where('name', 'Xem Sau')
+            ->first();
+    }
+
+    //lấy các video trong playlist xem sau
+    public static function getVideosInWatchLaterPlaylist($user_id){
+        $playlist = self::query()
+            ->where('user_id', $user_id)
+            ->where('name', 'Xem Sau')
+            ->first();
+
+        if ($playlist) {
+            return $playlist->getVideosInPlaylist();
+        }
+
+        return null;
+    }
+
 
     //mối quan hệ giữa playlist và video
     public function videos(): HasManyThrough

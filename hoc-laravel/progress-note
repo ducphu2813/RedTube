@@ -23,11 +23,14 @@ lưu history khi coi(v)
 hiện history(v)
 đổ dữ liệu vào trang history(v)
 làm phần search(v)(tạm thời search theo tên)
-xử lý xóa history(x)
+
 
 ghi chú: comment phần lưu lịch sử coi(trong VideoController) để làm chức năng trước
-history(x)
-tự động tạo cho user 1 playlist xem sau mỗi khi đăng ký (x)
+history(v)
+tự động tạo cho user 1 playlist xem sau mỗi khi đăng ký (v)
+làm tab xem sau (v)
+làm premium của studio(x)
 
+xử lý xóa history(x)
 cần cải tiến thanh tab bên trái ẩn đi 1 vài item khi chưa login (x)
 highlight video đang coi trong playlist(x)
