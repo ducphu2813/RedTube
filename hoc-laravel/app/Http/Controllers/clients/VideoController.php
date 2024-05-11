@@ -124,4 +124,9 @@ class VideoController extends Controller{
         return view('video.video-search', ['videos' => $videos]);
     }
 
+    // Hàm xem video theo kênh đăng kí, đổ data là video theo kênh user đã đăng kí
+    public function showVideoByChannel(){
+        return view('video.video-in-main-wrapper');
+    }
+
 }

@@ -1,4 +1,3 @@
-
 <ul class="content__body--list">
 
     <!-- header -->
@@ -76,11 +75,6 @@
     @endforeach
 </ul>
 
-
-@component('studio.pagination')
-@endcomponent
-
-
 <script>
     $('.content__body--list').ready(function() {
         $('.edit--btn').on('click', function(event) {
@@ -114,5 +108,25 @@
             });
             event.preventDefault();
         });
+
+    
+        $.ajax({
+            url: '{{ route('studio.pagination') }}',
+            type: 'GET',
+            data: {
+                currentPage: {{ $currentPage }},
+                totalPages: {{ $totalPages }}, 
+                pageDisplay: {{ $pageDisplay }}
+            },
+            dataType: 'html',
+            success: function(data) {
+                $('#body').append(data);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching content:', error);
+                console.log({{ $currentPage }})
+            }
+        });
+
     });
 </script>

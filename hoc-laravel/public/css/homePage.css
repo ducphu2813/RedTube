@@ -75,6 +75,141 @@ input.search-bar {
     z-index: 2;
 }
 
+/* Noti */
+
+.notification {
+    margin-right: 40px;
+}
+
+.notification::before {
+    content: "";
+    width: 100px;
+    height: 100px;
+    display: block;
+    position: absolute;
+    right: 16px;
+}
+
+.notification:hover .wrapper-notify-item-list {
+    display: block;
+}
+
+.fa-bell {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* Lớp giả tạo ra để khi có thông báo mới sẽ hiện */
+.new-noti {
+    position: relative;
+}
+
+.new-noti::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    top: -30px;
+    right: -3px;
+}
+
+.wrapper-notify-item-list {
+    position: absolute;
+    width: 450px;
+    top: 110%;
+    right: 25px;
+    border-radius: 8px;
+    display: none;
+}
+
+.header-notify {
+    background-color: #131313;
+    height: 40px;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-notify h4 {
+    color: #fff;
+    font-weight: 400;
+    line-height: 40px;
+    padding-left: 5px;
+    margin-bottom: 0;
+}
+
+.header-notify a{
+    margin-right: 10px;
+}
+
+.wrapper-header-notify-list {
+    background-color: #fff;
+    height: 500px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    overflow-y: scroll;
+}
+
+.header-notify-list {
+    margin-top: 10px;
+}
+
+.header-notify-item {
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.header-notify-item:hover {
+    background-color: #eaeaea;
+
+}
+
+.header-notify-item a {
+    display: flex;
+    text-decoration: none;
+    color: #000;
+}
+
+.channel-avatar-notify {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.header-notify-info {
+    flex-direction: column;
+    flex: 1;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.wrapper-header-notify-name {}
+
+.header-notify-name {}
+
+.wrapper-header-notify-description {}
+
+.wrapper-header-notify-description .fa-circle {
+    font-size: 5px;
+}
+
+.header-notify-description {}
+
+.thumbnail-notify {
+    width: 100px;
+    height: 75px;
+    border-radius: 8px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/* Account */
+
 .acc-box {
     margin-right: 20px;
     background-color: #fff;
@@ -150,7 +285,7 @@ input.search-bar {
 }
 
 .list-icon img,
-.list-icon{
+.list-icon {
     width: 24px;
     height: 24px;
     display: inline-block;
