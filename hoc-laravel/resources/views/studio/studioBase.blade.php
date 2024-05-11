@@ -3,6 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
+
 @endsection
 
 @section('search')
@@ -53,8 +55,8 @@
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
+                <a href="{{ route('studio.contents') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -86,8 +88,8 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
+                <a href="{{ route('studio.profile') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -103,7 +105,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('membership.membershipManager') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -115,7 +117,8 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('premium.premiumManager') }}">
+
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -127,19 +130,51 @@
                     Premium
                 </a>
             </li>
+            <li class="list-item">
+                <a href="">
+                    <span class="list-icon">
+                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
+                            class="style-scope tp-yt-iron-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                            <g width="24" height="24" viewBox="0 0 24 24" class="style-scope tp-yt-iron-icon">
+                                <path
+                                    d="M8 7H16V9H8V7ZM8 13H13V11H8V13ZM5 3V16H15H15.41L15.7 16.29L19 19.59V3H5ZM4 2H20V22L15 17H4V2Z"
+                                    class="style-scope tp-yt-iron-icon"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    Thông báo
+                </a>
+            </li>
         </ul>
     </div>
 @endsection
 
+@section('content')
+    <div id="right">
+
+    </div>
+
+@endsection
+
 @section('scripts')
+
     <script>
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-
+                    $.ajax({
+                        url: '{{ route('studio.videoDetails') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                        }
+                    })
                 } else if (index == 1) {
                     $.ajax({
                         url: '{{ route('playlist.createPlaylist') }}',
@@ -181,41 +216,87 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
             $('.list-item').on('click', function() {
-                var index = $(this).index();
-                if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
-                } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
-                } else if (index == 2) {
-                    console.log('Thông tin kênh');
-                    event.preventDefault();
-                } else if (index == 3) {
-                    $.ajax({
-                        url: '{{ route('membership.membershipManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                } else {
-                    $.ajax({
-                        url: '{{ route('premium.premiumManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                }
+                event.preventDefault();
+                var link = $(this).find('a').attr('href');
+                $.ajax({
+                    url: link,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#content').html(data);
+                    }
+                });
+// =======
+//             $('.list-item').on('click', function(event) {
+//                 var index = $(this).index();
+//                 if (index == 0) {
+//                     $.ajax({
+//                         url: '{{ route('studio.contents') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                 } else if (index == 1) {
+
+//                 } else if (index == 2) {
+// // <<<<<<< HEAD
+// //                     // console.log('Thông tin kênh');
+// // =======
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                     $.ajax({
+//                         url: '{{ route('studio.profile') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+// // <<<<<<< HEAD
+// //                         },
+// //                         // error: function(xhr, status, error) {
+// //                         //     console.error('Error fetching content:', error);
+// //                         // }
+// //                     });
+// //                     event.preventDefault();
+// // =======
+//                         }
+//                     });
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                 } else if (index == 3) {
+//                     $.ajax({
+//                         url: '{{ route('membership.membershipManager') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                 } else {
+//                     $.ajax({
+//                         url: '{{ route('premium.premiumManager') }}',
+//                         type: 'GET',
+//                         dataType: 'html',
+//                         success: function(data) {
+//                             $('#content').html(data);
+//                         }
+//                     });
+//                     event.preventDefault();
+// // <<<<<<< HEAD
+// //                     event.preventDefault();
+// // =======
+
+// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
+//                 }
+
+//                 $('#content').empty()
+//                 event.preventDefault();
+// >>>>>>> Dung
             });
         });
     </script>

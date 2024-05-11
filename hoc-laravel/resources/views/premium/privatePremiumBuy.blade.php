@@ -2,41 +2,168 @@
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
 @endsection
 
-{{-- @section('content') --}}
-    <div id="preimum-container">
-        <div class="premium-title">
-            <div class="premium-logo" style="background-color: transparent;">
-                <img src="https://www.gstatic.com/youtube/img/promos/growth/ytp_lp2_logo_phone_landscape_300x44.png"
+<div class="premium-modal">
+    <div class="premium-modal-color">
+
+        <div class="premium-content">
+            <div class="premium-logo margin-item">
+                <img src="https://www.gstatic.com/youtube/img/promos/growth/ytp_lp2_logo_phone_portrait_300x80.png"
                     alt="">
             </div>
-            Trải nghiệm YouTube không quảng cáo, chỉ với 4000đ/ngày với Youtube Premium.
-        </div>
-        <div id="premium-box">
 
-            <div class="box">
-
-                <div class="box-title">Premium 1 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 129000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
+            <div class="premium-intro margin-item">
+                Thưởng thức trọn vẹn YouTube mà không bị gián đoạn.
             </div>
-            <div class="box">
 
-                <div class="box-title">Premium 3 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 349000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
+            <div class="premium-description margin-item">
+                Trải nghiệm YouTube và YouTube Music không quảng cáo, không cần mạng, và phát trong nền.
             </div>
-            <div class="box">
 
-                <div class="box-title">Premium 6 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 699000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
+            <a class="premium-buy-to-form premium-buy margin-item" href="#buyform">
+                Dùng ngay chỉ với 4000đ/ngày
+            </a>
+
+            <div class="premium-intro margin-item" style="padding: 0 100px;">
+                Chọn gói thành viên phù hợp với bạn
             </div>
+
+            <div class="premium-buy-list margin-item" id="buyform">
+                <div class="premium-buy-item margin-item">
+                    <div class="premium-buy-title">
+                        Gói 1 tháng
+                    </div>
+                    <div class="premium-buy-info">
+                        <div class="premium-price margin-item">
+                            Giá chỉ: 119.000đ
+                        </div>
+                        <div class="premium-buy-btn">
+                            <button class="premium-buy">Dùng ngay</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="premium-buy-item margin-item">
+                    <div class="premium-buy-title">
+                        Gói 3 tháng
+                    </div>
+                    <div class="premium-buy-info">
+                        <div class="premium-price margin-item">
+                            Giá chỉ: 349.000đ
+                        </div>
+                        <div class="premium-buy-btn">
+                            <button class="premium-buy">Dùng ngay</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="premium-buy-item margin-item">
+                    <div class="premium-buy-title">
+                        Gói 6 tháng
+                    </div>
+                    <div class="premium-buy-info">
+                        <div class="premium-price margin-item">
+                            Giá chỉ: 679.000đ
+                        </div>
+                        <div class="premium-buy-btn">
+                            <button class="premium-buy">Dùng ngay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="premium-intro margin-item">
+                Tiếp tục phát nội dung yêu thích — không gián đoạn.
+            </div>
+
+            <div class="premium-intro-info margin-item">
+                <div class="premium-intro-info-text margin-item">
+                    <h1>Video không QC, không giới hạn</h1>
+                    Xem thêm nhiều video yêu thích mà không phải chờ hết quảng cáo. Tìm video hướng dẫn, thử
+                    công thức nấu ăn mới hoặc tập thể dục khi xem các nhà sáng tạo bạn yêu thích, hoàn toàn
+                    không bị gián đoạn.
+                </div>
+
+                <div class="premium-intro-info-video margin-item">
+                    <img src="https://www.gstatic.com/youtube/img/promos/growth/premium_lp2_large_feature_AdFree_dark_tablet_632x455.webp"
+                        alt="">
+                </div>
+            </div>
+
+            <div class="premium-intro-info margin-item">
+                <div class="premium-intro-info-video margin-item">
+                    <img src="https://www.gstatic.com/youtube/img/promos/growth/premium_lp2_large_feature_UnlimitedDownloads_dark_tablet_632x615.webp"
+                        alt="">
+                </div>
+
+                <div class="premium-intro-info-text margin-item">
+                    <h1>Chia sẻ với gia đình</h1>
+                    Xem mọi lúc mọi nơi, cùng mọi người, tận hưởng ấm áp từ việc chia sẻ premium.
+                </div>
+            </div>
+
+            <div class="premium-question-container margin-item">
+                <div class="premium-question-title margin-item premium-intro">
+                    Giải đáp các câu hỏi của bạn
+                </div>
+
+                <div class="premium-question-item">
+                    <div class="premium-question-up">
+                        <div class="premium-question-text">
+                            Gói YouTube Premium có những gì?
+                        </div>
+                        <div class="premium-question-btn">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="premium-question-answer">
+                        Khi là thành viên YouTube Premium, bạn có thể xem video không có quảng cáo trên YouTube.
+                        Hơn nữa, bạn có thể tải video xuống để xem không cần mạng và phát video trong nền khi
+                        dùng các ứng dụng khác.
+                        Gói thành viên YouTube Premium bao gồm cả quyền sử dụng YouTube Music Premium. Hãy tải
+                        ứng dụng YouTube Music xuống để nghe hơn 100 triệu bài hát không có quảng cáo, không cần
+                        mạng và khi khoá màn hình.
+                        Bạn cũng có thể xem video không có quảng cáo trên ứng dụng YouTube Kids.
+                    </div>
+                </div>
+
+                <div class="premium-question-item">
+                    <div class="premium-question-up">
+                        <div class="premium-question-text">
+                            Làm cách nào để thêm người khác vào gói của tôi?
+                        </div>
+                        <div class="premium-question-btn">
+                            <i class="fa-solid fa-angle-down"></i>
+                        </div>
+                    </div>
+
+                    <div class="premium-question-answer">
+                        Bạn có thể mua gói thành viên YouTube Premium dành cho gia đình để chia sẻ với tối đa 5
+                        thành viên khác trong gói gia đình. Khi mua gói dành cho gia đình, bạn có thể thêm thành
+                        viên nếu bạn là người quản lý gia đình. Các thành viên gia đình dùng chung gói dành
+                        cho gia đình phải sống trong cùng hộ gia đình với người quản lý gia đình và
+                        có Tài khoản Google. Mỗi thành viên gia đình sẽ có tài khoản riêng tư và được cá nhân
+                        hoá.
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
-{{-- @endsection --}}
+</div>
 
-{{-- @section('scripts')
-    <script src="{{ asset('js/premium.js') }}"></script> --}}
+{{-- Script mua ở này --}}
+<script>
+    $(document).ready(function() {
+        $('.premium-buy-btn').click(function() {
+            console.log('Mua thành công');
+        });
+
+        $('.premium-buy-to-form').click(function() {
+            $('html, body').animate({
+                scrollTop: $("#buyform").offset().top
+            }, 2000);
+        });
+    });
+</script>

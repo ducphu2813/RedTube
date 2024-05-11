@@ -5,3 +5,5 @@
         @endcomponent
     @endfor
 </div>
+
+{{-- Sờ cờ ríp cho playVideo tại này --}}
