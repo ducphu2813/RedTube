@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 
 class StudioController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('studio.studioBase');
+    }
+    public function Analysis()
+    {
+        return view('users.chart-user');
     }
 }

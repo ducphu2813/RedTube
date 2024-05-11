@@ -36,9 +36,9 @@ class AdminController extends Controller
     }
 
     // hàm hiển thị trang danh sách check
-    public function showCheckList(){
-        return view('admin.checkWrapper');
-    }
+    // public function showCheckList(){
+    //     return view('admin.checkWrapper');
+    // }
 
     // hàm hiển thị trang danh sách chart
     public function showChartList(){

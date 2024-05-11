@@ -16,6 +16,8 @@ use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\test\testcontroller;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
 
 //client route, school
-Route::middleware('CheckLogin')->prefix('schools')->group(function(){
+Route::middleware('CheckLogin')->prefix('schools')->group(function () {
 
     //lấy ra danh sách trường học(GET)
     Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
@@ -69,7 +71,7 @@ Route::middleware('CheckLogin')->prefix('schools')->group(function(){
 
 
 //admin route
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->group(function () {
 
 
     //1 ví dụ về route resource cho controller
@@ -110,6 +112,9 @@ Route::get('studioPage', [StudioController::class, 'index'])->name('clients.stud
 Route::get('buyPremium', [HomePageController::class, 'buyPremium'])->name('clients.buyPremium');
 // -------------------- Hết của Dương -------------------- //
 
+
+Route::get('sasd', [testcontroller::class, 'view'])->name('client.TEST');
+
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');
 
@@ -149,6 +154,8 @@ Route::get('videos/{video_id}', [VideoController::class, 'videoDetail'])
 //update ảnh đại diện
 Route::post('users/update-picture', [UsersController::class, 'updatePicture'])
     ->name('users.update-picture');
+//Hien thi thong ke
+Route::get('users/chart', [StudioController::class, 'Analysis'])->name('users.chart');
 
 
 
