@@ -6,7 +6,50 @@
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
 @endsection
 
+{{-- Cái này là thanh tìm kiếm --}}
 @section('search')
+    <script>
+        //định dạng view
+        function formatViews(views) {
+
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
+        }
+
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.ceil(diffDays / 7);
+            const diffMonths = Math.ceil(diffDays / 30);
+
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 13) {
+                return diffDays + ' ngày trước';
+            } else if (diffWeeks <= 4) {
+                return diffWeeks + ' tuần trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
+        }
+    </script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon" viewBox="0 0 90 20"
@@ -47,25 +90,32 @@
             </svg>
         </div>
 
+        {{-- seach box--}}
         <div class="search-container ">
-            <input type="text" name="search-bar" id="" class="search-bar" placeholder="Tìm kiếm">
-            <button type="submit">
+            <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
+            <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 14px;"></i>
             </button>
         </div>
 
+        {{--phần icon user nhỏ phía trên bên phải--}}
         <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
         </div>
     </div>
 @endsection
 
-
+{{-- Cái này là thanh bên trái --}}
 @section('nav')
     <div id="left">
         <ul class="list-container">
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.videoReload') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -95,7 +145,18 @@
         <ul class="list-container">
             <div class="list-title">Danh sách phát</div>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.playlistAll') }}">
+                    <span class="list-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
+                            focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+                            <path d="M22 7H2v1h20V7zm-9 5H2v-1h11v1zm0 4H2v-1h11v1zm2 3v-8l7 4-7 4z"></path>
+                        </svg>
+                    </span>
+                    Danh sách phát
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="{{ route('clients.watchLater') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -108,7 +169,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.videoHistory') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24"
                             style="pointer-events: none; display: inherit; width: 100%; height: 100%;" viewBox="0 0 24 24"
@@ -124,209 +185,16 @@
                 </a>
             </li>
         </ul>
-        <ul class="list-container">
-            <div class="list-title">Kênh đăng ký</div>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Youtube
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-            <li class="list-item">
-                <a href="">
-                    <span class="list-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
-                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
-                            <path fill="red"
-                                d="M11.13 1.21c.48-.28 1.26-.28 1.74 0l8.01 4.64c.48.28.87.97.87 1.53v9.24c0 .56-.39 1.25-.87 1.53l-8.01 4.64c-.48.28-1.26.28-1.74 0l-8.01-4.64c-.48-.28-.87-.97-.87-1.53V7.38c0-.56.39-1.25.87-1.53l8.01-4.64z">
-                            </path>
-                            <path fill="#fff"
-                                d="m12.71 18.98 4.9-2.83c.41-.24.64-.77.64-1.24V9.24c0-.47-.23-1-.64-1.24l-4.9-2.82c-.41-.23-1.02-.23-1.42 0L6.39 8c-.4.23-.64.77-.64 1.24v5.67c0 .47.24 1 .64 1.24l4.9 2.83c.2.12.46.18.71.18.26-.01.51-.07.71-.18z">
-                            </path>
-                            <path fill="red"
-                                d="m12.32 5.73 4.89 2.83c.16.09.41.31.41.67v5.67c0 .37-.25.54-.41.64l-4.89 2.83c-.16.09-.48.09-.64 0l-4.89-2.83c-.16-.09-.41-.34-.41-.64V9.24c.02-.37.25-.58.41-.68l4.89-2.83c.08-.05.2-.07.32-.07s.24.02.32.07z">
-                            </path>
-                            <path fill="#fff" d="M9.88 15.25 15.5 12 9.88 8.75z"></path>
-                        </svg>
-                    </span>
-                    Admin Premium
-                </a>
-            </li>
-        </ul>
+
+        {{-- Chổ này là DANH SÁCH kênh đăng kí nên phải tách item --}}
+        {{-- Sửa lại thành foreach --}}
+        {{-- Sẽ lưu trong resources/channel nhé --}}
+        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
+        @if(session('loggedInUser'))
+            @component('channel.channel-detail', ['followings' => $followings])
+            @endcomponent
+        @endif
+
         <ul class="list-container">
             <div class="list-title">Premium</div>
             <li class="list-item">
@@ -386,71 +254,73 @@
     </div>
 @endsection
 
+{{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
+@section('content')
+    @component('video.video-in-main-wrapper', ['videos' => $videos])
+    @endcomponent
+@endsection
+
 @section('scripts')
     <script>
+
+        // Cái này để điều hướng thanh bên trái
         $(".list-item").on('click', function(event) {
-            var indexParent = $(this).parent().index();
-            var index = $(this).index();
-            if(indexParent == 0){
-                console.log('bạn đang nhấn vào con thứ ' + index + ' có cha là ' + indexParent );
-            }else if(indexParent == 1){
-                console.log('bạn đang nhấn vào con thứ ' + index + ' có cha là ' + indexParent );
-            }else if(indexParent == 2){
-                console.log('bạn đang nhấn vào con thứ ' + index + ' có cha là ' + indexParent );
-            }else if(indexParent == 3){
-                if(index == 1){
-                    var link = $(this).find('a').attr('href');
-                    $.ajax({
-                        url: link,
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(response){
-                            $('#content').html(response);
-                        },
-                        error: function(jqXHR, textStatus, errorThrown) {
-                            console.log('AJAX error:', textStatus, errorThrown);
-                        }
-                    });
-                    event.preventDefault();
-                }
-            }
             event.preventDefault();
+            var link = $(this).find('a').attr('href');
+            console.log(link);
+            $.ajax({
+                url: link,
+                type: 'GET',
+                dataType: 'html',
+                success: function(response) {
+                    console.log(response);
+
+                    $('#content').html(response);
+                },
+                error: function(jqXHR, textStatus, errorThrown, response) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                    console.log(response);
+                }
+            });
+        });
+
+        //hàm xử lý tìm kiếm
+        function handleSearch() {
+            let searchValue = $('#search-inp').val().trim().replace(/\s+/g, ' ');
+
+            if (searchValue !== '') {
+
+                $.ajax({
+                    url: '{{ route('clients.searchVideo') }}',
+                    type: 'GET',
+                    data: {
+                        searchValue: searchValue
+                    },
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#content').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+
+                console.log(searchValue);
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        // Script của search btn
+        $('.search-btn').on('click', function() {
+            handleSearch();
+        });
+
+        // Script của search input
+        $('#search-inp').on('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
         });
     </script>
 @endsection
-
-{{-- @section('content')
-    <div id="preimum-container">
-        <div class="premium-title">
-            <div class="premium-logo" style="background-color: transparent;">
-                <img src="https://www.gstatic.com/youtube/img/promos/growth/ytp_lp2_logo_phone_landscape_300x44.png"
-                    alt="">
-            </div>
-            Trải nghiệm YouTube không quảng cáo, chỉ với 4000đ/ngày với Youtube Premium.
-        </div>
-        <div id="premium-box">
-
-            <div class="box">
-
-                <div class="box-title">Premium 1 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 129000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
-            </div>
-            <div class="box">
-
-                <div class="box-title">Premium 3 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 349000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
-            </div>
-            <div class="box">
-
-                <div class="box-title">Premium 6 Tháng</div>
-                <p>Không quảng cáo <br>
-                    Chỉ với 699000đ/tháng</p>
-                <button type="submit">Đăng ký ngay</button>
-            </div>
-        </div>
-    </div>
-@endsection --}}

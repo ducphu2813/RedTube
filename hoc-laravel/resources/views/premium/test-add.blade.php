@@ -9,6 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
+
+    <div>
+        <h2>Danh sách những người bạn chia sẻ premium</h2>
+
+        <div id="list-shared">
+
+        </div>
+    </div>
+
+
     <h2>Chia sẻ gói premium của bạn cho người khác</h2>
 
     <input id="search-bar" type="text" placeholder="Tìm user muốn chia sẻ">

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\PremiumPackage;
 use App\Models\PremiumRegistration;
 use App\Models\ShareNoti;
+use App\Models\SharePremium;
 use App\Models\Users;
 use Illuminate\Http\Request;
 
@@ -20,6 +22,9 @@ class PremiumController extends Controller
     public function sharePage(Request $request){
 
         $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        //danh sách những người đã mời chia sẻ
+//        $receiverList =
 
         if($currentUserPremium == null){
             return view('premium.no-premium');
@@ -39,6 +44,8 @@ class PremiumController extends Controller
         $listUsers = Users::getUsersByName($nameFind);
 
         foreach ($listUsers as $user){
+
+            //kiểm tra xem user có thể gửi thông báo chia sẻ không
             if(ShareNoti::isSendable(session('loggedInUser'), $user->user_id)){
                 $user->isSendable = true;
             }
@@ -93,5 +100,25 @@ class PremiumController extends Controller
         unset($data['_token']);
 
 
+    }
+
+    public function getAllRegistrations(){
+
+        // Lấy tất cả gói premium (không quan tâm user_id)
+        // $data['listRegistrations'] = PremiumRegistration::getAllPremiumRegistrationsByUser($id);
+
+        // Lấy tất cả user đã được share gói premium
+        // $data['listShares'] = $data['listRegistrations']->sharedUsers();
+        // $data[]
+
+        // đếm user được share gói premium
+        // $data['countUser'] = $data['listShares']->getAllSharedUsersCount();
+
+        $data = PremiumRegistration::getAllNoCondition();
+        return view('premium.premiumWrapper', $data);
+    }
+
+    public function showModalPremium(){
+        return view('premium.premiumShareList');
     }
 }

@@ -37,6 +37,7 @@ class ShareNoti extends Model
         if($senderId == $receiverId){
             return false;
         }
+        
         else if(self::query()
             ->where('sender_id', $senderId)
             ->where('receiver_id', $receiverId)
@@ -67,6 +68,19 @@ class ShareNoti extends Model
             ->where('receiver_id', $receiverId)
             ->where('expiry_date', '>', $currentDate)
             ->with(['sender', 'registration'])
+            ->get();
+
+        return $result;
+    }
+
+    //lấy thông báo của sender
+    public static function getNotiBySender(int $senderId)
+    {
+        $currentDate = date('Y-m-d H:i:s');
+        $result = self::query()
+            ->where('sender_id', $senderId)
+            ->where('expiry_date', '>', $currentDate)
+            ->with(['receiver', 'registration'])
             ->get();
 
         return $result;

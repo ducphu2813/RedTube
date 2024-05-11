@@ -1,0 +1,336 @@
+/* -----Playvideo------  */
+
+.container.play-container {
+    position: relative;
+    top: 40px;
+}
+
+.play-container {
+    padding-left: 2%;
+}
+
+.row {
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.playvideo {
+    flex-basis: 69%;
+}
+
+.sidebar {
+    flex-basis: 30%;
+}
+
+.playvideo video {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.item .small-thumnail {
+    flex-basis: 70%;
+}
+
+.item .infor-video {
+    margin-left: 8px;
+}
+
+#inforVideo {
+    margin-bottom: 0px;
+}
+
+#titlevideo {
+    text-decoration: none;
+    color: #000;
+}
+
+.playvideo .play-video-infor {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #5a5a5a;
+}
+
+.playvideo .play-video-infor a img {
+    width: 20px;
+    margin-right: 8px;
+    margin-left: 13px;
+}
+
+#channel-title {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+#channel-name {
+    width: 100%;
+    font-size: 20px;
+    font-weight: 500;
+    color: #000;
+}
+
+#channel-subcride {
+    font-size: 14px;
+    color: #000;
+
+}
+
+.icon {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50px;
+    background-color: #f2f2f2;
+    margin-left: 250px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.fa-thumbs-up,
+.fa-thumbs-down,
+.fa-list {
+    font-size: 20px;
+    padding: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #000;
+}
+
+.change-status:hover {
+    background-color: #e8e7e7;
+    border-radius: 50px;
+
+}
+
+.fa-thumbs-up:hover {
+    cursor: pointer;
+    background-color: #e8e7e7;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+}
+
+.fa-thumbs-down:hover {
+    cursor: pointer;
+    background-color: #e8e7e7;
+}
+
+.fa-list:hover {
+    cursor: pointer;
+    background-color: #e8e7e7;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.fa-thumbs-up.clicked {
+    color: rgb(39, 149, 245);
+}
+
+.fa-thumbs-down.clicked {
+    color: rgb(245, 0, 0);
+}
+
+.fa-thumbs-up.clicked span {
+    color: #000;
+}
+
+.fa-thumbs-down.clicked span {
+    color: #000;
+}
+
+.para {
+    font-size: 15px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.fa-window-minimize {
+    font-size: 28px;
+}
+
+.discription {
+    background-color: #ececec;
+    border-radius: 8px;
+}
+
+#status-video {
+    padding: 5px;
+    font-size: 15px;
+    width: 850px;
+}
+
+.publisher {
+    display: flex;
+    align-items: center;
+    width: 30%;
+}
+
+.publisher img {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+
+
+.play-video-infor button {
+    width: 100px;
+    height: 40px;
+    background: red;
+    color: #fff;
+    padding: 8px 30px;
+    border: 0;
+    outline: 0;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+#title-video {
+    font-size: 20px;
+    /* font-weight: 600; */
+    margin-bottom: 10px;
+
+}
+
+.less {
+    max-height: 20px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 5px;
+    word-wrap: break-word;
+}
+
+.show-more {
+    max-height: none;
+}
+
+/* #expandable-content {
+    display: none; 
+  }
+  
+  .expanded {
+    display: block;
+  }*/
+#btn-expand {
+    background: none;
+    font-family: "Times New Roman", Times, serif;
+    /* text-decoration: none; */
+    padding: 5px;
+    border: none;
+}
+
+/* Add into Playlist */
+#myModal {
+    display: none;
+    /* Không hiển thị modal ban đầu */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(236, 236, 236, 0.3);
+    /* Làm mờ modal một chút */
+}
+
+.modal-content {
+    display: none;
+    /* Không hiển thị modal-content ban đầu */
+    position: fixed;
+    top: 50%;
+    /* Đặt vị trí dọc ở giữa màn hình */
+    left: 50%;
+    /* Đặt vị trí ngang ở giữa màn hình */
+    transform: translate(-50%, -50%);
+    /* Dịch chuyển modal-content để nằm chính giữa màn hình */
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 280px !important;
+    height: auto !important;
+    opacity: 1;
+}
+
+#playlist-name {
+    margin-bottom: 8px;
+    font-size: 18px;
+    align-items: center;
+}
+
+.playlist-save {
+    display: flex;
+}
+
+#playlist-name input {
+    width: 20px;
+    height: 30px;
+    border-radius: 8px;
+    padding-left: 5px;
+}
+
+#playlist-name span {
+    align-items: center;
+    padding-left: 8px;
+}
+
+#new-playlist {
+    font-size: 18px;
+}
+
+/* comment */
+#row-comment {
+    padding-top: 0px;
+}
+
+#comment {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
+
+#comment h4 {
+    padding: 5px;
+    padding-left: 10px;
+}
+
+#user-comment {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+#header-comment {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    border-bottom: #000;
+}
+
+#header-comment img {
+    margin-left: 10px;
+}
+
+#header-comment .input-group {
+    width: 800px;
+    padding-left: 5px;
+    border-bottom: 1px solid;
+}
+
+.input-group {
+    border: none !important;
+    box-shadow: none !important;
+}

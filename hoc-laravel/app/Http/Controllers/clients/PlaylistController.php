@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
 use App\Models\PlaylistVideo;
 use Illuminate\Http\Request;
 
@@ -54,9 +55,34 @@ class PlaylistController extends Controller
     //     }
     // }
 
+    // Hiển thị danh sách xem sau (nó cũng là 1 danh sách phát, nhưng không được xóa)
+    public function showWatchLater(){
+
+        //xử lý khi chưa login
+        if(session('loggedInUser') == null){
+            return view('playlist.login-noti');
+        }
+
+        return view('playlist.later-playlist');
+    }
+
+    // Tạo danh sách phát
     public function showCreatePlaylist()
     {
         return view('playlist.playlistModal');
+    }
+
+    // Hiển thị danh sách phát trên trang chủ
+    public function showAllPlaylist()
+    {
+        //xử lý khi chưa login
+        if(session('loggedInUser') == null){
+            return view('playlist.login-noti');
+        }
+
+        $userPlaylist = Playlist::getPlaylistByUserId(session('loggedInUser'));
+
+        return view('playlist.playlist-all', ['userPlaylist' => $userPlaylist]);
     }
 
     public function playlistDetail($id){
@@ -102,9 +128,6 @@ class PlaylistController extends Controller
                     'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau'
                 ]);
             }
-
-
-
         }
 
         //cái này để debug

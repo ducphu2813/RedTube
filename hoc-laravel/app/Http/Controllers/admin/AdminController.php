@@ -28,7 +28,6 @@ class AdminController extends Controller
         $listUser = Cache::remember('list_user', 0, function () {
             return Users::getAllUsers();
         });
-
         return view('admin.userWrapper', ['listUser' => $listUser]);
     }
 
@@ -39,9 +38,10 @@ class AdminController extends Controller
     }
 
     // hàm hiển thị trang danh sách check
-    // public function showCheckList(){
-    //     return view('admin.checkWrapper');
-    // }
+    public function showCheckList()
+    {
+        return view('admin.checkWrapper');
+    }
 
     // hàm hiển thị trang danh sách chart
     public function showChartList()
@@ -85,5 +85,13 @@ class AdminController extends Controller
         $active = $data['active'];
         $video = new Video();
         $video->updateVideo($id, ['active' => $active]);
+    }
+
+    // Check video
+
+    // Analysis data
+    public function showChartList()
+    {
+        return view('admin.chartWrapper');
     }
 }

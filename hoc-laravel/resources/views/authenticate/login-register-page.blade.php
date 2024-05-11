@@ -91,11 +91,11 @@
                     success: function(response) {
                         console.log(response);
                         if (response.status === 200) {
-                            
+
                             //khi đăng nhập thành công
                             //lấy ra url mà người dùng muốn truy cập trước khi đăng nhập/đăng ký
                             let redirectUrl = localStorage.getItem('redirect_after_login');
-                            
+
                             if (redirectUrl) {
                                 //chuyển về trang trước đó khi chưa đăng nhập
                                 window.location.href = redirectUrl;
@@ -105,15 +105,20 @@
                                 window.location.href = '{{ route('users.dashboard') }}';
                             }
                         }
-                        
+
                         if (response.status === 400) {
                             $('#sign-in-btn').text('Đăng nhập');
                             //khi đăng nhập thất bại, hiện các message validate lên
-                            if(!response.message.user_name){
-                                document.getElementById('login_password').nextElementSibling.innerHTML = response.message.password[0];
+                            var invalidUsername = document.getElementById('login_username').nextElementSibling;
+                            var invalidPassword = document.getElementById('login_password').nextElementSibling;
+                            if(response.message.user_name === undefined){
+                                response.message.user_name = '';
                             }
-                            document.getElementById('login_username').nextElementSibling.innerHTML = response.message.user_name ? response.message.user_name[0] : '';
-                            document.getElementById('login_password').nextElementSibling.innerHTML = response.message.password ? response.message.password[0] : '';
+                            if(response.message.password === undefined){
+                                response.message.password = '';
+                            }
+                            invalidUsername.innerText = response.message.user_name;
+                            invalidPassword.innerText = response.message.password;
                         }
                     }
 
@@ -137,6 +142,8 @@
                     dataType: 'json', //chuyển dữ liệu về dạng json
 
                     success: function(response) {
+
+                        console.log(response);
                         if (response.status === 200) {
                             //khi đăng ký thành công
 
@@ -155,16 +162,24 @@
 
                         if (response.status === 400) {
                             $('#sign-up-btn').text('Đăng ký');
-                            
+
 
                             //khi đăng ký thất bại, hiện các message validate lên
+                            var fields = ['user_name', 'password', 'email', 'confirm_password'];
+                            
+                            fields.forEach(function(field) {
+                                if(response.message[field] === undefined) {
+                                    response.message[field] = '';
+                                }
+                            });
+
+                            fields.forEach(function(field) {
+                                var invalidField = document.getElementById('register_' + field).nextElementSibling;
+                                invalidField.innerText = response.message[field];
+                            });    
                         }
-                    if(response.status === 200) {
-                        //khi đăng ký thành công
-                        window.location.href = '{{ route('login-register') }}';
                     }
                 });
-
             });
         });
     </script>

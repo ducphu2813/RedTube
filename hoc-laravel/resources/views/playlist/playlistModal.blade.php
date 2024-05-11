@@ -1,5 +1,5 @@
 {{-- Modal này để dùng cho add và edit --}}
-<!-- Dùng modal.css -->
+<!-- Dùng modal.css ### -->
 <div class="modal-pl">
     <div class="modal-info-wrapper">
         <div id="modal-info-header">
