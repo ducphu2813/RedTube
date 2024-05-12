@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/studio/studioContentsVideos.css') }}">
+
 <ul class="content__body--list">
 
     <!-- header -->
@@ -80,7 +82,7 @@
         $('.edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails/${video_id}`,
+                url: `/studioPage/videoDetails`,
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
@@ -96,7 +98,7 @@
         $('.delete--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails/${video_id}`,
+                url: `/studioPage/videoDetails`,
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
@@ -115,6 +117,7 @@
             type: 'GET',
             data: {
                 currentPage: {{ $currentPage }},
+                itemPerPage: {{ $itemPerPage }},
                 totalPages: {{ $totalPages }}, 
                 pageDisplay: {{ $pageDisplay }}
             },

@@ -7,7 +7,7 @@
     <div class="pagination">
 
         <label for="itemPerPage">Hiển thị</label>
-        <input type="text" id="itemPerPage" class="pagi">
+        <input type="text" id="itemPerPage" class="pagi" value='{{ $itemPerPage }}'>
 
         @if ($currentPage != 1)
             <button class="pagi--btn" id="chevron--left" page={{ $currentPage - 1 }}>

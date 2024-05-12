@@ -61,4 +61,9 @@ class Follow extends Model
             ->where('follower_id', $follower_id)
             ->delete();
     }
+
+    public static function countFollow($user_id)
+    {
+        return self::where('user_id', $user_id)->count();
+    }
 }

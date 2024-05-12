@@ -1,13 +1,14 @@
 <ul class="list-container">
     <div class="list-title">Kênh đăng ký</div>
-    @for ($i = 0; $i < 6; $i++)
-        <li class="list-item">
+    @foreach ($channels as $channel)
+        <li class="list-item" user_id='{{ $channel->user_id }}'>
             <a href="">
                 <span class="list-icon">
-                    <img src="{{ asset('resources/img/ocean.jpg') }}" alt="">
+                    <img src="{{ $channel->picture_url }}" alt="">
                 </span>
-                Channel Name
+                
+                {{ $channel->channel_name }}
             </a>
         </li>
-    @endfor
+    @endforeach
 </ul>
