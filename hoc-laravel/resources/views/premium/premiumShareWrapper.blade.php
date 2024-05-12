@@ -30,6 +30,8 @@
 
 <script>
     $(document).ready(function() {
+
+        //nút coi chi tiết share
         $('.btn-detail-share').click(function() {
             // console.log('click')
             $.ajax({
@@ -49,7 +51,7 @@
             var target = $(event.target);
             if(!target.closest('.modal-share-content').length && $('.modal-share-premium').is(":visible")) {
                 $('#modal').empty();
-            }        
+            }
         });
 
     });

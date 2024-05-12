@@ -17,6 +17,16 @@ class HomePageController extends Controller
 
         $currentUserProfile = Users::getUserById($id);
 
+        if(!$currentUserProfile){
+            return view('main.homePageBase',
+                [
+                    'videos' => $videos,
+                    'currentUserProfile' => null,
+                    'followings' => null
+                ]
+            );
+        }
+
         //lấy danh sách kênh mà user đang follow
         $followings = $currentUserProfile->following();
 

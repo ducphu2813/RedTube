@@ -109,6 +109,8 @@ class PremiumController extends Controller
         // đếm user được share gói premium
         // $data['countUser'] = $data['listShares']->getAllSharedUsersCount();
 
+        //lấy premium còn hạn và hết hạn
+
         $data = PremiumRegistration::getAllNoCondition();
         return view('premium.premiumWrapper', $data);
     }

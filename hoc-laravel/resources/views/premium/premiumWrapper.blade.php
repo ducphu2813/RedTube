@@ -7,8 +7,6 @@
     <li class="content__option--item">Premium Gia Đình</li>
 </ul> --}}
 
-
-
 <div class="content__body">
     @component('premium.premiumShareWrapper')
     @endcomponent
