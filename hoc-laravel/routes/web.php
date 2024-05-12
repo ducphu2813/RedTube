@@ -120,6 +120,11 @@ Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipD
 //trang chính của đồ án
 Route::get('home', [HomePageController::class, 'index'])->name('clients.homePage');
 
+// Kênh của tôi
+Route::get('home/userChannel', [HomePageController::class, 'userChannel'])->name('clients.userChannel');
+Route::get('home/userChannel/videos', [HomePageController::class, 'userChannelVideos'])->name('clients.userChannel.videos');
+Route::get('home/userChannel/playlists', [HomePageController::class, 'userChannelPlaylists'])->name('clients.userChannel.playlists');
+
 //????
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
 Route::get('studioPage', [StudioController::class, 'index'])
@@ -147,6 +152,9 @@ Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('cl
 Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
 
 // Test screen video
+Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
+// Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage')->middleware('CheckLogin');
+
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');
@@ -162,12 +170,13 @@ Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.
 
 Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
 Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
-Route::get('studioPage/contents/playlists/{currentPage}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
+Route::get('studioPage/contents/playlists', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
-Route::get('studioPage/videoDetails/{video_id?}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
+Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');
+
 Route::post('studioPage/profileEdit', [StudioController::class, 'profileEdit'])->name('studio.profileEdit');
 
 //hiện layout user

@@ -4,7 +4,7 @@
 </h3>
 
 <div class="all-playlist-container">
-{{--     Cái này là nhiều danh sách phát --}}
+{{-- Cái này là nhiều danh sách phát --}}
 
     @foreach($userPlaylist as $playlist)
         <div class="all-playlist-item" id="{{ $playlist->playlist_id }}"
@@ -29,6 +29,7 @@
 
 {{-- Sờ cờ ríp xóa danh sách phát ở này --}}
 <script>
+
     $(document).ready(function() {
         // Cái này script xóa danh sách phát
         $('.all-playlist-btn').click(function() {

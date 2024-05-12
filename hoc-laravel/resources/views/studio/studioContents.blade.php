@@ -3,8 +3,8 @@
 <div class="content__title">Channel content</div>
 
 <ul class="content__option">
-    <li class="content__option--item selected" data-url="{{ route('studio.contents.videos', ['currentPage' => 1]) }}">Videos</li>
-    <li class="content__option--item" data-url="{{ route('studio.contents.playlists', ['currentPage' => 1]) }}">Playlists</li>
+    <li class="content__option--item selected" data-url="{{ route('studio.contents.videos') }}">Videos</li>
+    <li class="content__option--item" data-url="{{ route('studio.contents.playlists') }}">Playlists</li>
 </ul>
 
 <!-- body -->
@@ -18,8 +18,8 @@
             url: '{{ route('studio.contents.videos') }}',
             type: 'GET',
             data: {
-                'currentPage': 1,
-                'itemPerPage': 1
+                currentPage: 1,
+                itemPerPage: 1
             },
             dataType: 'html',
             success: function(data) {
@@ -55,7 +55,7 @@
             url: '{{ route('studio.contents.videos') }}',
             type: 'GET',
             data: {
-                'currentPage': page
+                currentPage: page
             },
             dataType: 'html',
             success: function(data) {

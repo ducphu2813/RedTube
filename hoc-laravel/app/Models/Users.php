@@ -77,6 +77,10 @@ class Users extends Model
         return $this->hasMany(Comment::class, 'user_id');
     }
 
+//     public static function lastInsertId(){
+//         return self::query()->latest('user_id')->first();
+//     }
+
     public function videoNoti(): HasMany{
         return $this->hasMany(VideoNotifications::class, 'user_id');
     }
@@ -90,17 +94,30 @@ class Users extends Model
         return $lastUser ? (int) $lastUser->user_id : null;
     }
 
-
     //Đếm số người follower của user
+    //đếm số lượng follow(subcribe) của user
+    //cách dùng: $user = Users::find(1);
+    //$followersCount = $user->followersCount();
     public function followersCount()
     {
         return $this->hasMany(Follow::class, 'user_id')->count();
     }
-    //đếm số lượng follow(subcribe) của user
-    //cách dùng: $user = Users::find(1);
-    //$followersCount = $user->followersCount();
 
-    //lấy danh sách các follower
+    public function videosCount() {
+        return $this->hasMany(Video::class, 'user_id')->count();
+    }
+
+    //lấy danh sách Users dựa trên danh sách được follow bởi user
+    public function getUsersByFollowing(){
+        return $this->belongsToMany(Users::class, 'follow', 'follower_id', 'user_id')->get();
+    }
+
+    //lấy danh sách Users dựa trên danh sách đang follow user
+    public function getUsersBFollowed(){
+        return $this->belongsToMany(Users::class, 'follow', 'user_id', 'follower_id');
+    }
+
+    //lấy danh sách các Follow đang follow user
     public function followers()
     {
         return $this->hasMany(Follow::class, 'user_id')->get();
@@ -119,7 +136,7 @@ class Users extends Model
     //cách dùng: $user = Users::find(1);
     //$followingCount = $user->followingCount();
 
-    //lấy danh sách các user mà user đó đang follow
+    //lấy danh sách các Follow được follow bởi user
     public function following()
     {
         return $this->hasMany(Follow::class, 'follower_id')->get();
@@ -131,9 +148,7 @@ class Users extends Model
 
     //kiểm tra xem user có follow user khác không
     public function isFollowing($user_id){
-
         return $this->hasMany(Follow::class, 'follower_id')->where('user_id', $user_id)->exists();
-
     }
     //cách dùng: $user = Users::find(1);
     // $user->isFollowing(2) để kiểm tra xem user có follow user có id = 2 không

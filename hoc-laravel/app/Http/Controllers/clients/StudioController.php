@@ -42,13 +42,25 @@ class StudioController extends Controller
             return view('');
         }
 
-        return view('studio.studioContentsVideos', ['videos' => $videos, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay]);
+        return view('studio.studioContentsVideos', ['videos' => $videos, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
-    public function contentsPlaylists($pageNumber = 1, $itemPerPage = 1) {
+    public function contentsPlaylists() {
+        $data = request()->all();
+        $currentPage = $data['currentPage'] ?? 1;
+        $itemPerPage = $data['itemPerPage'] ?? 1;
+        $pageDisplay = $data['pageDisplay'] ?? 3;
+
         $userId = session('loggedInUser');
-        $playlists = Playlist::where('user_id', $userId)->skip(($pageNumber - 1) * $itemPerPage)->take($itemPerPage)->get();
-        return view('studio.studioContentsPlaylists', ['playlists' => $playlists]);
+        $playlists = Playlist::where('user_id', $userId)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $totalItems = Playlist::where('user_id', $userId)->count();
+
+        $totalPages = ceil($totalItems / $itemPerPage);
+        if($currentPage > $totalPages) {
+            return view('');
+        }
+
+        return view('studio.studioContentsPlaylists', ['playlists' => $playlists, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
     public function videoDetails($video_id = null) {
@@ -66,9 +78,10 @@ class StudioController extends Controller
         $data = request()->all();
         $totalPages = $data['totalPages'];
         $currentPage = $data['currentPage'] ?? 1;
+        $itemPerPage = $data['itemPerPage'] ?? 1;
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
-        return view('studio.pagination', ['totalPages' => $totalPages, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay]);
+        return view('studio.pagination', ['totalPages' => $totalPages, 'itemPerPage' => $itemPerPage, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay]);
     }
 
     public function premium() {
