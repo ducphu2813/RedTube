@@ -23,7 +23,7 @@
                 </div>
             </div>
             {{-- Danh sách người nhận ở đây --}}
-            {{-- Người nào nhận rồi thì thêm class invated --}}
+            {{-- Người nào nhận rồi thì thêm class invated (color: green) --}}
             @for ($i = 0; $i < 6; $i++)
                 {{-- Cái này là từng item --}}
                 <div class="modal-share-body--item">
@@ -46,6 +46,4 @@
 
 {{-- Code xóa người dùng pre-share ở đây nè --}}
 {{-- Khi nào người khác chấp nhận thì đổi nội dung thành đã chấp nhận và thêm class .invated (premium.css) --}}
-<script>
-
-</script>
+<script></script>

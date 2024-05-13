@@ -97,6 +97,8 @@ Route::prefix('admin')->group(function (){
     Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
     // Change status user
     Route::post('changeStatusUser', [AdminController::class, 'changeStatusUser'])->name('admin.changeStatusUser');
+    // Show check modal
+    Route::post('showCheckModal', [AdminController::class, 'showCheckModal'])->name('admin.showCheckModal');
     // --------------------Hết phần của Dương --------------------//
 });
 
@@ -147,6 +149,15 @@ Route::get('showVideoByChannel', [VideoController::class, 'showVideoByChannel'])
 // Không có premium
 Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.noPremium');
 
+// Chuyển giữa 2 premium
+Route::get('mySharePremium', [PremiumController::class, 'mySharePremium'])->name('clients.mySharePremium');
+Route::get('receiveShare', [PremiumController::class, 'receiveShare'])->name('clients.receiveShare');
+
+// Nút invate trong premium
+Route::get('invitePremium', [PremiumController::class, 'invitePremium'])->name('clients.invitePremium');
+
+// Hiển thị tất cả thông báo
+Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
 
 // -------------------- Hết của Dương -------------------- //
 

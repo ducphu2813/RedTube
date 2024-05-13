@@ -131,7 +131,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.showAllNoti') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -224,6 +224,7 @@
             $('.list-item').on('click', function() {
                 event.preventDefault();
                 var link = $(this).find('a').attr('href');
+                $('#content').hide();
                 $.ajax({
                     url: link,
                     type: 'GET',
@@ -232,71 +233,12 @@
                         $('#content').html(data);
                     }
                 });
-// =======
-//             $('.list-item').on('click', function(event) {
-//                 var index = $(this).index();
-//                 if (index == 0) {
-//                     $.ajax({
-//                         url: '{{ route('studio.contents') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                 } else if (index == 1) {
+            });
 
-//                 } else if (index == 2) {
-// // <<<<<<< HEAD
-// //                     // console.log('Thông tin kênh');
-// // =======
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                     $.ajax({
-//                         url: '{{ route('studio.profile') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-// // <<<<<<< HEAD
-// //                         },
-// //                         // error: function(xhr, status, error) {
-// //                         //     console.error('Error fetching content:', error);
-// //                         // }
-// //                     });
-// //                     event.preventDefault();
-// // =======
-//                         }
-//                     });
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                 } else if (index == 3) {
-//                     $.ajax({
-//                         url: '{{ route('membership.membershipManager') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                 } else {
-//                     $.ajax({
-//                         url: '{{ route('premium.premiumManager') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                     event.preventDefault();
-// // <<<<<<< HEAD
-// //                     event.preventDefault();
-// // =======
-
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                 }
-
-//                 $('#content').empty()
-//                 event.preventDefault();
-// >>>>>>> Dung
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
             });
         });
     </script>

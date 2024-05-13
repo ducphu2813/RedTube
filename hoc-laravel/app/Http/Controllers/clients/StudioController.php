@@ -77,4 +77,9 @@ class StudioController extends Controller
     public function channel() {
         return view('studio.studioChannel');
     }
+
+    // Show all noti
+    public function showAllNoti(){
+        return view('noti.noti-all');
+    }
 }
