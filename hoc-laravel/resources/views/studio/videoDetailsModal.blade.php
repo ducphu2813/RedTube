@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/studio/videoDetailsModal.css') }}">
 
 <div id="modal__videoDetails" class="modal__popup">
-    @if($video != null)
+    @if($flag == 'edit')
         <div class="modal__overlay">
             <form action="" class="modal-form" method="post" enctype="multipart/form-data">
                 <div class="form-section">
@@ -75,7 +75,7 @@
                     <div class="form-left">
                         <div class="form-group">
                             <label for="video">Đăng tải video</label>
-                            <input type="file" id="video" name="video" accept="video/*">
+                            <input type="file" id="video_path" name="video" accept="video/*">
                         </div>
 
                         <div class="form-group">
@@ -92,7 +92,7 @@
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
-                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
+                            <input type="file" id="thumbnail_path" name="thumbnail" accept="image/*">
             
                             <div class="review__thumbnail">
                                 <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
@@ -101,7 +101,7 @@
             
                         <div class="form-group">
                             <label for="playlist">Danh sách phát</label>
-                            <select id="playlist" name="playlist">
+                            <select id="" name="playlist">
                                 <option value="A">Playlist A</option>
                                 <option value="B">Playlist B</option>
                             </select>
@@ -109,9 +109,9 @@
             
                         <div class="form-group">
                             <label for="privacy">Chế độ</label>
-                            <select id="privacy" name="privacy">
-                                <option value="public">Công khai</option>
-                                <option value="private">Riêng tư</option>
+                            <select id="display_mode" name="privacy">
+                                <option value="1">Công khai</option>
+                                <option value="0">Riêng tư</option>
                             </select>
                         </div>
 
@@ -146,28 +146,55 @@
             });
     
             $('#save--btn').on('click', function(event) {
-                $.ajax({
-                    url: '{{ route('api.videos.edit') }}',
-                    type: 'PUT',
-                    data: {
-                        video_id: $('#video_id').val(),
-                        title: $('#title').val(),
-                        description: $('#description').val(),
-                        video_path: $('#video_path').val(),
-                        thumbnail_path: $('#thumbnail_path').val(),
-                        display_mode: $('#display_mode').val(),
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'html',
-                    success: function(data) {
-                        $('#modal').empty();
-                        loadPage({{ $currentPage }}, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching content:', error);
-                    }
-                });
-                event.preventDefault();
+                if ('{{ $flag }}' == 'edit') {
+                    $.ajax({
+                        url: '{{ route('api.videos.edit') }}',
+                        type: 'PUT',
+                        data: {
+                            video_id: $('#video_id').val(),
+                            title: $('#title').val(),
+                            description: $('#description').val(),
+                            video_path: $('#video_path').val(),
+                            thumbnail_path: $('#thumbnail_path').val(),
+                            display_mode: $('#display_mode').val(),
+                            _token: '{{ csrf_token() }}'
+                        },
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').empty();
+                            loadPage({{ $currentPage }}, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching content:', error);
+                            console.log("...Otori")
+                        }
+                    });
+                    event.preventDefault();
+                }
+                else {
+                    $.ajax({
+                        url: '{{ route('api.videos.create') }}',
+                        type: 'POST',
+                        data: {
+                            title: $('#title').val(),
+                            description: $('#description').val(),
+                            video_path: $('#video_path').val(),
+                            thumbnail_path: $('#thumbnail_path').val(),
+                            display_mode: $('#display_mode').val(),
+                            _token: '{{ csrf_token() }}'
+                        },
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').empty();
+                            loadPage({{ $currentPage }}, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error fetching content:', error);
+                            console.log("hallo im Emu...")
+                        }
+                    });
+                    event.preventDefault();
+                }
             });
         });
     </script>

@@ -33,7 +33,7 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('user_id', $userId)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::where('user_id', $userId)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItems = Video::where('user_id', $userId)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -68,17 +68,15 @@ class StudioController extends Controller
         $currentPage = $data['currentPage'] ?? 1;
         $itemPerPage = $data['itemPerPage'] ?? 10;
 
-        $video = null;
-        if ($video_id !== null) {
-            $video = Cache::remember('video_' . $video_id, 0, function () use ($video_id) {
-                return Video::find($video_id);
-            });
+        if ($video_id) {
+            $video = Video::find($video_id);
+            return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'edit']);
         }
 
-        return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage]);
+        return view('studio.videoDetailsModal', ['currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'add']);
     }
 
-    public function pagination(Request $request) {
+    public function pagination() {
         $data = request()->all();
         $url = $data['url'];
         $totalPages = $data['totalPages'];
