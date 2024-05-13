@@ -34,8 +34,8 @@ class Membership extends Model
         return self::query()->get();
     }
 
-    public static function getMembershipById($id)
-    {
+    public static function getMembershipById($id){
+
         return self::query()->where('membership_id', $id)->first();
     }
 
@@ -43,5 +43,10 @@ class Membership extends Model
 
     public function createMembership($data){
         return $this->create($data);
+    }
+
+    //lấy các gói membership theo user id(người tạo)
+    public static function getMembershipByUserId($id){
+        return self::query()->where('user_id', $id)->get();
     }
 }

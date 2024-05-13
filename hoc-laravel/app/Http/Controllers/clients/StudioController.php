@@ -63,15 +63,17 @@ class StudioController extends Controller
         return view('studio.studioContentsPlaylists', ['playlists' => $playlists, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
-    public function videoDetails($video_id = null) {
-        $video = null;
+    public function videoDetails(Request $request) {
+        $video_id = $request->video_id;
+
+        //nếu có video thì nghĩa là đang sửa
         if ($video_id !== null) {
-            $video = Cache::remember('video_' . $video_id, 0, function () use ($video_id) {
-                return Video::find($video_id);
-            });
+            $video = Video::find($video_id);
+            return view('studio.videoDetailsModal', ['video' => $video, 'flag' => 'edit']);
         }
 
-        return view('studio.videoDetailsModal', ['video' => $video]);
+        //không có video thì nghĩa là đang thêm
+        return view('studio.videoDetailsModal', ['flag' => 'add']);
     }
 
     public function pagination(Request $request) {

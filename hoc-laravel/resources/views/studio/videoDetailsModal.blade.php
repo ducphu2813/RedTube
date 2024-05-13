@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="{{ asset('css/studio/videoDetailsModal.css') }}">
 
 <div id="modal__videoDetails" class="modal__popup">
-    @if($video != null)
+    @if($flag == 'edit')
         <div class="modal__overlay">
             <form action="" class="modal-form" method="post" enctype="multipart/form-data">
                 <div class="form-section">
@@ -19,18 +19,18 @@
                             <label for="title">Tiêu đề (required)</label>
                             <textarea name="title" id="title" rows="2">{{ $video->title }}</textarea>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="description">Mô tả</label>
                             <textarea name="description" id="description" rows="18">{{ $video->description }}</textarea>
                         </div>
                     </div>
-            
+
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
                             <input type="file" id="thumbnail" name="thumbnail" accept="image/*" value="{{ $video->thumbnail_path }}">
-            
+
                             <div class="review__thumbnail">
                                 <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
                             </div>
@@ -40,7 +40,7 @@
                             <label for="category">Thể loại</label>
                             <input type="text" id="category" disabled value="Thể loại A">
                         </div>
-            
+
                         <div class="form-group">
                             <label for="privacy">Chế độ</label>
                             <select id="privacy" name="privacy">
@@ -77,23 +77,23 @@
                             <label for="title">Tiêu đề (required)</label>
                             <textarea name="title" id="title" rows="2"></textarea>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="description">Mô tả</label>
                             <textarea name="description" id="description" rows="18"></textarea>
                         </div>
                     </div>
-            
+
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
                             <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
-            
+
                             <div class="review__thumbnail">
                                 <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
                             </div>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="playlist">Danh sách phát</label>
                             <select id="playlist" name="playlist">
@@ -101,7 +101,7 @@
                                 <option value="B">Playlist B</option>
                             </select>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="privacy">Chế độ</label>
                             <select id="privacy" name="privacy">
@@ -133,17 +133,19 @@
                 $('#thumbnail--review').attr('src', reader.result);
             };
         });
-    
-        
+
+
         $('#modal__videoDetails').ready(function() {
             $('#close--btn').on('click', function(event) {
                 $('#modal').empty();
                 event.preventDefault();
             });
-    
+
+            //event cho nút lưu
             $('#save--btn').on('click', function(event) {
-                
                 event.preventDefault();
+
+
             });
         });
     </script>

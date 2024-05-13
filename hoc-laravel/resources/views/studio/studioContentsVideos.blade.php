@@ -28,6 +28,7 @@
     </li>
 
     <!-- items -->
+    {{-- danh sách video của user trong studio--}}
     @foreach ($videos as $video)
         <li class="content__body--item">
             <div class="item__optionbox">
@@ -52,7 +53,7 @@
                 </div>
             </div>
 
-            
+
 
             <div class="item__display">
                 @if ($video->display_mode == 0)
@@ -79,46 +80,51 @@
 
 <script>
     $('.content__body--list').ready(function() {
+
+        // nút edit của video trong studio
         $('.edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
                 url: `/studioPage/videoDetails`,
+                data: {
+                    video_id: video_id
+                },
                 type: 'GET',
                 dataType: 'html',
                 success: function(data) {
                     $('#modal').html(data)
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching content:', error);
+                error: function(data) {
+                    console.log(data)
                 }
             });
             event.preventDefault();
         });
 
-        $('.delete--btn').on('click', function(event) {
-            var video_id = $(this).attr('video_id')
-            $.ajax({
-                url: `/studioPage/videoDetails`,
-                type: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    $('#modal').html(data)
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching content:', error);
-                }
-            });
-            event.preventDefault();
-        });
+        // $('.delete--btn').on('click', function(event) {
+        //     var video_id = $(this).attr('video_id')
+        //     $.ajax({
+        //         url: `/studioPage/videoDetails`,
+        //         type: 'GET',
+        //         dataType: 'html',
+        //         success: function(data) {
+        //             $('#modal').html(data)
+        //         },
+        //         error: function(data) {
+        //             console.log(data)
+        //         }
+        //     });
+        //     event.preventDefault();
+        // });
 
-    
+
         $.ajax({
             url: '{{ route('studio.pagination') }}',
             type: 'GET',
             data: {
                 currentPage: {{ $currentPage }},
                 itemPerPage: {{ $itemPerPage }},
-                totalPages: {{ $totalPages }}, 
+                totalPages: {{ $totalPages }},
                 pageDisplay: {{ $pageDisplay }}
             },
             dataType: 'html',

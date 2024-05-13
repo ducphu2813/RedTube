@@ -29,7 +29,7 @@ class UserMembership extends Model
         return $this->belongsTo(Membership::class);
     }
 
-    //lấy tất cả thông tin gói thành viên của người dùng
+    //lấy tất cả thông tin gói thành viên của người dùng(người mua)
     public static function getUserMembership($user_id)
     {
         return self::query()->where('user_id', $user_id)->get();

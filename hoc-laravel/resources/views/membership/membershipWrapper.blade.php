@@ -1,9 +1,12 @@
 <link rel="stylesheet" href="{{ asset('css/membership.css') }}">
 <div class="package-wrapper">
-    @foreach ($listMembership as $ms)
-        @component('membership.membershipItem', ['ms' => $ms])
-        @endcomponent
-    @endforeach
+
+    @if($listMembership)
+        @foreach ($listMembership as $ms)
+            @component('membership.membershipItem', ['ms' => $ms])
+            @endcomponent
+        @endforeach
+    @endif
 </div>
 
 
