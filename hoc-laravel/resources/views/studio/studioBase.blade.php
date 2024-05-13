@@ -180,6 +180,9 @@
                         success: function(data) {
                             $('#modal').html(data);
                             $('.modal-pl').css('display', 'flex');
+                        },
+                        error: function(data) {
+                            console.log(data);
                         }
                     })
                 } else if (index == 1) {

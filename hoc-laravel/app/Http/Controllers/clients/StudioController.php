@@ -74,7 +74,7 @@ class StudioController extends Controller
             return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'edit']);
         }
 
-        return view('studio.videoDetailsModal', ['currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'add']);
+        return view('studio.videoDetailsModal', ['video' => null, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'add']);
     }
 
     public function pagination() {
