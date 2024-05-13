@@ -74,6 +74,7 @@
             url: '{{ route('studio.pagination') }}',
             type: 'GET',
             data: {
+                url: '{{ route('studio.contents.playlists') }}',
                 currentPage: {{ $currentPage }},
                 itemPerPage: {{ $itemPerPage }},
                 totalPages: {{ $totalPages }}, 
@@ -88,7 +89,6 @@
                 console.log({{ $currentPage }})
             }
         });
-
     });
 </script>
 

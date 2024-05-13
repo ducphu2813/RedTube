@@ -32,6 +32,43 @@ class VideoController extends Controller{
 
     }
 
+    public function get() {
+        
+    }
+
+    public function create() {
+
+    }
+
+    public function edit() {
+        $data = request()->all();
+        $video_id = $data['video_id'];
+
+        $video = Video::find($video_id);
+
+        if ($video) {
+            $video->title = $data['title'];
+            $video->description = $data['description'];
+            $video->display_mode = $data['display_mode'];
+            $video->video_path = $data['video_path'];
+            $video->thumbnail_path = $data['thumbnail_path'];
+
+            $video->save();
+        }
+    }
+
+    public function delete() {
+        $data = request()->all();
+        $video_id = $data['video_id'];
+
+        $video = Video::find($video_id);
+
+        if($video) {
+            $video->active= 0;
+            $video->save();
+        }
+    }
+
     public function playVideo($id, $playlist_id = null){
 
         $video = Cache::remember('video_' . $id, 0, function () use ($id) {

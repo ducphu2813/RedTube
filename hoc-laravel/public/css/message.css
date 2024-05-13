@@ -1,0 +1,72 @@
+.modal__popup {
+    position: fixed;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: 3;
+    width: 100%; /* Full width */
+    height: 100%;
+}
+
+.modal__overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal__content {
+    width: 240px;
+}
+
+.model__header {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    padding: 8px;
+}
+
+.modal__title {
+    width: fit-content;
+    height: fit-content;
+    font-size: 16px;
+}
+
+.modal__body {
+    min-height: 320px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.modal__footer {
+
+}
+
+.modal__option {
+    display: flex;
+    justify-content: space-around;
+    padding: 8px;
+}
+
+.msg--option {
+    border: none;
+    display: flex;
+    padding: 4px 16px;
+}
+
+#cancel--btn {
+    background-color: #ff4e45;
+}
+
+#action--btn {
+    background-color: #3ea6ff;
+}
+
+.message {
+
+}
