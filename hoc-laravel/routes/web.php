@@ -34,6 +34,15 @@ use Illuminate\Http\RedirectResponse;
 */
 
 
+// Video CRUD
+Route::middleware('CheckLogin')->prefix('api/videos')->group(function() {
+    Route::get('/', [VideoController::class, 'get'])->name('api.videos.get');
+    Route::post('/', [VideoController::class, 'create'])->name('api.videos.create');
+    Route::put('/', [VideoController::class, 'edit'])->name('api.videos.edit');
+    Route::delete('/', [VideoController::class, 'delete'])->name('api.videos.delete');
+});
+
+
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
 
 //client route, school

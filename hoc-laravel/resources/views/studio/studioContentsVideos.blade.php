@@ -82,8 +82,13 @@
         $('.edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails`,
+                url: '{{ route('studio.videoDetails') }}',
                 type: 'GET',
+                data: {
+                    video_id: video_id,
+                    currentPage: {{ $currentPage }},
+                    itemPerPage: {{ $itemPerPage }}
+                },
                 dataType: 'html',
                 success: function(data) {
                     $('#modal').html(data)
@@ -98,11 +103,16 @@
         $('.delete--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails`,
-                type: 'GET',
+                url: '{{ route('api.videos.delete') }}',
+                type: 'DELETE',
+                data: {
+                    video_id: video_id,
+                    _token: '{{ csrf_token() }}'
+                },
                 dataType: 'html',
                 success: function(data) {
-                    $('#modal').html(data)
+                    $('#modal').empty();
+                    loadPage(1, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching content:', error);
@@ -116,6 +126,7 @@
             url: '{{ route('studio.pagination') }}',
             type: 'GET',
             data: {
+                url: '{{ route('studio.contents.videos') }}',
                 currentPage: {{ $currentPage }},
                 itemPerPage: {{ $itemPerPage }},
                 totalPages: {{ $totalPages }}, 

@@ -29,7 +29,7 @@ class StudioController extends Controller
     public function contentsVideos() {
         $data = request()->all();
         $currentPage = $data['currentPage'] ?? 1; 
-        $itemPerPage = $data['itemPerPage'] ?? 1;
+        $itemPerPage = $data['itemPerPage'] ?? 10;
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
@@ -47,7 +47,7 @@ class StudioController extends Controller
     public function contentsPlaylists() {
         $data = request()->all();
         $currentPage = $data['currentPage'] ?? 1; 
-        $itemPerPage = $data['itemPerPage'] ?? 1;
+        $itemPerPage = $data['itemPerPage'] ?? 10;
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
@@ -62,7 +62,12 @@ class StudioController extends Controller
         return view('studio.studioContentsPlaylists', ['playlists' => $playlists, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
-    public function videoDetails($video_id = null) {
+    public function videoDetails() {
+        $data = request()->all();
+        $video_id = $data['video_id'] ?? null; 
+        $currentPage = $data['currentPage'] ?? 1;
+        $itemPerPage = $data['itemPerPage'] ?? 10;
+
         $video = null;
         if ($video_id !== null) {
             $video = Cache::remember('video_' . $video_id, 0, function () use ($video_id) {
@@ -70,22 +75,24 @@ class StudioController extends Controller
             });
         }
 
-        return view('studio.videoDetailsModal', ['video' => $video]);
+        return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage]);
     }
 
     public function pagination(Request $request) {
         $data = request()->all();
+        $url = $data['url'];
         $totalPages = $data['totalPages'];
         $currentPage = $data['currentPage'] ?? 1;
-        $itemPerPage = $data['itemPerPage'] ?? 1; 
+        $itemPerPage = $data['itemPerPage'] ?? 10; 
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
-        return view('studio.pagination', ['totalPages' => $totalPages, 'itemPerPage' => $itemPerPage, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay]);
+        return view('studio.pagination', ['totalPages' => $totalPages, 'itemPerPage' => $itemPerPage, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay, 'url' => $url]);
     }
 
     public function premium() {
         return view('studio.studioPremium');
     }
+
 
     public function profile(Request $request) {
 
@@ -96,6 +103,7 @@ class StudioController extends Controller
         return view('studio.studioProfile', $data);
     }
 
+    
     public function profileEdit(Request $request) {
 
         if(!session('loggedInUser')){

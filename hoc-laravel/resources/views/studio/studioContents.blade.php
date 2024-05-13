@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/studio/studioContents.css') }}">
 
-<div class="content__title">Channel content</div>
+<div class="content__title">Nội dung</div>
 
 <ul class="content__option">
     <li class="content__option--item selected" data-url="{{ route('studio.contents.videos') }}">Videos</li>
@@ -19,7 +19,7 @@
             type: 'GET',
             data: {
                 currentPage: 1,
-                itemPerPage: 1
+                itemPerPage: 10
             },
             dataType: 'html',
             success: function(data) {
@@ -37,6 +37,10 @@
             $.ajax({
                 url: url,
                 type: 'GET',
+                data: {
+                    currentPage: 1,
+                    itemPerPage: 10
+                },
                 dataType: 'html',
                 success: function(data) {
                     $('#body').html(data);
@@ -50,12 +54,13 @@
         });
     });
 
-    function loadPage(page) {
+    function loadPage(page, url, itemPerPage) {
         $.ajax({
-            url: '{{ route('studio.contents.videos') }}',
+            url: url,
             type: 'GET',
             data: {
-                currentPage: page
+                currentPage: page,
+                itemPerPage: itemPerPage
             },
             dataType: 'html',
             success: function(data) {
@@ -63,6 +68,7 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching content:', error);
+                console.log(url)
             }
         });
     }
