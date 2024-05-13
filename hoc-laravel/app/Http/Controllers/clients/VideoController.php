@@ -40,7 +40,21 @@ class VideoController extends Controller{
     }
 
     public function create() {
-
+        $data = request()->all();
+        
+        Video::create([
+            'title' => $data['title'],
+            'user_id' => session('loggedInUser'),
+            'created_date' => now(),
+            'view' => 0,
+            'description' => $data['description'],
+            'display_mode' => $data['display_mode'],
+            'membership' => 0,
+            'active' => 1,
+            'video_path' => $data['video_path'],
+            'thumbnail_path' => $data['thumbnail_path'],
+            'is_approved' => 0
+        ]);
     }
 
     public function edit(Request $request) {
