@@ -132,7 +132,12 @@
         <div class="row">
             <div class="playvideo">
                 <video controls autoplay>
-                    <source src="abc.mp4" type="video/mp4">
+                    @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
+                        <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
+
+                    @else
+                        <source src="{{ asset('storage/video/' . $video->video_path) }}" type="video/mp4">
+                    @endif
                 </video>
                 <div class="tag">
                     <a href="">#Music</a> <a href="">#Trending</a>
@@ -157,7 +162,7 @@
 
                     @elseif(session('loggedInUser') == $video->user->user_id)
                         {{--nếu là chính mình thì không hiện nút đăng ký--}}
-
+                        <button type="button" id="sub-btn" style="visibility: hidden"></button>
                     @elseif(session('loggedInUser') && $video->user->isFollowed(session('loggedInUser')))
                         <button type="button" id="sub-btn">Đã Đăng ký</button>
 
@@ -379,58 +384,7 @@
             });
         });
 
-        //xử lý reply
-        {{--$('.reply-btn').on('click', function() {--}}
-
-        {{--    // lấy giá trị input gần nhất--}}
-        {{--    let content = $(this).siblings('.reply-tf').val();--}}
-        {{--    let comment_id = '{{ $comment->comment_id }}';--}}
-        {{--    let video_id = '{{ $video->video_id }}';--}}
-        {{--    let url = '{{ route('comments.reply.save') }}';--}}
-        {{--    let _token = '{{ csrf_token() }}';--}}
-
-        {{--    $.ajax({--}}
-        {{--        url: url,--}}
-        {{--        type: 'POST',--}}
-        {{--        data: {--}}
-        {{--            content: content,--}}
-        {{--            reply_id: comment_id,--}}
-        {{--            video_id: video_id,--}}
-        {{--            _token: _token--}}
-        {{--        },--}}
-        {{--        success: function(response) {--}}
-        {{--            console.log(response);--}}
-        {{--            if(response.status === 'not_logged_in'){--}}
-        {{--                localStorage.setItem('redirect_after_login', window.location.href);--}}
-        {{--                window.location.href = '{{ route('login-register') }}';--}}
-        {{--            }--}}
-        {{--            else{--}}
-        {{--                //trong này, lấy ra 1 element có class là show-comment nằm ngay dưới nó, append thêm 1 reply-item vào--}}
-        {{--                let reply = `--}}
-        {{--                        <div id="user-comment-reply">--}}
-        {{--                            <div>--}}
-        {{--                                <a id="user-comment-info" href="">--}}
-        {{--                                    <img src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"--}}
-        {{--                                        alt="">--}}
-        {{--                                </a>--}}
-        {{--                            </div>--}}
-        {{--                            <div id="channel-name-comment">--}}
-        {{--                                <a href=""><span>${response.user_name} - ${response.created_date}</span></a>--}}
-        {{--                                <span>--}}
-        {{--                                    ${response.content}--}}
-        {{--                                </span>--}}
-        {{--                            </div>--}}
-        {{--                        </div>--}}
-        {{--                    `;--}}
-        {{--                //lấy element có id là reply-section-id-của-comment-cha và append reply vào--}}
-        {{--                $('#reply-section-{{ $comment->comment_id }}').append(reply);--}}
-        {{--            }--}}
-        {{--        },--}}
-        {{--        error: function(error) {--}}
-        {{--            console.log(error);--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--});--}}
+        //xử lý quảng cáo
 
         // Sử dụng các hàm này để định dạng lượt xem và thời gian tạo video
         let views = formatViews({{ $video->view }});
@@ -439,6 +393,28 @@
         // Hiển thị lượt xem và thời gian tạo video
         document.getElementById('status-video').textContent = views + ' lượt xem - ' + time;
 
+        //xử lý quảng cáo
+        var videoPath = "{{ asset('storage/video/' . $video->video_path) }}";
+
+        var videoElement = document.querySelector('video');
+
+        // event khi coi xong video
+        videoElement.addEventListener("ended", function() {
+
+
+            var videoSrc = videoElement.src;
+
+            //kiểm tra src hiện tại và src chính
+            if(videoSrc !== videoPath){
+
+                videoElement.src = videoPath;
+
+                // Chơi video mới
+                videoElement.play();
+            }
+
+
+        });
     </script>
 </body>
 

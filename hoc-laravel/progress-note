@@ -29,7 +29,10 @@ ghi chú: comment phần lưu lịch sử coi(trong VideoController) để làm 
 history(v)
 tự động tạo cho user 1 playlist xem sau mỗi khi đăng ký (v)
 làm tab xem sau (v)
-tạo và sửa video đã có của D
+làm xử lý premium khi play-video(v)
+làm phần create video(x)
+merge của Dũng(có playlist trong studio)(x)
+membership(x)
 
 làm premium của studio(x)
 

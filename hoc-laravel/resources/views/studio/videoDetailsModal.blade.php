@@ -17,7 +17,9 @@
 
                         <div class="form-group">
                             <label for="video">Đăng tải video</label>
-                            <input type="file" id="video_path" name="video" accept="video/*" value="{{ $video->video_path }}" readonly>
+
+                            {{-- phần input file video của video--}}
+                            <input type="file" id="video_path" name="video_path" accept="video/*" value="{{ $video->video_path }}" readonly>
                         </div>
 
                         <div class="form-group">
@@ -34,10 +36,17 @@
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
-                            <input type="file" id="thumbnail_path" name="thumbnail" accept="image/*" value="{{ $video->thumbnail_path }}">
 
+                            {{-- phần input ảnh bìa của video--}}
+                            <input type="file" id="thumbnail_path" name="thumbnail_path" accept="image/*" value="{{ $video->thumbnail_path }}">
+
+                            {{-- phần hiện thị ảnh bìa của video--}}
                             <div class="review__thumbnail">
-                                <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
+                                @if($video->thumbnail_path)
+                                    <img src="{{ asset('storage/thumbnail/' . $video->thumbnail_path) }}" alt="" id="thumbnail--review" class="thumbnail--img" style="display: block;">
+                                @else
+                                    <img src="{{ asset('storage/thumbnail/default-thumbnail.jpg') }}" alt="" id="thumbnail--review" class="thumbnail--img" style="display: block;">
+                                @endif
                             </div>
                         </div>
 
@@ -147,29 +156,54 @@
 
             //event cho nút lưu
             $('#save--btn').on('click', function(event) {
+                event.preventDefault();
+                let formData = new FormData();
+                formData.append('video_id', $('#video_id').val());
+                formData.append('title', $('#title').val());
+                formData.append('description', $('#description').val());
+                formData.append('display_mode', $('#display_mode').val());
+                formData.append('_token', '{{ csrf_token() }}');
+                formData.append('_method', 'PUT');
+
+                if($('input[name="video_path"]')[0].files.length > 0)
+                {
+                    var videoFile = $('input[name="video_path"]')[0].files[0];
+                    formData.append('video_path', videoFile);
+                }
+
+                if($('input[name="thumbnail_path"]')[0].files.length > 0)
+                {
+                    var thumbnailFile = $('input[name="thumbnail_path"]')[0].files[0];
+                    formData.append('thumbnail_path', thumbnailFile);
+                }
+
                 $.ajax({
                     url: '{{ route('api.videos.edit') }}',
-                    type: 'PUT',
-                    data: {
-                        video_id: $('#video_id').val(),
-                        title: $('#title').val(),
-                        description: $('#description').val(),
-                        video_path: $('#video_path').val(),
-                        thumbnail_path: $('#thumbnail_path').val(),
-                        display_mode: $('#display_mode').val(),
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'html',
+                    type: 'POST',
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    {{--data: {--}}
+                    {{--    video_id: $('#video_id').val(),--}}
+                    {{--    title: $('#title').val(),--}}
+                    {{--    description: $('#description').val(),--}}
+                    {{--    video_path: $('#video_path').val(),--}}
+                    {{--    thumbnail_path: $('#thumbnail_path').val(),--}}
+                    {{--    display_mode: $('#display_mode').val(),--}}
+                    {{--    _token: '{{ csrf_token() }}'--}}
+                    {{--},--}}
+                    {{--dataType: 'html',--}}
                     success: function(data) {
+                        console.log(data);
                         $('#modal').empty();
                         loadPage({{ $currentPage }}, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
                     },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching content:', error);
+                    error: function(data) {
+                        console.log(data)
                     }
                 });
-                event.preventDefault();
-
 
             });
         });

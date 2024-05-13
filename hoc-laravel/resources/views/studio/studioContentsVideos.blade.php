@@ -43,7 +43,16 @@
 
             <div class="item__content">
                 <div class="item__thumbnail">
-                    <img src="../assets/img/ocean.jpg" alt="" class="item__thumbnail--img">
+                    {{-- phần thumbnail--}}
+
+                    @if($video->thumbnail_path)
+                        <img src="{{ asset('storage/thumbnail/' . $video->thumbnail_path) }}" alt="" class="item__thumbnail--img">
+
+                    @else
+                        <img src="{{ asset('storage/thumbnail/default-thumbnail.jpg') }}" alt="" class="item__thumbnail--img">
+
+                    @endif
+
                 </div>
 
                 <div class="item__info">
@@ -103,6 +112,7 @@
             event.preventDefault();
         });
 
+        //event của nút xóa
         $('.delete--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({

@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\clients;
 
+use App\Models\PremiumRegistration;
+use App\Models\SharePremium;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\History;
 use App\Models\Playlist;
@@ -33,28 +36,68 @@ class VideoController extends Controller{
     }
 
     public function get() {
-        
+
     }
 
     public function create() {
 
     }
 
-    public function edit() {
+    public function edit(Request $request) {
         $data = request()->all();
+
         $video_id = $data['video_id'];
 
         $video = Video::find($video_id);
 
-        if ($video) {
-            $video->title = $data['title'];
-            $video->description = $data['description'];
-            $video->display_mode = $data['display_mode'];
-            $video->video_path = $data['video_path'];
-            $video->thumbnail_path = $data['thumbnail_path'];
-
-            $video->save();
+        if($request->hasFile('video_path')){
+            //xóa video cũ
+            if($video->video_path){
+                Storage::delete('public/video/' . $video->video_path);
+            }
+            //lấy file từ request
+            $video_file = $request->file('video_path');
+            //lấy extension của file
+            $videoExtension = $video_file->getClientOriginalExtension();
+            //tạo tên mới cho video
+            $video_path_name =  $video->video_id . time() . '.' . $videoExtension;
+            //lưu đường dẫn video mới
+            $video->video_path = $video_path_name;
+            //lưu video
+            $video_file->storeAs('public/video/', $video_path_name);
         }
+
+        if($request->hasFile('thumbnail_path')){
+
+            //xóa thumbnail cũ
+            if($video->thumbnail_path){
+                Storage::delete('public/thumbnail/' . $video->thumbnail_path);
+            }
+            //lấy file từ request
+            $thumbnail_file = $request->file('thumbnail_path');
+            //lấy extension của file
+            $thumbnailExtension = $thumbnail_file->getClientOriginalExtension();
+            //tạo tên mới cho thumbnail
+            $thumbnail_path_name =  $video->video_id . time() . '.' . $thumbnailExtension;
+            //lưu đường dẫn thumbnail mới
+            $video->thumbnail_path = $thumbnail_path_name;
+            //lưu thumbnail
+            $thumbnail_file->storeAs('public/thumbnail/', $thumbnail_path_name);
+        }
+
+        $newVideo = [
+            'video_id' => $data['video_id'],
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'display_mode' => $data['display_mode'],
+            'video_path' => $video->video_path,
+            'thumbnail_path' => $video->thumbnail_path,
+        ];
+
+        $videoModel = new Video();
+        $videoModel->updateVideo($video_id, $newVideo);
+
+        return response()->json($newVideo);
     }
 
     public function delete() {
@@ -100,6 +143,15 @@ class VideoController extends Controller{
 
         //lấy thông tin user đang đăng nhập
         $currentUserProfile = Users::getUserById($userId);
+        $current_premium = null;
+        $current_shared_premium = null;
+        if($currentUserProfile){
+            //lấy premium của user
+            $current_premium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+            //lấy premium đc share của user
+            $current_shared_premium = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
+        }
 
         //khi coi từ playlist
         if($playlist_id != null){
@@ -120,14 +172,24 @@ class VideoController extends Controller{
                         'playlists' => $playlists,
                         'currentUserProfile' => $currentUserProfile,
                         'videosInPlayList' => $videosInPlayList,
-                        'videoPlaylist' => $videoPlaylist
+                        'videoPlaylist' => $videoPlaylist,
+                        'current_premium' => $current_premium,
+                        'current_shared_premium' => $current_shared_premium
                     ]
                 );
             }
 
         }
 
-        return view('video.play-video', ['video' => $video, 'playlists' => $playlists, 'currentUserProfile' => $currentUserProfile]);
+        return view('video.play-video',
+            [
+                'video' => $video,
+                'playlists' => $playlists,
+                'currentUserProfile' => $currentUserProfile,
+                'current_premium' => $current_premium,
+                'current_shared_premium' => $current_shared_premium
+            ]
+        );
     }
 
 

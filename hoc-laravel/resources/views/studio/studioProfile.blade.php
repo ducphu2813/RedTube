@@ -7,6 +7,7 @@
     <div class="content__body-info">
         <div class="section_1 w-20">
             <div class="img__wrap">
+                {{-- phần ảnh avatar--}}
                 @if($user->picture_url)
                     <img src="{{ asset('storage/img/' . $user->picture_url) }}" id="avatar--review" value="" alt="">
                 @else
