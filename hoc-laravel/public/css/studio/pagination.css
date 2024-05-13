@@ -1,6 +1,26 @@
 .pagination {
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+
+.pagination__setting {
+    margin-right: 32px;
+}
+
+.pagination__setting label {
+    margin-right: 8px;
+}
+
+.pagination__setting input {
+    width: 68px;
+    padding-left: 8px;
+    height: 28px;
+    background-color: #606060;
+    outline: none;
+    color: white;
+    border-radius: 8px;
+    border: none;
 }
 
 .pagi--btn {

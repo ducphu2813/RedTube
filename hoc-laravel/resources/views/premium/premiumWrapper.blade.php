@@ -16,8 +16,6 @@
     <li class="content__option--item" id="sharedPre">Premium Được Chia Sẻ</li>
 </ul>
 
-
-
 <div class="content__body">
     @component('premium.premiumShareWrapper')
     @endcomponent

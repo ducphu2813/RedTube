@@ -23,7 +23,7 @@ class PremiumController extends Controller
 
         $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
 
-        if ($currentUserPremium == null) {
+        if($currentUserPremium == null){
             return view('premium.no-premium');
         } else if ($currentUserPremium->getAvailableShares() <= 0) {
             return view('premium.no-share');
@@ -40,8 +40,10 @@ class PremiumController extends Controller
 
         $listUsers = Users::getUsersByName($nameFind);
 
-        foreach ($listUsers as $user) {
-            if (ShareNoti::isSendable(session('loggedInUser'), $user->user_id)) {
+        foreach ($listUsers as $user){
+
+            //kiểm tra xem user có thể gửi thông báo chia sẻ không
+            if(ShareNoti::isSendable(session('loggedInUser'), $user->user_id)){
                 $user->isSendable = true;
             } else {
                 $user->isSendable = false;
@@ -85,7 +87,7 @@ class PremiumController extends Controller
         }
 
         //cái này để debug thôi, không cần quan tâm
-        //        return response()->json($data);
+        //return response()->json($data);
 
     }
 
@@ -94,10 +96,6 @@ class PremiumController extends Controller
         $data = $request->all();
 
         unset($data['_token']);
-    }
-
-    public function getAllRegistrations(){
-        return view('premium.premiumWrapper');
     }
 
     public function showModalPremium(){
@@ -109,7 +107,7 @@ class PremiumController extends Controller
 // Còn share nếu có gói premium thì nội dung thay đổi thành "Bạn có muốn chia sẻ cho ai không"
 // Cái btn nó sẽ chia ra làm 2 function
 // có thì chuyển tới trang premium trong studio
-// không thì chuyển tới trang mua premium 
+// không thì chuyển tới trang mua premium
 
     // Chưa mua premium cá nhân
     public function buyPremium(){

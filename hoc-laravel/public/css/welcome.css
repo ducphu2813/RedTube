@@ -198,7 +198,7 @@ html {
 .invalid_feedback {
     flex-basis: 100%;
     margin: 5px 70px;
-    font-size: 13px;
+    font-size: 15px;
     color: red;
 }
 

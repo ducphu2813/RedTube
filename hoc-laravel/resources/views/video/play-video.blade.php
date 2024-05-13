@@ -18,9 +18,55 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+
+{{--    jquery và ajax--}}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
+
+<script>
+    //định dạng view
+    function formatViews(views) {
+
+        if (views >= 1000000000) {
+            return (views / 1000000000).toFixed(1) + ' Tỷ';
+        } else if (views >= 1000000) {
+            return (views / 1000000).toFixed(1) + ' Tr';
+        } else if (views >= 10000) {
+            return (views / 1000).toFixed(1) + ' N';
+        } else {
+            return views.toString();
+        }
+    }
+
+    //định dạng thời gian
+    function formatTime(time) {
+        const now = new Date();
+        const videoTime = new Date(time);
+        const diffTime = Math.abs(now - videoTime);
+        const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffWeeks = Math.ceil(diffDays / 7);
+        const diffMonths = Math.ceil(diffDays / 30);
+
+        if (diffMinutes < 60) {
+            return diffMinutes + ' phút trước';
+        } else if (diffHours < 24) {
+            return diffHours + ' tiếng trước';
+        } else if (diffDays <= 13) {
+            return diffDays + ' ngày trước';
+        } else if (diffWeeks <= 4) {
+            return diffWeeks + ' tuần trước';
+        } else if (diffDays <= 365) {
+            return diffMonths + ' tháng trước';
+        } else {
+            return videoTime.toLocaleDateString();
+        }
+    }
+</script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon"
@@ -69,8 +115,16 @@
             </button>
         </div>
 
+        {{--phần icon user nhỏ phía trên bên phải--}}
         <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
+        {{--<img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32">--}}
+
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
         </div>
     </div>
 
@@ -78,28 +132,51 @@
         <div class="row">
             <div class="playvideo">
                 <video controls autoplay>
-                    <source src="abc.mp4" type="video/mp4">
+                    @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
+                        <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
+
+                    @else
+                        <source src="{{ asset('storage/video/' . $video->video_path) }}" type="video/mp4">
+                    @endif
                 </video>
                 <div class="tag">
                     <a href="">#Music</a> <a href="">#Trending</a>
                 </div>
-                <h3 id="title-video">NHỮNG LỜI HỨA BỎ QUÊN / VŨ. x DEAR JANE (Official MV)</h3>
+                <h3 id="title-video">{{ $video->title }}</h3>
                 <div class="play-video-infor">
                     <div class="publisher">
-                        <img src="OIP.jpg" alt="">
+                        {{--avatar của chủ kênh--}}
+                        @if($video->user->picture_url)
+                            <img src="{{ asset('storage/img/' . $video->user->picture_url) }}" alt="" width="40" height="40">
+                        @else
+                            <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="40" height="40">
+
+                        @endif
                         <div id="channel-title">
-                            <span id="channel-name" class="play-video">VŨ</span>
-                            <span id="channel-subcride" class="play-video">500K Subscribers</span>
+                            <span id="channel-name" class="play-video">{{ $video->user->channel_name }}</span>
+                            <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }} Subscribers</span>
                         </div>
                     </div>
-                    <button type="button">Đăng ký</button>
+                    @if(!session('loggedInUser'))
+                        <button type="button" id="sub-btn">Đăng ký</button>
+
+                    @elseif(session('loggedInUser') == $video->user->user_id)
+                        {{--nếu là chính mình thì không hiện nút đăng ký--}}
+                        <button type="button" id="sub-btn" style="visibility: hidden"></button>
+                    @elseif(session('loggedInUser') && $video->user->isFollowed(session('loggedInUser')))
+                        <button type="button" id="sub-btn">Đã Đăng ký</button>
+
+                    @elseif(session('loggedInUser') && !$video->user->isFollowed(session('loggedInUser')))
+                        <button type="button" id="sub-btn">Đăng ký</button>
+
+                    @endif
                     <div class="icon">
-                        <div class="change-status">
+                        <div class="change-status interact" id="like">
                             <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
                             </i>
                         </div>
                         <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        <div class="change-status">
+                        <div class="change-status interact" id="dislike">
                             <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
                             </i>
                         </div>
@@ -116,51 +193,30 @@
                         <span>
                         </span>
                     <div id="outer">
-                        <span id="status-video">31 Tr lượt xem 3 tháng trước</span>
+                        <span id="status-video"></span>
                         <p class="less">
-                            "Tôi là VŨ"
-                            "Đây là bài hát mới trong Album abc của tôi"
-                            "Cảm ơn các bạn đã ủng hộ"
-                            "Hãy đăng ký và like để ủng hộ tôi"
-                            "Liên hệ tôi thông qua số điện thoại 0123456789"
-                            "Chân thành cảm ơn mọi người!!!!!!!!!!!!!!!!!"
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                            duududdudddddddddddddddddddddddddddddddddddddddddddddddddddasdasdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+                            {{ $video->description }}
                         </p>
                     </div>
                     </p>
                     <button id="btn-expand">Xem thêm</button>
                 </div>
-                @component('comments.comment-video-wrapper')
+                {{--Phần này là phần comment--}}
+                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments, 'video' => $video, 'currentUserProfile' => $currentUserProfile])
                 @endcomponent
             </div>
+
+            {{--Phần này là phần sidebar, chứa playlist và video đề xuất--}}
             <div class="sidebar">
                 {{-- Cái này là cái danh sách hiển thị khi người dùng xem DANH SÁCH PHÁT --}}
-                @component('video.playlist-in-video-wrapper')
-                @endcomponent
+                {{--Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện--}}
+                @if(isset($videoPlaylist))
+                    {{--truyền vào các video của playlist đó--}}
+                    @component('video.playlist-in-video-wrapper', ['videosInPlayList' => $videosInPlayList, 'videoPlaylist' => $videoPlaylist])
+                    @endcomponent
+                @endif
+                {{--@component('video.playlist-in-video-wrapper');--}}
+                {{--@endcomponent--}}
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
                 @component('video.video-hint-wrapper')
@@ -169,7 +225,9 @@
         </div>
     </div>
 
-    @component('video.video-modal')
+    {{--đây là phần thêm video vào playlist--}}
+    {{--chỗ này lấy playlist của user--}}
+    @component('video.video-modal', ['playlists' => $playlists, 'video' => $video])
     @endcomponent
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -192,7 +250,7 @@
         //     this.classList.toggle("clicked");
         // });
         // var lastClicked = null;
-
+        //
         // function buttonClickHandler() {
         //   if (lastClicked === this) {
         //     // Nếu nút đã được nhấn lần trước là nút này, thì xóa lớp "clicked"
@@ -220,6 +278,143 @@
         // dislikeButtons.forEach(function(button) {
         //   button.addEventListener('click', buttonClickHandler);
         // });
+
+
+        $(document).ready(function() {
+
+            //thêm sự kiện ajax khi bấm vào thanh input reply
+            $('.reply-tf').one('click', function(event) {
+                var currentInput = $(event.target);
+                $.ajax({
+                    url: '{{ route('check-login') }}', // check login
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}' // Thêm token CSRF để bảo mật
+                    },
+                    success: function(response) {
+                        // Xử lý khi request thành công
+                        console.log(response);
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        requestSent = true;
+                    },
+                    error: function(error) {
+                        // Xử lý khi có lỗi xảy ra
+                        console.log(error);
+                        requestSent = true;
+                    }
+                });
+            });
+
+
+            //sự kiện cho nút subscribe
+            $('#sub-btn').on('click', function() {
+
+                let follower_id = '{{ session('loggedInUser') ? session('loggedInUser') : null }}';
+                let user_id = '{{ $video->user->user_id }}';
+                $.ajax({
+                    url: '{{ route('follow.handle') }}',
+                    type: 'POST',
+                    data: {
+                        user_id: user_id,
+                        follower_id: follower_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        else{
+                            if(response.status === 'followed'){
+                                $('#sub-btn').text('Đã Đăng ký');
+                            }
+                            else if(response.status === 'unfollow'){
+                                $('#sub-btn').text('Đăng ký');
+                            }
+                        }
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+            //like và dislike
+            $('.interact').on('click', function() {
+                var react = this.id;
+                console.log(react);
+                let video_id = '{{ $video->video_id }}';
+                let user_id = '{{ session('loggedInUser') ? session('loggedInUser') : null }}';
+                $.ajax({
+                    url: '{{ route('like.handle') }}',
+                    type: 'POST',
+                    data: {
+                        video_id: video_id,
+                        user_id: user_id,
+                        react: react,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        if(response.status === 'not_logged_in'){
+                            localStorage.setItem('redirect_after_login', window.location.href);
+                            window.location.href = '{{ route('login-register') }}';
+                        }
+                        else if(response.status === 'liked'){
+                            //khi like
+                        }
+                        else if(response.status === 'disliked'){
+                            //khi dislike
+                        }
+                        else if(response.status === 'unset_react'){
+                            //khi hủy like/dislike
+                        }
+
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+
+                });
+            });
+        });
+
+        //xử lý quảng cáo
+
+        // Sử dụng các hàm này để định dạng lượt xem và thời gian tạo video
+        let views = formatViews({{ $video->view }});
+        let time = formatTime('{{ $video->created_date }}');
+
+        // Hiển thị lượt xem và thời gian tạo video
+        document.getElementById('status-video').textContent = views + ' lượt xem - ' + time;
+
+        //xử lý quảng cáo
+        var videoPath = "{{ asset('storage/video/' . $video->video_path) }}";
+
+        var videoElement = document.querySelector('video');
+
+        // event khi coi xong video
+        videoElement.addEventListener("ended", function() {
+
+
+            var videoSrc = videoElement.src;
+
+            //kiểm tra src hiện tại và src chính
+            if(videoSrc !== videoPath){
+
+                videoElement.src = videoPath;
+
+                // Chơi video mới
+                videoElement.play();
+            }
+
+
+        });
     </script>
 </body>
 

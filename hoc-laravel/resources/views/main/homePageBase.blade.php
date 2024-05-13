@@ -8,6 +8,48 @@
 
 {{-- Cái này là thanh tìm kiếm --}}
 @section('search')
+    <script>
+        //định dạng view
+        function formatViews(views) {
+
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
+        }
+
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.ceil(diffDays / 7);
+            const diffMonths = Math.ceil(diffDays / 30);
+
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 13) {
+                return diffDays + ' ngày trước';
+            } else if (diffWeeks <= 4) {
+                return diffWeeks + ' tuần trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
+        }
+    </script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon" viewBox="0 0 90 20"
@@ -48,8 +90,9 @@
             </svg>
         </div>
 
+        {{-- seach box--}}
         <div class="search-container ">
-            <input type="text" name="search-bar" id="" class="search-bar" placeholder="Tìm kiếm">
+            <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
             <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 14px;"></i>
             </button>
@@ -71,9 +114,17 @@
             </div>
         </div>
 
-        {{-- <div class="acc-box">
-            <img src="{{ asset('resources/img/user.png') }}" alt="">
-        </div> --}}
+
+        {{--phần icon user nhỏ phía trên bên phải--}}
+        <div class="acc-box">
+            @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+
+            @endif
+        </div>
+
     </div>
 @endsection
 
@@ -106,6 +157,19 @@
                         </svg>
                     </span>
                     Kênh đăng ký
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="{{ route('clients.userChannel') }}">
+                    <span class="list-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
+                             viewBox="0 0 24 24" width="24" focusable="false"
+                             style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+                            <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z">
+                            </path>
+                        </svg>
+                    </span>
+                    Kênh của tôi
                 </a>
             </li>
         </ul>
@@ -156,8 +220,12 @@
         {{-- Chổ này là DANH SÁCH kênh đăng kí nên phải tách item --}}
         {{-- Sửa lại thành foreach --}}
         {{-- Sẽ lưu trong resources/channel nhé --}}
-        @component('channel.channel-detail')
-        @endcomponent
+        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
+        {{-- và sẽ bị ẩn đi nếu mày chưa đăng nhập--}}
+        @if(session('loggedInUser'))
+            @component('channel.channel-detail', ['followings' => $followings])
+            @endcomponent
+        @endif
 
         <ul class="list-container">
             <div class="list-title">Premium</div>
@@ -220,12 +288,13 @@
 
 {{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
 @section('content')
-    @component('video.video-in-main-wrapper')
+    @component('video.video-in-main-wrapper', ['videos' => $videos])
     @endcomponent
 @endsection
 
 @section('scripts')
     <script>
+
         // Cái này để điều hướng thanh bên trái
         $(".list-item").on('click', function(event) {
             event.preventDefault();
@@ -236,28 +305,53 @@
                 type: 'GET',
                 dataType: 'html',
                 success: function(response) {
+                    console.log(response);
+
                     $('#content').html(response);
                 },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown);
+                error: function(response) {
+                    console.log(response);
                 }
             });
         });
 
-        // Cái này để search nè
+        //hàm xử lý tìm kiếm
+        function handleSearch() {
+            let searchValue = $('#search-inp').val().trim().replace(/\s+/g, ' ');
+
+            if (searchValue !== '') {
+
+                $.ajax({
+                    url: '{{ route('clients.searchVideo') }}',
+                    type: 'GET',
+                    data: {
+                        searchValue: searchValue
+                    },
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#content').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+
+                console.log(searchValue);
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        // Script của search btn
         $('.search-btn').on('click', function() {
-            $.ajax({
-                url: '{{ route('clients.searchVideo') }}',
-                type: 'GET',
-                dataType: 'html',
-                success: function(response) {
-                    $('#content').html(response);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown);
-                }
-            });
-            console.log('click');
+            handleSearch();
+        });
+
+        // Script của search input
+        $('#search-inp').on('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
         });
     </script>
 @endsection

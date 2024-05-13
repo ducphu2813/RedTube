@@ -39,7 +39,11 @@
         </div>
 
         <div class="acc-box ">
-            <img src="{{ asset('resources/img/user.png') }}" alt="XXX">
+            @if($user->picture_url)
+                <img id="avatar-right-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" alt="XXX" height="32" width="32">
+            @else
+                <img id="avatar-right-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="XXX" height="32" width="32">
+            @endif
         </div>
     </div>
 @endsection
@@ -49,9 +53,13 @@
 
         <div class="account-box">
             <div class="account-box-avatar">
-                <img src="{{ asset('resources/img/ocean.jpg') }}" alt="XXX">
+                @if($user->picture_url)
+                    <img id="avatar-left-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" height="112" width="112" alt="XXX">
+                @else
+                    <img id="avatar-left-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" height="112" width="112" alt="XXX">
+                @endif
             </div>
-            <div class="account-box-name">UserChannel</div>
+            <div class="account-box-name">{{ $user->channel_name }}</div>
         </div>
 
         <ul class="list-container">
@@ -231,6 +239,9 @@
                     dataType: 'html',
                     success: function(data) {
                         $('#content').html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
                 });
             });

@@ -67,23 +67,97 @@ class Users extends Model
         return self::whereYear('created_Date', $year)->count();
     }
 
+    public function videos(): HasMany{
 
-// =======
-//     public function videos(): HasMany{
+        return $this->hasMany(Video::class, 'user_id');
+    }
 
-//         return $this->hasMany(Video::class, 'user_id');
-//     }
+    public function comments(): HasMany{
 
-//     public function comments(): HasMany{
-//         return $this->hasMany(Comment::class, 'user_id');
-
-//     public static function lastInsertId(){
-//         return self::query()->latest('user_id')->first();
-//     }
+        return $this->hasMany(Comment::class, 'user_id');
+    }
 
 //     public static function lastInsertId(){
 //         return self::query()->latest('user_id')->first();
 //     }
 
-// >>>>>>> 9537bb7110dd81d0199cd4a0176f9b45ba89ab09
+    public function videoNoti(): HasMany{
+        return $this->hasMany(VideoNotifications::class, 'user_id');
+    }
+    //đây là hàm lấy các thông báo duyệt video của user
+    //ví dụ lấy thông báo của user có id = 1
+    // $user = Users::find(1);
+    // $videoNoti = $user->videoNoti;
+
+    public static function lastInsertId(){
+        $lastUser = self::query()->latest('user_id')->first();
+        return $lastUser ? (int) $lastUser->user_id : null;
+    }
+
+    //Đếm số người follower của user
+    //đếm số lượng follow(subcribe) của user
+    //cách dùng: $user = Users::find(1);
+    //$followersCount = $user->followersCount();
+    public function followersCount()
+    {
+        return $this->hasMany(Follow::class, 'user_id')->count();
+    }
+
+    public function videosCount() {
+        return $this->hasMany(Video::class, 'user_id')->count();
+    }
+
+    //lấy danh sách Users dựa trên danh sách được follow bởi user
+    public function getUsersByFollowing(){
+        return $this->belongsToMany(Users::class, 'follow', 'follower_id', 'user_id')->get();
+    }
+
+    //lấy danh sách Users dựa trên danh sách đang follow user
+    public function getUsersBFollowed(){
+        return $this->belongsToMany(Users::class, 'follow', 'user_id', 'follower_id');
+    }
+
+    //lấy danh sách các Follow đang follow user
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'user_id')->get();
+    }
+    //lấy danh sách các follower của user
+    //cách dùng: $user = Users::find(1);
+    // $followers = $user->followers();
+    //$followers->isEmpty() để kiểm tra xem user có follower nào không
+
+    //đếm số người mà user đang follow
+    public function followingCount()
+    {
+        return $this->hasMany(Follow::class, 'follower_id')->count();
+    }
+    //đếm số lượng người mà user đang follow
+    //cách dùng: $user = Users::find(1);
+    //$followingCount = $user->followingCount();
+
+    //lấy danh sách các Follow được follow bởi user
+    public function following()
+    {
+        return $this->hasMany(Follow::class, 'follower_id')->get();
+    }
+    //lấy danh sách các người mà user đang follow
+    //cách dùng: $user = Users::find(1);
+    // $following = $user->following();
+    //$following->isEmpty() để kiểm tra xem user có đang follow ai không
+
+    //kiểm tra xem user có follow user khác không
+    public function isFollowing($user_id){
+        return $this->hasMany(Follow::class, 'follower_id')->where('user_id', $user_id)->exists();
+    }
+    //cách dùng: $user = Users::find(1);
+    // $user->isFollowing(2) để kiểm tra xem user có follow user có id = 2 không
+
+    //kiểm tra xem user có được user khác follow không
+    public function isFollowed($user_id){
+
+        return $this->hasMany(Follow::class, 'user_id')->where('follower_id', $user_id)->exists();
+    }
+    //cách dùng: $user = Users::find(1);
+    // $user->isFollowed(2) để kiểm tra xem user có được user có id = 2 follow không
 }

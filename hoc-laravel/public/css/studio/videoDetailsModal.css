@@ -110,6 +110,7 @@
     border: solid 2px #3f3f3f;
     color: white;
     border: none;
+    width: 100%;
 }
 
 .form-group > label {

@@ -1,13 +1,46 @@
 <ul class="list-container">
     <div class="list-title">Kênh đăng ký</div>
-    @for ($i = 0; $i < 6; $i++)
+
+    @if($followings->count() <= 0)
+        {{-- nếu chưa đăng ký kênh nào--}}
         <li class="list-item">
             <a href="">
                 <span class="list-icon">
                     <img src="{{ asset('resources/img/ocean.jpg') }}" alt="">
                 </span>
-                Channel Name
+                Không 1 ai
             </a>
         </li>
-    @endfor
+    @else
+        {{-- nếu đã đăng ký kênh --}}
+        @foreach($followings as $following)
+            <li class="list-item" user_id='{{ $following->user->user_id }}'>
+                <a href="{{ route('clients.userChannel') }}">
+                <span class="list-icon">
+                    {{--icon avatar trong 1 component kênh đăng ký--}}
+                    @if($following->user->picture_url)
+                        <img src="{{ asset('storage/img/' . $following->user->picture_url) }}" alt="" width="24" height="24">
+                    @else
+                        <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="24" height="24">
+
+                    @endif
+
+{{--                    <img src="{{ asset('resources/img/ocean.jpg') }}" alt="">--}}
+                </span>
+                    {{ $following->user->channel_name }}
+                </a>
+            </li>
+        @endforeach
+    @endif
+
+{{--    @for ($i = 0; $i < 6; $i++)--}}
+{{--        <li class="list-item">--}}
+{{--            <a href="">--}}
+{{--                <span class="list-icon">--}}
+{{--                    <img src="{{ asset('resources/img/ocean.jpg') }}" alt="">--}}
+{{--                </span>--}}
+{{--                Channel Name--}}
+{{--            </a>--}}
+{{--        </li>--}}
+{{--    @endfor--}}
 </ul>

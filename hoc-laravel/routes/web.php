@@ -4,9 +4,11 @@ use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
-use App\Http\Controllers\clients\History;
+use App\Http\Controllers\clients\FollowController;
+use App\Http\Controllers\clients\HistoryController;
 use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
+use App\Http\Controllers\clients\InteractionController;
 use App\Http\Controllers\clients\MemberShipController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
@@ -17,7 +19,6 @@ use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\RedirectResponse;
 
@@ -31,6 +32,15 @@ use Illuminate\Http\RedirectResponse;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+// Video CRUD
+Route::middleware('CheckLogin')->prefix('api/videos')->group(function() {
+    Route::get('/', [VideoController::class, 'get'])->name('api.videos.get');
+    Route::post('/', [VideoController::class, 'create'])->name('api.videos.create');
+    Route::put('/', [VideoController::class, 'edit'])->name('api.videos.edit');
+    Route::delete('/', [VideoController::class, 'delete'])->name('api.videos.delete');
+});
 
 
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
@@ -103,18 +113,35 @@ Route::prefix('admin')->group(function (){
 });
 
 // --------------------Cái này của Dương -------------------- //
+//cái này của user
 // Membership
-Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])->name('membership.createMemberPackage');
-Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('membership.membershipManager');
-Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])->name('membership.membershipEdit');
+Route::get('createMemberPackage', [MemberShipController::class, 'showCreateMemberShip'])
+    ->middleware('CheckLogin')
+    ->name('membership.createMemberPackage');
 
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])
+    ->middleware('CheckLogin')
+    ->name('membership.membershipManager');
 
-// Trang chủ
-Route::get('homePage', [HomePageController::class, 'index'])->name('clients.homePage');
+Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])
+    ->name('membership.membershipEdit')
+    ->middleware('CheckLogin');
+// end Membership
 
-// Danh sách phát
+//trang chính của đồ án
+Route::get('home', [HomePageController::class, 'index'])->name('clients.homePage');
+
+// Kênh của tôi
+Route::get('home/userChannel', [HomePageController::class, 'userChannel'])->name('clients.userChannel');
+Route::get('home/userChannel/videos', [HomePageController::class, 'userChannelVideos'])->name('clients.userChannel.videos');
+Route::get('home/userChannel/playlists', [HomePageController::class, 'userChannelPlaylists'])->name('clients.userChannel.playlists');
+
+//????
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
-Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage');
+Route::get('studioPage', [StudioController::class, 'index'])
+    ->middleware('CheckLogin')
+    ->name('clients.studioPage');
+
 Route::get('buyPremium', [PremiumController::class, 'buyPremium'])->name('clients.buyPremium');
 
 // Hiển thị danh sách xem sau
@@ -124,7 +151,7 @@ Route::get('showWatchLater', [PlaylistController::class, 'showWatchLater'])->nam
 Route::get('showAllPlaylist', [PlaylistController::class, 'showAllPlaylist'])->name('clients.playlistAll');
 
 // Hiển thị danh sách lịch sử xem
-Route::get('showHistory', [History::class, 'showHistory'])->name('clients.videoHistory');
+Route::get('showHistory', [HistoryController::class, 'showHistory'])->name('clients.videoHistory');
 
 // Hiển thị danh sách video tìm kiếm
 Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('clients.searchVideo');
@@ -163,13 +190,14 @@ Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clien
 
 Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
 Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVideos'])->name('studio.contents.videos')->middleware('CheckLogin');
-Route::get('studioPage/contents/playlists/{currentPage}', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
+Route::get('studioPage/contents/playlists', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 
-Route::get('studioPage/videoDetails/{video_id?}', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');    
+Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');
 
+Route::post('studioPage/profileEdit', [StudioController::class, 'profileEdit'])->name('studio.profileEdit');
 
 //hiện layout user
 Route::get('users', [UsersController::class, 'index'])->name('users.layout');
@@ -205,6 +233,16 @@ Route::post('users/add', [UsersController::class, 'addUser'])
 //hiện chi tiết video của user
 Route::get('videos/{video_id}', [VideoController::class, 'videoDetail'])
     ->name('video.detail')
+    ->where('id', '[0-9]+');
+
+//xem video
+Route::get('playVideo/{video_id}', [VideoController::class, 'playVideo'])
+    ->name('clients.playVideo')
+    ->where('id', '[0-9]+');
+
+//cũng là xem video nhưng từ danh sách phát
+Route::get('playVideo/{video_id}/{playlist_id}', [VideoController::class, 'playVideo'])
+    ->name('clients.playVideo.playlist')
     ->where('id', '[0-9]+');
 
 //update ảnh đại diện
@@ -297,6 +335,26 @@ Route::get('users/dashboard', [UsersController::class, 'showUserDashboard'])
 
 //logout
 Route::get('auth/logout', [LoginController::class, 'logout'])->name('auth.logout');
+
+
+//check login không thông qua middleware
+Route::post('check-login', [UsersController::class, 'checkLogin'])->name('check-login');
+
+
+//làm phần follow
+
+//xử lý khi bấm subscribe
+Route::post('follow', [FollowController::class, 'handleFollow'])
+    ->name('follow.handle');
+
+
+//làm phần like
+
+//xử lý khi bấm like/dislike
+Route::post('like', [InteractionController::class, 'handleLike'])
+    ->name('like.handle');
+
+
 
 //
 //Route::get('/category/{category}', [HomeController::class, 'getCategory'])->name('category');

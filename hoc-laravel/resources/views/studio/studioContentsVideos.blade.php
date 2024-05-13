@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/studio/studioContentsVideos.css') }}">
+
 <ul class="content__body--list">
 
     <!-- header -->
@@ -26,6 +28,7 @@
     </li>
 
     <!-- items -->
+    {{-- danh sách video của user trong studio--}}
     @foreach ($videos as $video)
         <li class="content__body--item">
             <div class="item__optionbox">
@@ -40,7 +43,16 @@
 
             <div class="item__content">
                 <div class="item__thumbnail">
-                    <img src="../assets/img/ocean.jpg" alt="" class="item__thumbnail--img">
+                    {{-- phần thumbnail--}}
+
+                    @if($video->thumbnail_path)
+                        <img src="{{ asset('storage/thumbnail/' . $video->thumbnail_path) }}" alt="" class="item__thumbnail--img">
+
+                    @else
+                        <img src="{{ asset('storage/thumbnail/default-thumbnail.jpg') }}" alt="" class="item__thumbnail--img">
+
+                    @endif
+
                 </div>
 
                 <div class="item__info">
@@ -50,7 +62,7 @@
                 </div>
             </div>
 
-            
+
 
             <div class="item__display">
                 @if ($video->display_mode == 0)
@@ -77,45 +89,60 @@
 
 <script>
     $('.content__body--list').ready(function() {
+
+        // nút edit của video trong studio
         $('.edit--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails/${video_id}`,
+                url: '{{ route('studio.videoDetails') }}',
                 type: 'GET',
+                data: {
+                    video_id: video_id,
+                    currentPage: {{ $currentPage }},
+                    itemPerPage: {{ $itemPerPage }}
+                },
                 dataType: 'html',
                 success: function(data) {
                     $('#modal').html(data)
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching content:', error);
+                error: function(data) {
+                    console.log(data)
                 }
             });
             event.preventDefault();
         });
 
+        //event của nút xóa
         $('.delete--btn').on('click', function(event) {
             var video_id = $(this).attr('video_id')
             $.ajax({
-                url: `/studioPage/videoDetails/${video_id}`,
-                type: 'GET',
+                url: '{{ route('api.videos.delete') }}',
+                type: 'DELETE',
+                data: {
+                    video_id: video_id,
+                    _token: '{{ csrf_token() }}'
+                },
                 dataType: 'html',
                 success: function(data) {
-                    $('#modal').html(data)
+                    $('#modal').empty();
+                    loadPage(1, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
                 },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching content:', error);
+                error: function(data) {
+                    console.log(data)
                 }
             });
             event.preventDefault();
         });
 
-    
+
         $.ajax({
             url: '{{ route('studio.pagination') }}',
             type: 'GET',
             data: {
+                url: '{{ route('studio.contents.videos') }}',
                 currentPage: {{ $currentPage }},
-                totalPages: {{ $totalPages }}, 
+                itemPerPage: {{ $itemPerPage }},
+                totalPages: {{ $totalPages }},
                 pageDisplay: {{ $pageDisplay }}
             },
             dataType: 'html',

@@ -12,7 +12,7 @@
         </div>
         <div id="text-wrapper" class="text-wrapper-playlist">
             <div id="title-wrapper" class="title-wrapper-playlist">
-                <h3 id="title" class="title-playlist">Video đã thích</h3>
+                <h3 id="title" class="title-playlist">Video lưu vào xem sau</h3>
             </div>
             <div id="self-profile">
                 <h4>
@@ -57,7 +57,8 @@
 <!-- video playlist -->
 <div id="playlist" class="video-playlist">
     {{-- Data đặt ở đây --}}
-    @for ($i = 0; $i < 10; $i++)
+
+    @foreach($watchLaterVideo as $video)
         <div class="box-container">
             <div id="index-container">
                 <span id="index">1</span>
@@ -66,8 +67,8 @@
                 <div id="thumb-container" class="video-playlist">
                     <a href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
                         <img id="thumb-image" class="video-playlist"
-                            src="https://i.ytimg.com/vi/YNaAyu2cOV4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCg_kUWgKXOIHp8oq0tsEAq7gouTg"
-                            alt="">
+                             src="https://i.ytimg.com/vi/YNaAyu2cOV4/hq720.jpg?sqp=-oaymwEcCNAFEJQDSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLCg_kUWgKXOIHp8oq0tsEAq7gouTg"
+                             alt="">
                     </a>
                 </div>
                 <div id="text-wrapper" class="video-playlist">
@@ -75,13 +76,12 @@
                         <div id="title-wrapper" class="video-playlist">
                             <h3 class="title">
                                 <a id="video-title" class="video-playlist"
-                                    href="https://www.youtube.com/watch?v=YNaAyu2cOV4">CHÚ TÔI DƯƠNG TÍNH VỚI
-                                    MAI THÚY | HÔN NHÂN CÓ GÌ VUI #5</a>
+                                   href="https://www.youtube.com/watch?v=YNaAyu2cOV4">{{ $video->title }}</a>
                             </h3>
                         </div>
                         <div id="metadata" class="video-playlist">
                             <a id="status-video" class="video-playlist"
-                                href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
+                               href="https://www.youtube.com/watch?v=YNaAyu2cOV4">
                                 <span>100 lượt xem</span>
                                 <i class="fa-solid fa-circle"></i>
                                 <span>2 tuần trước</span>
@@ -91,13 +91,14 @@
                     <div id="channel-info" class="video-playlist">
                         <div id="text-container" class="video-playlist">
                             <a id="channel-name" class="video-playlist"
-                                href="https://www.youtube.com/@TunaGamingvn">Monsieur Tuna</a>
+                               href="https://www.youtube.com/@TunaGamingvn">Monsieur Tuna</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    @endfor
+    @endforeach
+
 </div>
 
 {{-- Gáng mà script --}}
