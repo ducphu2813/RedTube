@@ -221,6 +221,7 @@
         {{-- Sửa lại thành foreach --}}
         {{-- Sẽ lưu trong resources/channel nhé --}}
         {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
+        {{-- và sẽ bị ẩn đi nếu mày chưa đăng nhập--}}
         @if(session('loggedInUser'))
             @component('channel.channel-detail', ['followings' => $followings])
             @endcomponent

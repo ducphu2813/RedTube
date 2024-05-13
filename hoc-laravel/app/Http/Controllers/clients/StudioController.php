@@ -110,7 +110,8 @@ class StudioController extends Controller
         $user = Users::getUserById(session('loggedInUser'));
         unset($data['_token']);
 
-        $newUserData = [];
+//        $newUserData = [];
+        $userModel = new Users;
 
         //kiểm tra xem có thay đổi ảnh hay không
         if($request->hasFile('picture_url') && isset($data['picture_url'])){
@@ -124,19 +125,29 @@ class StudioController extends Controller
             }
             $data['picture_url_status'] = 'isChange';
             $data['new_picture_url'] = $fileName;
-            $newUserData['picture_url'] = $fileName;
+//            $newUserData['picture_url'] = $fileName;
+            $newUserData = [
+                'user_name' => $data['user_name'],
+                'email' => $data['email'],
+                'description' => $data['description'],
+                'channel_name' => $data['channel_name'],
+                'picture_url' => $fileName,
+            ];
+
+            $userModel->updateUser($user->user_id, $newUserData);
+        }else{
+            $newUserData = [
+                'user_name' => $data['user_name'],
+                'email' => $data['email'],
+                'description' => $data['description'],
+                'channel_name' => $data['channel_name'],
+            ];
+
+
+            $userModel->updateUser($user->user_id, $newUserData);
         }
 
-        $newUserData = [
-            'user_name' => $data['user_name'],
-            'email' => $data['email'],
-            'description' => $data['description'],
-            'channel_name' => $data['channel_name'],
-        ];
 
-        $userModel = new Users;
-
-        $userModel->updateUser($user->user_id, $newUserData);
 
         $data['status'] = 'success';
         $data['message'] = 'Cập nhật thông tin thành công';
