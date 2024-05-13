@@ -14,10 +14,10 @@
     @else
         {{-- nếu đã đăng ký kênh --}}
         @foreach($followings as $following)
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" user_id='{{ $following->user->user_id }}'>
+                <a href="{{ route('clients.userChannel') }}">
                 <span class="list-icon">
-                    {{--icon avatar trong 1 component video--}}
+                    {{--icon avatar trong 1 component kênh đăng ký--}}
                     @if($following->user->picture_url)
                         <img src="{{ asset('storage/img/' . $following->user->picture_url) }}" alt="" width="24" height="24">
                     @else
