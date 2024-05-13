@@ -50,10 +50,6 @@
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label for="category">Thể loại</label>
-                            <input type="text" id="category" disabled value="Thể loại A">
-                        </div>
 
                         <div class="form-group">
                             <label for="privacy">Chế độ</label>
@@ -84,7 +80,10 @@
                     <div class="form-left">
                         <div class="form-group">
                             <label for="video">Đăng tải video</label>
-                            <input type="file" id="video" name="video" accept="video/*">
+                            <input type="hidden" id="video_id" name="video_id" value="">
+
+                            {{-- phần input file video của video--}}
+                            <input type="file" id="video_path" name="video_path" accept="video/*" value="" readonly required>
                         </div>
 
                         <div class="form-group">
@@ -101,26 +100,23 @@
                     <div class="form-right">
                         <div class="form-group">
                             <label for="thumbnail">Đăng tải ảnh bìa</label>
-                            <input type="file" id="thumbnail" name="thumbnail" accept="image/*">
 
+                            {{-- phần input ảnh bìa của video--}}
+                            <input type="file" id="thumbnail_path" name="thumbnail_path" accept="image/*" value="" required>
+
+                            {{-- phần hiện thị ảnh bìa của video--}}
                             <div class="review__thumbnail">
-                                <img src="" alt="" id="thumbnail--review" class="thumbnail--img">
+                                <img src="" alt="" id="thumbnail--review" class="thumbnail--img" style="display: block;">
                             </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label for="playlist">Danh sách phát</label>
-                            <select id="playlist" name="playlist">
-                                <option value="A">Playlist A</option>
-                                <option value="B">Playlist B</option>
-                            </select>
-                        </div>
 
                         <div class="form-group">
                             <label for="privacy">Chế độ</label>
-                            <select id="privacy" name="privacy">
-                                <option value="public">Công khai</option>
-                                <option value="private">Riêng tư</option>
+                            <select id="display_mode" name="privacy">
+                                <option value="1">Công khai</option>
+                                <option value="0">Riêng tư</option>
                             </select>
                         </div>
 
