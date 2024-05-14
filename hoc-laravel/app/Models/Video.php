@@ -108,7 +108,14 @@ class Video extends Model
     // $review = $video->review;
 
     // Dương code ở này
+    public static function showVideoApproved(){
+        return self::query()->where('is_approved', 1)->get();
+    }
 
+    public static function getAllVideoNotApproved(){
+        return self::query()->where('is_approved', 0)->get();
+    }
+    
     //hàm này lấy tất cả video
     public static function getAllVideo(){
         return self::query()->get();
@@ -117,6 +124,10 @@ class Video extends Model
     //hàm này update video theo id
     public function updateVideo($id, $data){
         return $this->where('video_id', $id)->update($data);
+    }
+
+    public static function getVideoById($id){
+        return self::where('video_id', $id)->first();
     }
 
     // Dương không code nữa

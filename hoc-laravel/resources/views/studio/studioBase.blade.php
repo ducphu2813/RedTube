@@ -138,7 +138,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('clients.showAllNoti') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -234,6 +234,7 @@
             $('.list-item').on('click', function() {
                 event.preventDefault();
                 var link = $(this).find('a').attr('href');
+                $('#content').hide();
                 $.ajax({
                     url: link,
                     type: 'GET',
@@ -245,6 +246,12 @@
                         console.log(data);
                     }
                 });
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
             });
         });
     </script>

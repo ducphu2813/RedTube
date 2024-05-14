@@ -1,0 +1,54 @@
+/* Css chung */
+.noti-all-wrapper{
+    display: flex;
+    flex-direction: column;
+    min-height: 70%;
+    padding: 20px;
+    width: 100%;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.noti-content{
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    border-bottom: 1px solid #dedede;
+    align-items: center;
+    margin-bottom: 10px;
+    height: 90px;
+    padding: 0 20px;
+}
+
+.noti-avt img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.noti-info{
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.noti-thumbnail img{
+    width: 100px;
+    height: 60px;
+}
+
+/* Css của noti check & comment */
+
+/* Css của noti premium share */
+
+.noti-btn{
+    /* display: flex; */
+}
+
+.noti-btn-acp{
+    margin-bottom: 5px;
+}
+
+.btn-success,
+.btn-danger{
+    width: 100px;
+}

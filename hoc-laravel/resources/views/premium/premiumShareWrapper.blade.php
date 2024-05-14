@@ -17,18 +17,16 @@
         </div>
     </div>
 
+    {{-- Chổ này đổ data của gói premium --}}
     @for ($i = 0; $i < 5; $i++)
         @component('premium.premiumShareItem')
         @endcomponent
     @endfor
-
-    {{-- @foreach ($listShares as $share)
-        @component('premium.premiumShareItem', ['share' => $share])
-        @endcomponent
-    @endforeach --}}
 </div>
 
 <script>
+    // Hiển thị danh sách người được chia sẻ premium
+    // Kèm theo nút đóng modal
     $(document).ready(function() {
 
         //nút coi chi tiết share
@@ -47,6 +45,7 @@
             })
         });
 
+        // Cái này click bất kì ngoài modal thì ẩn modal đi
         $(document).click(function(event) {
             var target = $(event.target);
             if(!target.closest('.modal-share-content').length && $('.modal-share-premium').is(":visible")) {

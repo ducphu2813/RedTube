@@ -13,8 +13,8 @@
             console.log(role);
             console.log(id);
             $.ajax({
-                url: "{{ route('admin.changeStatusUser') }}",
-                method: 'POST',
+                url: "{{ route('admin.changeRoleUser') }}",
+                type: 'POST',
                 data: {
                     user_id: id,
                     role: role,
@@ -50,7 +50,7 @@
             console.log(id);
             $.ajax({
                 url: "{{ route('admin.changeStatusUser') }}",
-                method: 'POST',
+                type: 'POST',
                 data: {
                     user_id: id,
                     active: status,

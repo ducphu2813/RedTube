@@ -16,7 +16,7 @@ class AdminController extends Controller
     // hàm hiển thị trang danh sách video
     public function showVideoList(){
         $listVideo = Cache::remember('list_video', 0, function (){
-            return Video::getAllVideo();
+            return Video::showVideoApproved();
         });
         return view('admin.videoWrapper', ['listVideo' => $listVideo]);
     }
@@ -36,7 +36,10 @@ class AdminController extends Controller
 
     // hàm hiển thị trang danh sách check
     public function showCheckList(){
-        return view('admin.checkWrapper', ['listCheck' => Video::getAllVideo()]);
+
+        $videoNotApproved = Video::getAllVideoNotApproved();
+
+        return view('admin.checkWrapper', ['listCheck' => $videoNotApproved]);
     }
 
     // hàm hiển thị trang quản lý
@@ -74,6 +77,13 @@ class AdminController extends Controller
     }
 
     // Check video
+    // hàm duyệt video
+    public function showCheckModal(Request $request){
+        $data = $request->all();
+        $video = Video::getVideoById($data['video_id']);
+
+        return view('admin.checkIsApproved', ['video' => $video]);
+    }
     
     // Analysis data
     public function showChartList(){

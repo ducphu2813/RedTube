@@ -98,25 +98,12 @@ class PremiumController extends Controller
         unset($data['_token']);
     }
 
-    public function getAllRegistrations(){
-        // Lấy tất cả gói premium (không quan tâm user_id)
-        // $data['listRegistrations'] = PremiumRegistration::getAllPremiumRegistrationsByUser($id);
-
-        // Lấy tất cả user đã được share gói premium
-        // $data['listShares'] = $data['listRegistrations']->sharedUsers();
-        // $data[]
-
-        // đếm user được share gói premium
-        // $data['countUser'] = $data['listShares']->getAllSharedUsersCount();
-
-        //lấy premium còn hạn và hết hạn
-
-        $data = PremiumRegistration::getAllNoCondition();
-        return view('premium.premiumWrapper', $data);
-    }
-
     public function showModalPremium(){
         return view('premium.premiumShareList');
+    }
+
+    public function getAllRegistrations(){
+        return view('premium.premiumWrapper');
     }
 
     // -----------------Dương muốn note-----------------
@@ -125,6 +112,8 @@ class PremiumController extends Controller
 // Cái btn nó sẽ chia ra làm 2 function
 // có thì chuyển tới trang premium trong studio
 // không thì chuyển tới trang mua premium
+
+
 
     // Chưa mua premium cá nhân
     public function buyPremium(){
@@ -135,5 +124,21 @@ class PremiumController extends Controller
     public function noPremium(){
         return view('premium.no-premium-no-share');
 
+    }
+
+    // Lịch sử chia sẻ
+
+    public function mySharePremium(){
+        return view('premium.premiumShareWrapper');
+    }
+
+    // Nhận chia sẻ
+    public function receiveShare(){
+        return view('premium.premiumHistoryWrapper');
+    }
+
+    // Modal invate
+    public function invitePremium(){
+        return view('premium.premiumInvate');
     }
 }

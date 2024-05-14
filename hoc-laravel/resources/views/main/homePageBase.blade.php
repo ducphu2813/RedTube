@@ -109,7 +109,7 @@
                 </header>
                 <div class="wrapper-header-notify-list">
                     {{-- Chổ này cho danh sách thông báo --}}
-                    @component('noti.noti-wrapper')
+                    @component('noti.noti-new')
                     @endcomponent
                 </div>
             </div>

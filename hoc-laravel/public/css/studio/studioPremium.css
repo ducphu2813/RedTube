@@ -170,3 +170,7 @@ input:focus {
     border-radius: 2px;
     border: none;
 }
+
+.loading{
+    opacity: .5;
+}
