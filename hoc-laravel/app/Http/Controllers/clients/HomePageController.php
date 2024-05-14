@@ -29,6 +29,7 @@ class HomePageController extends Controller
         $data = request()->all();
         $logged_user_id = session('loggedInUser');
         $user_id = $data['user_id'] ?? $logged_user_id;
+        
         $user = Users::getUserById($user_id);
         $followers = $user->followersCount();
         $videoCounts = $user->videosCount();
@@ -39,10 +40,21 @@ class HomePageController extends Controller
 
     public function userChannelVideos() {
         $data = request()->all();
-        $user_id = $data['user_id'] ?? session('loggedUser');
-        $videos = Video::getVideoByUserId($user_id);
+        $url = $data['url'];
+        $currentPage = $data['currentPage'] ?? 1; 
+        $itemPerPage = $data['itemPerPage'] ?? 10;
+        $pageDisplay = $data['pageDisplay'] ?? 3;
 
-        return view('video.video-in-main-wrapper', ['videos' => $videos]);
+        $user_id = $data['user_id'] ?? session('loggedUser');
+        $videos = Video::where('user_id', $user_id)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $totalItems = Video::where('user_id', $user_id)->where('active', 1)->count();
+
+        $totalPages = ceil($totalItems / $itemPerPage);
+        if($currentPage > $totalPages) {
+            return view('');
+        }
+
+        return view('video.video-in-main-wrapper', ['videos' => $videos, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay, 'url' => $url]);
     }
 
     public function userChannelPlaylists() {

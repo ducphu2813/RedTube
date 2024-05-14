@@ -92,7 +92,7 @@ button:hover {
 }
 
 #subcribe--btn {
-    padding: 6px 16px;
+    padding: 8px 16px;
     border-radius: 16px;
     color: white;
     background-color: #3ea6ff;
@@ -103,11 +103,11 @@ button:hover {
 
 #subcribe--btn i {
     font-size: 16px;
-    margin-right: 4px;
+    margin-right: 8px;
 }
 
 #unsubcribe--btn {
-    padding: 6px 16px;
+    padding: 8px 16px;
     border-radius: 16px;
     color: white;
     background-color: #ff4e45;
@@ -118,7 +118,7 @@ button:hover {
 
 #unsubcribe--btn i {
     font-size: 16px;
-    margin-right: 4px;
+    margin-right: 8px;
 }
 
 .content__body {

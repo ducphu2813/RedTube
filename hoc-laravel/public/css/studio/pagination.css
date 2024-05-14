@@ -1,3 +1,9 @@
+.content__footer {
+    display: flex;
+    justify-content: end;
+    margin: 16px 32px 32px 0px;
+}
+
 .pagination {
     display: flex;
     flex-direction: row;
@@ -6,6 +12,7 @@
 
 .pagination__setting {
     margin-right: 32px;
+    color: white;
 }
 
 .pagination__setting label {

@@ -77,6 +77,7 @@
     @endforeach
 </ul>
 
+
 <script>
     $('.content__body--list').ready(function() {
         $('.edit--btn').on('click', function(event) {

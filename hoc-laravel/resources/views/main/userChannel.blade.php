@@ -34,8 +34,6 @@
     </div>
     
     <ul class="content__option">
-        {{-- <li class="content__option--item selected">Videos</li>
-        <li class="content__option--item">Playlists</li> --}}
         <li class="content__option--item selected" data-url="{{ route('clients.userChannel.videos') }}">Videos</li>
         <li class="content__option--item" data-url="{{ route('clients.userChannel.playlists') }}">Playlists</li>
     </ul>
@@ -62,14 +60,24 @@
     </div>
 </div>
 
-{{-- <script>
+<script>
+    $('#close--btn').on('click', function(event) {
+        $('.modal__description').css('display', 'none');
+    });
+
+    $('.user__details').on('click', function(event) {
+        $('.modal__description').css('display', 'block');
+    });
+
     $(document).ready(function() {
         $.ajax({
             url: '{{ route('clients.userChannel.videos') }}',
             type: 'GET',
             data: {
-                'currentPage': 1,
-                'itemPerPage': 21
+                url: '{{ route('clients.userChannel.videos') }}',
+                user_id: {{ $user->user_id }},
+                currentPage: 1,
+                itemPerPage: 10
             },
             dataType: 'html',
             success: function(data) {
@@ -100,13 +108,14 @@
         });
     });
 
-    set cung cho nay bi sai
-    function loadPage(page) {
+    function loadPage(page, url, itemPerPage) {
         $.ajax({
-            url: '{{ route('studio.contents.videos') }}',
+            url: url,
             type: 'GET',
             data: {
-                'currentPage': page
+                user_id: {{ $user->user_id }},
+                currentPage: page,
+                itemPerPage: itemPerPage
             },
             dataType: 'html',
             success: function(data) {
@@ -114,37 +123,10 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching content:', error);
+                console.log(url)
             }
         });
     }
-</script> --}}
-
-<script>
-    $('#close--btn').on('click', function(event) {
-        $('.modal__description').css('display', 'none');
-    });
-
-    $('.user__details').on('click', function(event) {
-        $('.modal__description').css('display', 'block');
-    });
-
-    $(document).ready(function() {
-        $.ajax({
-            url: '{{ route('clients.userChannel.videos') }}',
-            type: 'GET',
-            // data: {
-            //     // 'currentPage': 1,
-            //     'itemPerPage': 999
-            // },
-            dataType: 'html',
-            success: function(data) {
-                $('#body').html(data);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching content:', error);
-            }
-        });
-    });
 </script>
 
 
