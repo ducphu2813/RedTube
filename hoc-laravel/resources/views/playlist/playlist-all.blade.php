@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/playlistAll.css') }}">
 <h3 style="margin: 20px; color:#fff">
-    Danh sách phát
+    {{-- Danh sách phát --}}
 </h3>
 
 <div class="all-playlist-container">

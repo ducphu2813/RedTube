@@ -263,7 +263,7 @@
 
 {{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
 @section('content')
-    {{-- @component('video.video-in-main-wrapper', ['videos' => $videos, 'currentPage' => 1, 'itemPerPage' => 10])
+    {{-- @component('video.video-in-main-wrapper', ['videos' => $videos])
     @endcomponent --}}
 @endsection
 
@@ -273,11 +273,6 @@
             $.ajax({
                 url: '{{ route('clients.videoReload') }}',
                 type: 'GET',
-                data: {
-                    url: '{{ route('clients.videoReload') }}',
-                    currentPage: 1,
-                    itemPerPage: 30
-                },
                 dataType: 'html',
                 success: function(data) {
                     $('#content').html(data);
@@ -299,8 +294,6 @@
                 type: 'GET',
                 dataType: 'html',
                 success: function(response) {
-                    console.log(response);
-
                     $('#content').html(response);
                 },
                 error: function(jqXHR, textStatus, errorThrown, response) {

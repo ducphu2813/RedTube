@@ -16,20 +16,27 @@
             </div>
     
             <div class="user__details">Mô tả</div>
+
+            <div class="user__option">
+                @if ($logged_user_id != $user->user_id)
+                    @if ($isFollowing == true)
+                        <button class="btn" id="unsubcribe--btn">
+                            <i class="fa-solid fa-bell"></i>
+                            Hủy đăng ký
+                        </button>
+                        @else
+                        <button class="btn" id="subcribe--btn">
+                            <i class="fa-solid fa-bell"></i>
+                            Đăng ký
+                        </button>
+                     @endif
+    
+                     <button class="btn" id="join--btn">
+                        Tham gia
+                    </button>
+                @endif
+            </div>
             
-            @if ($logged_user_id != $user->user_id)
-                @if ($isFollowing == true)
-                    <button id="unsubcribe--btn">
-                        <i class="fa-solid fa-bell"></i>
-                        Hủy đăng ký
-                    </button>
-                    @else
-                    <button id="subcribe--btn">
-                        <i class="fa-solid fa-bell"></i>
-                        Đăng ký
-                    </button>
-                 @endif
-            @endif
         </div>
     </div>
     
@@ -74,10 +81,7 @@
             url: '{{ route('clients.userChannel.videos') }}',
             type: 'GET',
             data: {
-                url: '{{ route('clients.userChannel.videos') }}',
                 user_id: {{ $user->user_id }},
-                currentPage: 1,
-                itemPerPage: 10
             },
             dataType: 'html',
             success: function(data) {
@@ -85,6 +89,7 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching content:', error);
+                console.log("lolol");
             }
         });
 
@@ -95,6 +100,9 @@
             $.ajax({
                 url: url,
                 type: 'GET',
+                data: {
+                    user_id: {{ $user->user_id }},
+                },
                 dataType: 'html',
                 success: function(data) {
                     $('#body').html(data);
@@ -107,26 +115,6 @@
             event.preventDefault();
         });
     });
-
-    function loadPage(page, url, itemPerPage) {
-        $.ajax({
-            url: url,
-            type: 'GET',
-            data: {
-                user_id: {{ $user->user_id }},
-                currentPage: page,
-                itemPerPage: itemPerPage
-            },
-            dataType: 'html',
-            success: function(data) {
-                $('#body').html(data);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching content:', error);
-                console.log(url)
-            }
-        });
-    }
 </script>
 
 

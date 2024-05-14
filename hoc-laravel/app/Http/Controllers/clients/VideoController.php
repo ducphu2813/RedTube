@@ -146,23 +146,11 @@ class VideoController extends Controller{
 
     // Hàm load video trang chủ, đổ data là video mới nhất và random 
     public function reloadVideoList(){
-        $data = request()->all();
-        $url = $data['url'];
-        $currentPage = $data['currentPage'] ?? 1; 
-        $itemPerPage = $data['itemPerPage'] ?? 10;
-        $pageDisplay = $data['pageDisplay'] ?? 3;
-
         $user_id = $data['user_id'] ?? session('loggedUser');
         $currentUserProfile = Users::getUserById($user_id);
-        $videos = Video::where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
-        $totalItems = Video::where('active', 1)->count();
+        $videos = Video::where('active', 1)->get();
 
-        $totalPages = ceil($totalItems / $itemPerPage);
-        if($currentPage > $totalPages) {
-            return view('');
-        }
-
-        return view('video.video-in-main-wrapper', ['videos' => $videos, 'totalPages' => $totalPages, 'currentUserProfile' => $currentUserProfile, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay, 'url' => $url]);
+        return view('video.video-in-main-wrapper', ['videos' => $videos, 'currentUserProfile' => $currentUserProfile]);
     }
 
     // Hàm tìm kiếm

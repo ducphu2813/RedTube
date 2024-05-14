@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Playlist;
 use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Http\Request;
@@ -40,25 +41,18 @@ class HomePageController extends Controller
 
     public function userChannelVideos() {
         $data = request()->all();
-        $url = $data['url'];
-        $currentPage = $data['currentPage'] ?? 1; 
-        $itemPerPage = $data['itemPerPage'] ?? 10;
-        $pageDisplay = $data['pageDisplay'] ?? 3;
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $videos = Video::where('user_id', $user_id)->where('active', 1)->get();
 
-        $user_id = $data['user_id'] ?? session('loggedUser');
-        $videos = Video::where('user_id', $user_id)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
-        $totalItems = Video::where('user_id', $user_id)->where('active', 1)->count();
-
-        $totalPages = ceil($totalItems / $itemPerPage);
-        if($currentPage > $totalPages) {
-            return view('');
-        }
-
-        return view('video.video-in-main-wrapper', ['videos' => $videos, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay, 'url' => $url]);
+        return view('video.video-in-main-wrapper', ['videos' => $videos]);
     }
 
     public function userChannelPlaylists() {
+        $data = request()->all();
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $playlists = Playlist::where('user_id', $user_id)->get();
 
+        return view('playlist.playlist-all', ['userPlaylist' => $playlists]);
     }
     
 }
