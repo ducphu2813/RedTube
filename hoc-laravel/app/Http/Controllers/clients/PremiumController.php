@@ -102,12 +102,18 @@ class PremiumController extends Controller
         return view('premium.premiumShareList');
     }
 
+    public function getAllRegistrations(){
+        return view('premium.premiumWrapper');
+    }
+
     // -----------------Dương muốn note-----------------
 // Cái này là nếu thằng user có sở hữu pre gòi thì khi nhấn vào mua thì nó hiện lên là m muốn mua nữa không ?
 // Còn share nếu có gói premium thì nội dung thay đổi thành "Bạn có muốn chia sẻ cho ai không"
 // Cái btn nó sẽ chia ra làm 2 function
 // có thì chuyển tới trang premium trong studio
 // không thì chuyển tới trang mua premium
+
+
 
     // Chưa mua premium cá nhân
     public function buyPremium(){

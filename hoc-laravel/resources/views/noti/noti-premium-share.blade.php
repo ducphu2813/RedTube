@@ -6,15 +6,21 @@
 
         <div class="noti-info">
             <div>
-                Trạng thái: 
+                Tên người chia sẻ: 
             </div>
-            <div style="visible: hidden">
-                Lí do: 
+            <div>
+                Thời hạn sử dụng:
             </div>
         </div>
 
-        <div class="noti-thumbnail">
-            <img src="{{ asset('resources/img/ocean.jpg') }}" alt="" srcset="">
+        <div class="noti-btn">
+            <div class="noti-btn-acp">
+                <button class="btn btn-success">Chấp nhận</button>
+            </div>
+
+            <div class="noti-btn-dec">
+                <button class="btn btn-danger">Từ chối</button>
+            </div>
         </div>
     </div>
 </div>

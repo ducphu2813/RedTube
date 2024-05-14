@@ -1,5 +1,23 @@
 <link rel="stylesheet" href="{{ asset('/css/premium.css') }}">
-<div class="content__title">Premium</div>
+<div class="content__title">
+    Premium
+    <span class="premium-check-own">
+        <div>
+            <i class="fa-solid fa-crown" style="fill: #fff"></i>
+        </div>
+    </span>
+    <span class="premium-check-share">
+        <span class="has-share" >
+            <i class="fa-solid fa-star"></i>
+        </span>
+        <span class="info-share">
+            Bạn được chia sẻ bởi: Dương Đẹp Trai <br>
+            Ngày hết hạn: 1/1/2022
+        </span>
+    </span>
+</div>
+
+
 
 <button class="modal-share-btn--item">
     <span class="span"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 23 21" height="21"

@@ -598,19 +598,97 @@ button.modal-invate-btn {
 }
 
 @keyframes shake {
-    0% { transform: translate(1px, 0) rotate(0deg); }
-    10% { transform: translate(-1px, 0px) rotate(0deg); }
-    20% { transform: translate(-3px, 0px) rotate(0deg); }
-    30% { transform: translate(3px, 0px) rotate(0deg); }
-    40% { transform: translate(1px, 0px) rotate(0deg); }
-    50% { transform: translate(-1px, 0px) rotate(0deg); }
-    60% { transform: translate(-3px, 0px) rotate(0deg); }
-    70% { transform: translate(3px, 0px) rotate(0deg); }
-    80% { transform: translate(-1px, 0px) rotate(0deg); }
-    90% { transform: translate(1px, 0px) rotate(0deg); }
-    100% { transform: translate(1px, 0px) rotate(0deg); }
+    0% {
+        transform: translate(1px, 0) rotate(0deg);
+    }
+
+    10% {
+        transform: translate(-1px, 0px) rotate(0deg);
+    }
+
+    20% {
+        transform: translate(-3px, 0px) rotate(0deg);
+    }
+
+    30% {
+        transform: translate(3px, 0px) rotate(0deg);
+    }
+
+    40% {
+        transform: translate(1px, 0px) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-1px, 0px) rotate(0deg);
+    }
+
+    60% {
+        transform: translate(-3px, 0px) rotate(0deg);
+    }
+
+    70% {
+        transform: translate(3px, 0px) rotate(0deg);
+    }
+
+    80% {
+        transform: translate(-1px, 0px) rotate(0deg);
+    }
+
+    90% {
+        transform: translate(1px, 0px) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(1px, 0px) rotate(0deg);
+    }
 }
 
 .feedback-wrong {
     animation: shake 0.5s;
+}
+
+/* Premium check */
+.premium-check-share,
+.premium-check-own {
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 17px;
+    position: relative;
+    color: #fff;
+    background-color: rgba(221, 141, 44, 0.3);
+    border: 2px solid rgb(221, 141, 44);
+    font-weight: 500 !important;
+    display: inline-block;
+}
+
+.has-share{
+    /* display: none; */
+    font-size: 15px;
+}
+
+.info-share{
+    display: none;
+    font-size: 15px;
+    color: #dedede;
+    transition: 1s;
+    position: absolute;
+    z-index: 1;
+}
+
+.premium-check-share:hover .info-share{
+    display: block;
+    animation: show 1s ease-in-out;
+    z-index: 1;
+    width: 1000px;
+    margin-top: -35px;
+    margin-left: 40px;
+}
+
+@keyframes show {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
 }
