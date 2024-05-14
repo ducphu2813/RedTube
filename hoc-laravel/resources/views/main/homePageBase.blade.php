@@ -98,6 +98,7 @@
             </button>
         </div>
 
+        {{-- notification --}}
         <div class="notification">
             <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
             <div class="new-noti"></div>
@@ -350,6 +351,18 @@
         // Script của search input
         $('#search-inp').on('keypress', function(event) {
             if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
+        //tạo 1 event khi trang vừa được load, kiểm tra trên url có tham số là searchValue hay không
+        //nếu có thì gọi hàm handleSearch
+        $(document).ready(function() {
+            let url = new URL(window.location.href);
+            let searchValue = url.searchParams.get('searchValue');
+
+            if (searchValue) {
+                $('#search-inp').val(searchValue);
                 handleSearch();
             }
         });

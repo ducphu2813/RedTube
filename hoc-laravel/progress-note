@@ -33,8 +33,12 @@ làm xử lý premium khi play-video(v)
 làm phần create video(v)
 merge của Dũng(có playlist trong studio)(v)
 
-làm phần membership(x)
+xử lý xong logic của membership ở phần coi video(v)
+sửa thanh tìm kiếm ở playvideo(v)
 
+đợi giao diện trang thanh toán, mua membership, mua premium, premium trong studio, membership trong studio(phần dđăng ký của ng khác) (x)
+form đăng ký(mua) membership(x)
+form đăng ký(mua) premium(x)
 làm premium của studio(x)
 
 xử lý xóa history(x)

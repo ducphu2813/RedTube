@@ -1,5 +1,5 @@
 <div class="header-notify-list">
-    {{-- Từng item video  --}}
+    {{-- Từng item notification, xếp theo thời gian từ mới nhất đến cũ nhất  --}}
     @for ($i = 0; $i < 10; $i++)
         <div class="header-notify-item">
             <a href="">

@@ -108,9 +108,10 @@
             </svg>
         </div>
 
+        {{-- seach box--}}
         <div class="search-container">
-            <input type="text" name="search-bar" id="" class="search-bar" placeholder="Tìm kiếm">
-            <button type="submit">
+            <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
+            <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 14px;"></i>
             </button>
         </div>
@@ -131,14 +132,31 @@
     <div class="container play-container">
         <div class="row">
             <div class="playvideo">
-                <video controls autoplay>
-                    @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
-                        <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
+                {{-- nếu video không có đánh dấu membership--}}
+                {{-- or nếu video là của chính mình--}}
+                {{-- or nếu video có membership và user đã tham gia membership--}}
+                {{-- thì cho coi vide0--}}
+                @if($video->membership == 0 || (session('loggedInUser') == $video->user->user_id) || ($video->user->memberships()->exists() && $video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) ))
+                    <video controls autoplay>
+                        @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
+                            <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
 
-                    @else
-                        <source src="{{ asset('storage/video/' . $video->video_path) }}" type="video/mp4">
-                    @endif
-                </video>
+                        @else
+                            <source src="{{ asset('storage/video/' . $video->video_path) }}" type="video/mp4">
+                        @endif
+                    </video>
+
+                @elseif( ($video->membership == 1 && !$video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) || ($video->membership == 1 && !session('loggedInUser'))) )
+                    {{-- Các trường hợp không thể coi video--}}
+                    {{-- video là video dành cho thành viên và người đang đăng nhập chưa tham gia membership--}}
+                    {{-- chưa đăng nhập--}}
+                    <div class="membership-info">
+                        Video dành cho thành viên
+                        Hãy đăng ký tham gia làm thành viên của kênh này để xem video đặc quyền riêng
+                        <button>Tham gia</button>
+                    </div>
+
+                @endif
                 <div class="tag">
                     <a href="">#Music</a> <a href="">#Trending</a>
                 </div>
@@ -157,6 +175,8 @@
                             <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }} Subscribers</span>
                         </div>
                     </div>
+
+                    {{-- phần nút đăng ký và tham gia(memebership)--}}
                     @if(!session('loggedInUser'))
                         <button type="button" id="sub-btn">Đăng ký</button>
 
@@ -170,6 +190,18 @@
                         <button type="button" id="sub-btn">Đăng ký</button>
 
                     @endif
+
+                    @if( ($video->user->memberships()->exists() && $video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) ))
+                        <button type="button" id="join-btn">Đã Tham gia</button>
+
+                    @elseif(session('loggedInUser') == $video->user->user_id)
+                        {{--nếu là chính mình thì không hiện nút tham gia--}}
+
+                    @elseif($video->user->memberships()->exists())
+                        <button type="button" id="join-btn">Tham gia</button>
+
+                    @endif
+
                     <div class="icon">
                         <div class="change-status interact" id="like">
                             <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
@@ -234,6 +266,32 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
+
+        //search bar
+        //hàm xử lý tìm kiếm
+        function handleSearch() {
+            let searchValue = $('#search-inp').val().trim().replace(/\s+/g, ' ');
+
+            if (searchValue !== '') {
+                // Quay về trang chủ và thêm từ khóa tìm kiếm vào URL
+                window.location.href = '/home?searchValue=' + encodeURIComponent(searchValue);
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        // Script của search btn
+        $('.search-btn').on('click', function() {
+            handleSearch();
+        });
+
+        // Script của search input
+        $('#search-inp').on('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
+        });
+
         /* Expandable content */
         document.getElementById("btn-expand").addEventListener("click", function() {
             var content = document.querySelector("#outer p");
