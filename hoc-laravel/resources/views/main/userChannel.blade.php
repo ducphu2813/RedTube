@@ -114,6 +114,23 @@
 
             event.preventDefault();
         });
+
+        $('#join--btn').on('click', function(event) {
+            $.ajax({
+                url: '{{ route('clients.userChannel.membershipModal') }}',
+                type: 'GET',
+                data: {
+                    user_id: {{ $user->user_id }},
+                },
+                dataType: 'html',
+                success: function(data) {
+                    $('#modal').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error joining channel:', error);
+                }
+            });
+        });
     });
 </script>
 

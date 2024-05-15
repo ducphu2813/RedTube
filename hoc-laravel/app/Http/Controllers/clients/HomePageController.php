@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Membership;
 use App\Models\Playlist;
 use App\Models\Users;
 use App\Models\Video;
@@ -53,6 +54,14 @@ class HomePageController extends Controller
         $playlists = Playlist::where('user_id', $user_id)->get();
 
         return view('playlist.playlist-all', ['userPlaylist' => $playlists]);
+    }
+
+    public function membershipModal() {
+        $data = request()->all();
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $memberships = Membership::where('user_id', $user_id)->get();
+
+        return view('main.membershipModal', ['memberships' => $memberships]);
     }
     
 }
