@@ -29,6 +29,22 @@ class MemberShipController extends Controller
         return view('membership.membershipWrapper', ['listMembership' => $listMembership]);
     }
 
+    public function showAllMemberPackage(Request $request){
+        $userId = session('loggedInUser');
+
+        if(!$userId){
+            return redirect()->route('login-register');
+        }
+
+        $listMembership = Membership::getMembershipByUserId($userId);
+
+        return view('membership.membership-package-wrapper', ['listMembership' => $listMembership]);
+    }
+
+    public function showAllMembershipRegistration(){
+        return view('membership.membership-registration');
+    }
+
     public function createMemberPackage(Request $request, $id) {
         $ms = Membership::getMembershipById($id);
         return response()->json($ms);

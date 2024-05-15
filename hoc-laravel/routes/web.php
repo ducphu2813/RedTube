@@ -10,6 +10,7 @@ use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
 use App\Http\Controllers\clients\InteractionController;
 use App\Http\Controllers\clients\MemberShipController;
+use App\Http\Controllers\clients\PaymentController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
 use App\Http\Controllers\clients\SchoolsController;
@@ -204,6 +205,15 @@ Route::post('cancelShare', [PremiumController::class, 'handleCancelShare'])->nam
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
 
+// Thanh toán momo
+Route::get('', [PaymentController::class, 'payWithMomo'])->name('clients.payWithMomo');
+
+// Chuyển tab membership
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('studio.membershipManager');
+Route::get('allMemberPackage', [MemberShipController::class, 'showAllMemberPackage'])->name('studio.showAllMembership');
+Route::get('membershipRegistration', [MemberShipController::class, 'showAllMembershipRegistration'])->name('studio.membershipRegistration');
+
+Route::get('', [StudioController::class, 'test'])->name('studio.test')->middleware('CheckLogin');
 // -------------------- Hết của Dương -------------------- //
 
 Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
@@ -211,6 +221,7 @@ Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVide
 Route::get('studioPage/contents/playlists', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+Route::get('studioPage/analysis', [StudioController::class, 'analysis'])->name('studio.analysis')->middleware('CheckLogin');
 
 Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');

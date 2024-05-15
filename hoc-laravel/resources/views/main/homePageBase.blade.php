@@ -90,7 +90,7 @@
             </svg>
         </div>
 
-        {{-- seach box--}}
+        {{-- seach box --}}
         <div class="search-container ">
             <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
             <button type="submit" class="search-btn">
@@ -98,32 +98,47 @@
             </button>
         </div>
 
-        {{-- notification --}}
-        <div class="notification">
-            <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
-            <div class="new-noti"></div>
-            <div class="wrapper-notify-item-list">
-                <header class="header-notify">
-                    <h4>Thông báo</h4>
-                    <a href="">Xem tất cả</a>
-                </header>
-                <div class="wrapper-header-notify-list">
-                    {{-- Chổ này cho danh sách thông báo --}}
-                    @component('noti.noti-new')
-                    @endcomponent
+        {{-- Này chưa đăng nhập --}}
+        {{-- <div class="wrapper-right-icon" style="margin-right: 10px">
+            <div class="not-login">
+                <a href="{{ route('login-register') }}" class="login-btn">Đăng nhập</a>
+            </div>
+        </div> --}}
+
+        {{-- Này đã login --}}
+        <div class="wrapper-right-icon">
+
+            <div class="notification">
+                <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+                <div class="new-noti"></div>
+                <div class="wrapper-notify-item-list">
+                    <header class="header-notify">
+                        <h4>Thông báo</h4>
+                        <a href="{{ route('studio.test') }}">Xem tất cả</a>
+                    </header>
+                    {{-- Thông báo --}}
+                    <div class="show-noti wrapper-header-notify-list">
+                        @component('noti.noti-new')
+                        @endcomponent
+                    </div>
                 </div>
             </div>
-        </div>
 
 
-        {{--phần icon user nhỏ phía trên bên phải--}}
-        <div class="acc-box">
-            @if(session('loggedInUser') && $currentUserProfile->picture_url)
-                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
-            @else
-                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-
-            @endif
+            {{-- phần icon user nhỏ phía trên bên phải --}}
+            <div class="acc-box">
+                @if (session('loggedInUser') && $currentUserProfile->picture_url)
+                    <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32"
+                        height="32">
+                @else
+                    <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+                @endif
+                {{-- Cái này là thanh đăng xuất --}}
+                <ul id="logged-in-feat">
+                    <li class="logged-feat"><a href="{{ route('clients.studioPage') }}">Studio</a></li>
+                    <li class="logged-feat"><a href="{{ route('auth.logout') }}">Đăng xuất</a></li>
+                </ul>
+            </div>
         </div>
 
     </div>
@@ -164,8 +179,8 @@
                 <a href="{{ route('clients.userChannel') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
-                             viewBox="0 0 24 24" width="24" focusable="false"
-                             style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
+                            viewBox="0 0 24 24" width="24" focusable="false"
+                            style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
                             <path d="M10 18v-6l5 3-5 3zm7-15H7v1h10V3zm3 3H4v1h16V6zm2 3H2v12h20V9zM3 10h18v10H3V10z">
                             </path>
                         </svg>
@@ -221,9 +236,9 @@
         {{-- Chổ này là DANH SÁCH kênh đăng kí nên phải tách item --}}
         {{-- Sửa lại thành foreach --}}
         {{-- Sẽ lưu trong resources/channel nhé --}}
-        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
-        {{-- và sẽ bị ẩn đi nếu mày chưa đăng nhập--}}
-        @if(session('loggedInUser'))
+        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc --}}
+        {{-- và sẽ bị ẩn đi nếu mày chưa đăng nhập --}}
+        @if (session('loggedInUser'))
             @component('channel.channel-detail', ['followings' => $followings])
             @endcomponent
         @endif
@@ -295,7 +310,6 @@
 
 @section('scripts')
     <script>
-
         // Cái này để điều hướng thanh bên trái
         $(".list-item").on('click', function(event) {
             event.preventDefault();
@@ -353,6 +367,16 @@
             if (event.key === 'Enter') {
                 handleSearch();
             }
+        });
+
+        // Script bấm vào thông báo
+        $('.notification').on('click', function() {
+            $('.wrapper-notify-item-list').toggleClass('show');
+        });
+
+        // Script bấm vào acc box
+        $('.acc-box').on('click', function() {
+            $('#logged-in-feat').toggleClass('show');
         });
 
         //tạo 1 event khi trang vừa được load, kiểm tra trên url có tham số là searchValue hay không

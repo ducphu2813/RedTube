@@ -36,6 +36,8 @@
         @endif
 
     </div>
+
+    <div class="noti-add-out"></div>
 </div>
 
 
@@ -62,6 +64,15 @@
             var playlistId = $(this).data('playlist-id');
             var videoId = $(this).data('video-id');
             var isChecked = $(this).is(':checked');
+            if (isChecked) {
+                $('.noti-add-out').text('Video đã thêm vào danh sách phát');
+                $('.noti-add-out').css('background-color', '#4CAF50');
+                $('.noti-add-out').fadeIn(500).delay(2000).fadeOut(500);
+            }else{
+                $('.noti-add-out').css('background-color', '#f44336');
+                $('.noti-add-out').text('Video đã xóa khỏi danh sách phát');
+                $('.noti-add-out').fadeIn(500).delay(2000).fadeOut(500);
+            }
             $.ajax({
                 url: "{{ route('playlist.update') }}",
                 method: "POST",

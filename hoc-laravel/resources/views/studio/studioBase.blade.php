@@ -43,6 +43,10 @@
             @else
                 <img id="avatar-right-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="XXX" height="32" width="32">
             @endif
+            <ul id="logged-in-feat">
+                <li class="logged-feat"><a href="{{ route('clients.homePage') }}">Trang chủ</a></li>
+                <li class="logged-feat"><a href="{{ route('auth.logout') }}">Đăng xuất</a></li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -80,7 +84,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('studio.analysis') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -112,7 +116,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="{{ route('membership.membershipManager') }}">
+                <a href="{{ route('studio.membershipManager') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -231,7 +235,7 @@
             });
 
             // handle left navigator
-            $('.list-item').on('click', function() {
+            $('.list-item').on('click', function(event) {
                 event.preventDefault();
                 var link = $(this).find('a').attr('href');
                 $('#content').hide();
@@ -254,5 +258,42 @@
                 }, 100); // Delay of 1 second
             });
         });
+
+        // Script bấm vào acc box
+        $('.acc-box').on('click', function() {
+            $('#logged-in-feat').toggleClass('show');
+        });
+
+        // Chuyển từ trang chủ sang xem tất cả thông báo
+        // Lấy flag từ session
+        var flag = "{{ session('flag', 'analysis') }}";
+        if(flag === 'noti'){
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('.list-item').eq(5).trigger('click');
+                }, 500); // Adjust the delay as needed
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
+            });
+
+            console.log(flag);
+        }else if(flag === 'analysis'){
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('.list-item').eq(4).trigger('click');
+                }, 500); // Adjust the delay as needed
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
+            });
+            
+        }
     </script>
 @endsection

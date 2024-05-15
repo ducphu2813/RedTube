@@ -316,7 +316,7 @@ a.premium-buy-to-form {
     cursor: pointer;
 }
 
-.premium-buy {
+a.premium-buy {
     background-color: rgb(62, 166, 255);
     border: none;
     height: 48px;
@@ -325,7 +325,14 @@ a.premium-buy-to-form {
     padding: 0 20px;
     font-weight: 500;
     font-size: 18px;
+    text-decoration: none;
+    color: #000;
+    display: block;
+    line-height: 48px;
+    text-align: center;
 }
+
+
 
 .premium-buy-list {
     display: flex;

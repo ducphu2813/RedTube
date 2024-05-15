@@ -1,0 +1,14 @@
+.Chart {
+    display: flex;
+    /* justify-content: center; */
+    /* flex-direction: row; Chia đôi theo chiều ngang */
+}
+.chartOne,
+.chartTwo {
+    width: 50%;
+}
+.titleThongKe {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 32px 0px 32px 24px;
+}
