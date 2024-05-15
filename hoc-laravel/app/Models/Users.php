@@ -41,8 +41,14 @@ class Users extends Model
         return self::query()->where('user_id', $id)->first();
     }
 
+    //tìm user theo tên, trả về danh sách user
     public static function getUsersByName($name){
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
+    }
+
+    //tìm user theo tên, tìm theo đúng chính xác tên, trả về user đầu tiên
+    public static function getUserByName($name){
+        return self::whereRaw('BINARY `user_name` = ?', [$name])->first();
     }
 
     public function getPlaylists(){

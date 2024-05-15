@@ -144,4 +144,12 @@ class PremiumRegistration extends Model
     {
         return $this->belongsTo(PremiumPackage::class, 'package_id');
     }
+
+    //lấy gói premium dựa trên registration_id
+    public static function getPremiumRegistrationById(int $registrationId)
+    {
+        return self::query()
+            ->where('registration_id', $registrationId)
+            ->first();
+    }
 }

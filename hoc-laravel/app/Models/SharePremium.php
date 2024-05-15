@@ -15,7 +15,8 @@ class SharePremium extends Model
     protected $table = 'share_premium';
 
     protected $casts = [
-        'created_date' => 'datetime',
+//        'created_date' => 'datetime',
+//        'expiry_date' => 'datetime',
     ];
 
     protected $primaryKey = 'share_id';
@@ -24,6 +25,7 @@ class SharePremium extends Model
         'user_id',
         'premium_registration_id',
         'created_date',
+        'expiry_date',
     ];
 
     //kiểm tra user có đang sử dụng gói premium được share còn hạn hay không
@@ -64,11 +66,21 @@ class SharePremium extends Model
         return $result;
     }
 
+    //lấy tất cả gói premium được share cho user
     public static function getAllSharedPremiumsByUser(int $userId)
     {
         return self::query()
             ->where('user_id', $userId)
+            ->orderBy('created_date', 'desc')
             ->get();
+    }
+
+    //tìm theo share_id
+    public static function getShareById(int $shareId)
+    {
+        return self::query()
+            ->where('share_id', $shareId)
+            ->first();
     }
 
     public function user(): BelongsTo
@@ -79,6 +91,12 @@ class SharePremium extends Model
     public function premiumRegistration(): BelongsTo
     {
         return $this->belongsTo(PremiumRegistration::class, 'premium_registration_id');
+    }
+
+    //update theo share_id
+    public function updateSharePremium(int $shareId, array $data)
+    {
+        return $this->where('share_id', $shareId)->update($data);
     }
 
 }

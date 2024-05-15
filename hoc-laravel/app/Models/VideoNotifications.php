@@ -23,7 +23,7 @@ class VideoNotifications extends Model
     ];
 
     protected $casts = [
-        'created_date' => 'datetime',
+//        'created_date' => 'datetime',
     ];
 
     public function user(): BelongsTo

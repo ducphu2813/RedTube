@@ -32,63 +32,146 @@ class PremiumController extends Controller
         return view('premium.test-add');
     }
 
-    public function findUser(Request $request)
-    {
-        $nameFind = $request->input('name');
-
-        $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
-
-        $listUsers = Users::getUsersByName($nameFind);
-
-        foreach ($listUsers as $user){
-
-            //kiểm tra xem user có thể gửi thông báo chia sẻ không
-            if(ShareNoti::isSendable(session('loggedInUser'), $user->user_id)){
-                $user->isSendable = true;
-            } else {
-                $user->isSendable = false;
-            }
-        }
-
-        return response()->json([
-            'data' => $listUsers,
-            'current_user_premium' => $currentUserPremium,
-        ]);
-    }
-
+    //xử lý gửi lời mời share
     public function handleSend(Request $request)
     {
-        //lấy tất cả dữ liệu từ form
-        //bao gồm: user_id, registration_id, created_date
-        $data = $request->all();
 
-        unset($data['_token']);
-
-        //kiểm tra gói premium có còn hạn không
-        if (PremiumRegistration::isPremiumExpired($data['registration_id'])) {
-
+        if(!session('loggedInUser')){
             return response()->json([
                 'status' => 400,
-                'message' => 'Gói premium đã hết hạn'
+                'message' => 'Bạn cần đăng nhập để thực hiện chức năng này'
             ]);
         }
 
-        if (ShareNoti::createShareNoti($data)) {
+        //tìm user theo user_name
+        $user = Users::getUserByName($request->input('user_name'));
 
-            return response()->json([
-                'status' => 200,
-                'message' => 'Gửi thông báo chia sẻ thành công'
-            ]);
-        } else {
+        if($user == null){
             return response()->json([
                 'status' => 400,
-                'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau'
+                'message' => 'Không tìm thấy user'
             ]);
         }
+
+        if($user->user_id == session('loggedInUser')){
+            return response()->json([
+                'status' => 400,
+                'message' => 'Không thể chia sẻ với chính mình'
+            ]);
+        }
+
+        //lấy ra gói premium đang sử dụng hiện tại của user
+        $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        if($currentUserPremium == null){
+            return response()->json([
+                'status' => 400,
+                'message' => 'Bạn chưa mua gói premium'
+            ]);
+        }
+
+        //kiểm tra xem user có thể gửi thông báo chia sẻ không
+        $shareStaus = ShareNoti::isSendable(session('loggedInUser'), $user->user_id, $currentUserPremium->registration_id);
+
+        if($shareStaus == 'alreadysent'){
+            return response()->json([
+                'status' => 400,
+                'message' => 'Bạn đã gửi lời mời cho ' . $user->user_name . ' rồi',
+                'pre_id' => $currentUserPremium->registration_id,
+                'user_id' => $user->user_id,
+                'sender_id' => session('loggedInUser')
+            ]);
+        }
+        elseif ($shareStaus == 'receiverusingsenderpremium'){
+            return response()->json([
+                'status' => 400,
+                'message' => $user->user_name . ' đang sử dụng gói premium của bạn',
+                'pre_id' => $currentUserPremium->registration_id,
+                'user_id' => $user->user_id,
+                'sender_id' => session('loggedInUser')
+            ]);
+        }
+        elseif ($shareStaus == 'sharelimitexceeded'){
+            return response()->json([
+                'status' => 400,
+                'message' => 'Số lượng người dùng hiện tại đã đạt giới hạn chia sẻ',
+                'pre_id' => $currentUserPremium->registration_id,
+                'user_id' => $user->user_id,
+                'sender_id' => session('loggedInUser')
+            ]);
+        }
+
+        //khi thỏa tất cả điều kiện trên thì create 1 ShareNoti
+        $shareNotiModel = new ShareNoti();
+        $data['sender_id'] = session('loggedInUser');
+        $data['receiver_id'] = $user->user_id;
+        $data['registration_id'] = $currentUserPremium->registration_id;
+        $data['status'] = 0;
+        $data['expiry_date'] = $currentUserPremium->end_date; //lấy ngày hết hạn của gói premium của user
+
+        $shareNotiModel->createShareNoti($data);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Gửi thông báo chia sẻ thành công',
+            'pre_id' => $currentUserPremium->registration_id,
+            'user_id' => $user->user_id,
+            'sender_id' => session('loggedInUser'),
+            'share_noti_object' => $data,
+        ]);
 
         //cái này để debug thôi, không cần quan tâm
         //return response()->json($data);
 
+    }
+
+    //xử lý xóa share(kể cả lời mời)
+    public function handleDeleteShare(Request $request)
+    {
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        if($data['obj'] == 'using_share'){
+            //nếu là hủy người đang dùng chung gói premium
+
+            //lấy ra SharePremium theo share_id
+            $sharePremium = SharePremium::getShareById($data['obj_id']);
+
+            //update ngày hết hạn là ngày hiện tại
+            $sharePremium['expiry_date'] = date('Y-m-d H:i:s');
+
+            //cập nhật vào dtb
+            $sharePremium->updateSharePremium($sharePremium->share_id, $sharePremium->toArray());
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Hủy chia sẻ thành công',
+                'object' => $sharePremium,
+            ]);
+        }
+        elseif($data['obj'] == 'share_noti'){
+            //nếu là xóa thông báo share
+
+            //tìm thông báo chia sẻ theo obj_id
+            $shareNotiModel = new ShareNoti();
+            $shareNoti = $shareNotiModel->getNotiById($data['obj_id']);
+
+            //xóa thông báo chia sẻ
+            $shareNoti->deleteNotiById($shareNoti->noti_id);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Xóa thông báo chia sẻ thành công',
+                'object' => $shareNoti,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 400,
+            'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau',
+            'share_noti_object' => $data,
+        ]);
     }
 
     public function handleAcceptPremium(Request $request)
@@ -98,12 +181,33 @@ class PremiumController extends Controller
         unset($data['_token']);
     }
 
-    public function showModalPremium(){
-        return view('premium.premiumShareList');
+    //show danh sách người share
+    public function showModalPremium(Request $request){
+
+        $registration_id = $request->input('registration_id');
+        $premiumRegistrationModel = new PremiumRegistration();
+
+        //lấy ra gói premium đang sử dụng hiện tại của user
+        $premiumRegistration = $premiumRegistrationModel->getPremiumRegistrationById($registration_id);
+
+        //lấy những thoông báo gửi share
+        $shareNoti = ShareNoti::getNotiByRegistrationId($registration_id);
+
+        return view('premium.premiumShareList', ['premiumRegistration' => $premiumRegistration, 'shareNoti' => $shareNoti]);
     }
 
     public function getAllRegistrations(){
-        return view('premium.premiumWrapper');
+
+        //record premium đang sử dụng
+        $data['current_premium'] = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        //record shared premium đang được share
+        $data['current_shared_premium'] = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
+
+        //tất cả record mua premium của user
+        $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
+
+        return view('premium.premiumWrapper', $data);
     }
 
     // -----------------Dương muốn note-----------------
@@ -126,19 +230,27 @@ class PremiumController extends Controller
 
     }
 
-    // Lịch sử chia sẻ
-
+    // Danh sách đăng ký premium của bản thân
     public function mySharePremium(){
-        return view('premium.premiumShareWrapper');
+
+        //tất cả record mua premium của user
+        $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
+
+        return view('premium.premiumShareWrapper', $data);
     }
 
     // Nhận chia sẻ
     public function receiveShare(){
-        return view('premium.premiumHistoryWrapper');
+
+        //lấy tất cả những premium đc share cho user
+        $data['all_shared_premium'] = SharePremium::getAllSharedPremiumsByUser(session('loggedInUser'));
+
+        return view('premium.premiumHistoryWrapper', $data);
     }
 
     // Modal invate
     public function invitePremium(){
+
         return view('premium.premiumInvate');
     }
 }

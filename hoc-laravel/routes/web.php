@@ -169,7 +169,7 @@ Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('client
 Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('clients.videoReload');
 
 // Modal premium
-Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
+Route::post('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
 
 // Test screen video
 Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
@@ -191,6 +191,9 @@ Route::get('receiveShare', [PremiumController::class, 'receiveShare'])->name('cl
 
 // Nút invate trong premium
 Route::get('invitePremium', [PremiumController::class, 'invitePremium'])->name('clients.invitePremium');
+
+//Xóa Share Premium
+Route::post('deleteSharePremium', [PremiumController::class, 'handleDeleteShare'])->name('clients.deleteSharePremium');
 
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');

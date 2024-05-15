@@ -1,17 +1,17 @@
 <div class="pre-share-info" href="">
     <div class="pre-share-name">
-        Gói dữ dằn
+        {{ $premium->package->name }}
     </div>
 
     <div class="pre-share-start">
-        11/11/2022
+        {{ $premium->start_date }}
     </div>
 
     <div class="pre-share-end">
-        11/2/2023
+        {{ $premium->end_date }}
     </div>
 
     <div class="pre-share-quantity">
-        <button class="btn-detail-share">!</button>
+        <button class="btn-detail-share" pre-id="{{ $premium->registration_id }}">!</button>
     </div>
 </div>

@@ -36,7 +36,16 @@ merge của Dũng(có playlist trong studio)(v)
 xử lý xong logic của membership ở phần coi video(v)
 sửa thanh tìm kiếm ở playvideo(v)
 
-đợi giao diện trang thanh toán, mua membership, mua premium, premium trong studio, membership trong studio(phần dđăng ký của ng khác) (x)
+premium trong studio
+xử lý logic premium trong studio(v)
+hiện ở tab được share(v)
+xử lý gửi thông báo share(v)
+nút chấp nhận, từ chối(x)
+nút hủy ở tab được share(x)
+
+
+đợi giao diện trang thanh toán, mua membership, mua premium(x)
+membership trong studio(phần dđăng ký của ng khác) (x)
 form đăng ký(mua) membership(x)
 form đăng ký(mua) premium(x)
 làm premium của studio(x)

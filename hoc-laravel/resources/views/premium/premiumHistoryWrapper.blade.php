@@ -23,8 +23,16 @@
     </div>
 
     {{-- Chổ này đổ data của premium được người khác chia sẻ --}}
-    @for ($i = 0; $i < 5; $i++)
-        @component('premium.premiumHistoryItem')
-        @endcomponent
-    @endfor
+    @if($all_shared_premium->count() > 0)
+        @foreach($all_shared_premium as $shared_premium)
+            @component('premium.premiumHistoryItem', ['shared_premium' => $shared_premium])
+            @endcomponent
+        @endforeach
+    @endif
+
+
+{{--    @for ($i = 0; $i < 5; $i++)--}}
+{{--        @component('premium.premiumHistoryItem')--}}
+{{--        @endcomponent--}}
+{{--    @endfor--}}
 </div>

@@ -6,21 +6,27 @@
 
         <div class="noti-info">
             <div>
-                Tên người chia sẻ: 
+                {{ $notification['sender_name'] }} muốn chia sẻ premium với bạn
             </div>
             <div>
-                Thời hạn sử dụng:
+                Ngày gửi: {{ $notification['created_date'] }}
             </div>
         </div>
 
-        <div class="noti-btn">
-            <div class="noti-btn-acp">
-                <button class="btn btn-success">Chấp nhận</button>
-            </div>
+        @if(strtotime($notification['expiry_date']) > strtotime(date('Y-m-d H:i:s')))
+            <div class="noti-btn">
+                <div class="noti-btn-acp">
+                    <button class="btn btn-success">Chấp nhận</button>
+                </div>
 
-            <div class="noti-btn-dec">
-                <button class="btn btn-danger">Từ chối</button>
+                <div class="noti-btn-dec">
+                    <button class="btn btn-danger">Từ chối</button>
+                </div>
             </div>
-        </div>
+        @else
+            <div class="noti-expired">
+                Đã hết hạn
+            </div>
+        @endif
     </div>
 </div>

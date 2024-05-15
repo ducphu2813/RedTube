@@ -20,6 +20,7 @@ class PremiumPackage extends Model{
         'price',
         'duration',
         'description',
+        'share_limit',
     ];
 
     public static function getAllPackages(){
