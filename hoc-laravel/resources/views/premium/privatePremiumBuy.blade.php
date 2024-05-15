@@ -37,7 +37,7 @@
                             Giá chỉ: 119.000đ
                         </div>
                         <div class="premium-buy-btn">
-                            <button class="premium-buy">Dùng ngay</button>
+                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
                         </div>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                             Giá chỉ: 349.000đ
                         </div>
                         <div class="premium-buy-btn">
-                            <button class="premium-buy">Dùng ngay</button>
+                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
                         </div>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                             Giá chỉ: 679.000đ
                         </div>
                         <div class="premium-buy-btn">
-                            <button class="premium-buy">Dùng ngay</button>
+                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
                         </div>
                     </div>
                 </div>
@@ -157,6 +157,7 @@
 <script>
     $(document).ready(function() {
         $('.premium-buy-btn').click(function() {
+            
             console.log('Mua thành công');
         });
 

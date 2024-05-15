@@ -10,6 +10,7 @@ use App\Http\Controllers\clients\HomeController;
 use App\Http\Controllers\clients\HomePageController;
 use App\Http\Controllers\clients\InteractionController;
 use App\Http\Controllers\clients\MemberShipController;
+use App\Http\Controllers\clients\PaymentController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
 use App\Http\Controllers\clients\SchoolsController;
@@ -185,6 +186,14 @@ Route::get('invitePremium', [PremiumController::class, 'invitePremium'])->name('
 
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
+
+// Thanh toán momo
+Route::get('', [PaymentController::class, 'payWithMomo'])->name('clients.payWithMomo');
+
+// Chuyển tab membership
+Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('studio.membershipManager');
+Route::get('allMemberPackage', [MemberShipController::class, 'showAllMemberPackage'])->name('studio.showAllMembership');
+Route::get('membershipRegistration', [MemberShipController::class, 'showAllMembershipRegistration'])->name('studio.membershipRegistration');
 
 // -------------------- Hết của Dương -------------------- //
 

@@ -98,31 +98,33 @@
             </button>
         </div>
 
-        <div class="notification">
-            <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
-            <div class="new-noti"></div>
-            <div class="wrapper-notify-item-list">
-                <header class="header-notify">
-                    <h4>Thông báo</h4>
-                    <a href="">Xem tất cả</a>
-                </header>
-                <div class="wrapper-header-notify-list">
-                    {{-- Chổ này cho danh sách thông báo --}}
-                    @component('noti.noti-new')
-                    @endcomponent
+        <div id="wrapper-right-icon">
+
+            <div class="notification">
+                <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+                <div class="new-noti"></div>
+                <div class="wrapper-notify-item-list">
+                    <header class="header-notify">
+                        <h4>Thông báo</h4>
+                        <a href="">Xem tất cả</a>
+                    </header>
+                    <div class="wrapper-header-notify-list">
+                        {{-- Chổ này cho danh sách thông báo --}}
+                        @component('noti.noti-new')
+                        @endcomponent
+                    </div>
                 </div>
             </div>
-        </div>
-
-
-        {{--phần icon user nhỏ phía trên bên phải--}}
-        <div class="acc-box">
-            @if(session('loggedInUser') && $currentUserProfile->picture_url)
-                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
-            @else
-                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-
-            @endif
+    
+            {{--phần icon user nhỏ phía trên bên phải--}}
+            <div class="acc-box">
+                @if(session('loggedInUser') && $currentUserProfile->picture_url)
+                    <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+                @else
+                    <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+    
+                @endif
+            </div>
         </div>
 
     </div>

@@ -19,53 +19,53 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
 
-{{--    jquery và ajax--}}
+    {{--    jquery và ajax --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <body>
 
-<script>
-    //định dạng view
-    function formatViews(views) {
+    <script>
+        //định dạng view
+        function formatViews(views) {
 
-        if (views >= 1000000000) {
-            return (views / 1000000000).toFixed(1) + ' Tỷ';
-        } else if (views >= 1000000) {
-            return (views / 1000000).toFixed(1) + ' Tr';
-        } else if (views >= 10000) {
-            return (views / 1000).toFixed(1) + ' N';
-        } else {
-            return views.toString();
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
         }
-    }
 
-    //định dạng thời gian
-    function formatTime(time) {
-        const now = new Date();
-        const videoTime = new Date(time);
-        const diffTime = Math.abs(now - videoTime);
-        const diffMinutes = Math.floor(diffTime / (1000 * 60));
-        const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-        const diffWeeks = Math.ceil(diffDays / 7);
-        const diffMonths = Math.ceil(diffDays / 30);
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.ceil(diffDays / 7);
+            const diffMonths = Math.ceil(diffDays / 30);
 
-        if (diffMinutes < 60) {
-            return diffMinutes + ' phút trước';
-        } else if (diffHours < 24) {
-            return diffHours + ' tiếng trước';
-        } else if (diffDays <= 13) {
-            return diffDays + ' ngày trước';
-        } else if (diffWeeks <= 4) {
-            return diffWeeks + ' tuần trước';
-        } else if (diffDays <= 365) {
-            return diffMonths + ' tháng trước';
-        } else {
-            return videoTime.toLocaleDateString();
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 13) {
+                return diffDays + ' ngày trước';
+            } else if (diffWeeks <= 4) {
+                return diffWeeks + ' tuần trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
         }
-    }
-</script>
+    </script>
 
     <div id="top">
         <div class="logo">
@@ -115,15 +115,15 @@
             </button>
         </div>
 
-        {{--phần icon user nhỏ phía trên bên phải--}}
+        {{-- phần icon user nhỏ phía trên bên phải --}}
         <div class="acc-box">
-        {{--<img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32">--}}
+            {{-- <img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32"> --}}
 
-            @if(session('loggedInUser') && $currentUserProfile->picture_url)
-                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32" height="32">
+            @if (session('loggedInUser') && $currentUserProfile->picture_url)
+                <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32"
+                    height="32">
             @else
                 <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-
             @endif
         </div>
     </div>
@@ -132,9 +132,8 @@
         <div class="row">
             <div class="playvideo">
                 <video controls autoplay>
-                    @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
+                    @if (($current_premium == null && $current_shared_premium == null) || !session('loggedInUser'))
                         <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
-
                     @else
                         <source src="{{ asset('storage/video/' . $video->video_path) }}" type="video/mp4">
                     @endif
@@ -145,30 +144,29 @@
                 <h3 id="title-video">{{ $video->title }}</h3>
                 <div class="play-video-infor">
                     <div class="publisher">
-                        {{--avatar của chủ kênh--}}
-                        @if($video->user->picture_url)
-                            <img src="{{ asset('storage/img/' . $video->user->picture_url) }}" alt="" width="40" height="40">
+                        {{-- avatar của chủ kênh --}}
+                        @if ($video->user->picture_url)
+                            <img src="{{ asset('storage/img/' . $video->user->picture_url) }}" alt=""
+                                width="40" height="40">
                         @else
-                            <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="40" height="40">
-
+                            <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="40"
+                                height="40">
                         @endif
                         <div id="channel-title">
                             <span id="channel-name" class="play-video">{{ $video->user->channel_name }}</span>
-                            <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }} Subscribers</span>
+                            <span id="channel-subcride" class="play-video">{{ $video->user->followersCount() }}
+                                Subscribers</span>
                         </div>
                     </div>
-                    @if(!session('loggedInUser'))
+                    @if (!session('loggedInUser'))
                         <button type="button" id="sub-btn">Đăng ký</button>
-
                     @elseif(session('loggedInUser') == $video->user->user_id)
-                        {{--nếu là chính mình thì không hiện nút đăng ký--}}
+                        {{-- nếu là chính mình thì không hiện nút đăng ký --}}
                         <button type="button" id="sub-btn" style="visibility: hidden"></button>
                     @elseif(session('loggedInUser') && $video->user->isFollowed(session('loggedInUser')))
                         <button type="button" id="sub-btn">Đã Đăng ký</button>
-
                     @elseif(session('loggedInUser') && !$video->user->isFollowed(session('loggedInUser')))
                         <button type="button" id="sub-btn">Đăng ký</button>
-
                     @endif
                     <div class="icon">
                         <div class="change-status interact" id="like">
@@ -201,22 +199,29 @@
                     </p>
                     <button id="btn-expand">Xem thêm</button>
                 </div>
-                {{--Phần này là phần comment--}}
-                @component('comments.comment-video-wrapper', ['comments' => $video->getRootComments, 'video' => $video, 'currentUserProfile' => $currentUserProfile])
+                {{-- Phần này là phần comment --}}
+                @component('comments.comment-video-wrapper', [
+                    'comments' => $video->getRootComments,
+                    'video' => $video,
+                    'currentUserProfile' => $currentUserProfile,
+                ])
                 @endcomponent
             </div>
 
-            {{--Phần này là phần sidebar, chứa playlist và video đề xuất--}}
+            {{-- Phần này là phần sidebar, chứa playlist và video đề xuất --}}
             <div class="sidebar">
                 {{-- Cái này là cái danh sách hiển thị khi người dùng xem DANH SÁCH PHÁT --}}
-                {{--Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện--}}
-                @if(isset($videoPlaylist))
-                    {{--truyền vào các video của playlist đó--}}
-                    @component('video.playlist-in-video-wrapper', ['videosInPlayList' => $videosInPlayList, 'videoPlaylist' => $videoPlaylist])
+                {{-- Cái này là playlist bên phải, nếu bấm coi từ playlist thì mới hiện --}}
+                @if (isset($videoPlaylist))
+                    {{-- truyền vào các video của playlist đó --}}
+                    @component('video.playlist-in-video-wrapper', [
+                        'videosInPlayList' => $videosInPlayList,
+                        'videoPlaylist' => $videoPlaylist,
+                    ])
                     @endcomponent
                 @endif
-                {{--@component('video.playlist-in-video-wrapper');--}}
-                {{--@endcomponent--}}
+                {{-- @component('video.playlist-in-video-wrapper'); --}}
+                {{-- @endcomponent --}}
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
                 @component('video.video-hint-wrapper')
@@ -225,8 +230,8 @@
         </div>
     </div>
 
-    {{--đây là phần thêm video vào playlist--}}
-    {{--chỗ này lấy playlist của user--}}
+    {{-- đây là phần thêm video vào playlist --}}
+    {{-- chỗ này lấy playlist của user --}}
     @component('video.video-modal', ['playlists' => $playlists, 'video' => $video])
     @endcomponent
 
@@ -294,7 +299,7 @@
                     success: function(response) {
                         // Xử lý khi request thành công
                         console.log(response);
-                        if(response.status === 'not_logged_in'){
+                        if (response.status === 'not_logged_in') {
                             localStorage.setItem('redirect_after_login', window.location.href);
                             window.location.href = '{{ route('login-register') }}';
                         }
@@ -325,15 +330,13 @@
                     success: function(response) {
                         console.log(response);
 
-                        if(response.status === 'not_logged_in'){
+                        if (response.status === 'not_logged_in') {
                             localStorage.setItem('redirect_after_login', window.location.href);
                             window.location.href = '{{ route('login-register') }}';
-                        }
-                        else{
-                            if(response.status === 'followed'){
+                        } else {
+                            if (response.status === 'followed') {
                                 $('#sub-btn').text('Đã Đăng ký');
-                            }
-                            else if(response.status === 'unfollow'){
+                            } else if (response.status === 'unfollow') {
                                 $('#sub-btn').text('Đăng ký');
                             }
                         }
@@ -361,18 +364,29 @@
                     },
                     success: function(response) {
                         console.log(response);
-                        if(response.status === 'not_logged_in'){
+                        if (response.status === 'not_logged_in') {
                             localStorage.setItem('redirect_after_login', window.location.href);
                             window.location.href = '{{ route('login-register') }}';
-                        }
-                        else if(response.status === 'liked'){
+                        } else if (response.status === 'liked') {
                             //khi like
-                        }
-                        else if(response.status === 'disliked'){
+                            $('#like i').addClass('up-clicked');
+                            if ($('#dislike i').hasClass('down-clicked')) {
+                                $('#dislike i').removeClass('down-clicked');
+                            }
+
+                        } else if (response.status === 'disliked') {
                             //khi dislike
-                        }
-                        else if(response.status === 'unset_react'){
+                            $('#dislike i').addClass('down-clicked');
+                            if ($('#like i').hasClass('up-clicked')) {
+                                $('#like i').removeClass('up-clicked');
+                            }
+                        } else if (response.status === 'unset_react') {
                             //khi hủy like/dislike
+                            if ($('#like i').hasClass('up-clicked')) {
+                                $('#like i').removeClass('up-clicked');
+                            } else if ($('#dislike i').hasClass('down-clicked')){
+                                $('#dislike i').removeClass('down-clicked');
+                            }
                         }
 
                     },
@@ -405,7 +419,7 @@
             var videoSrc = videoElement.src;
 
             //kiểm tra src hiện tại và src chính
-            if(videoSrc !== videoPath){
+            if (videoSrc !== videoPath) {
 
                 videoElement.src = videoPath;
 

@@ -77,8 +77,13 @@ input.search-bar {
 
 /* Noti */
 
+div#wrapper-right-icon {
+    display: flex;
+    align-items: center;
+}
+
 .notification {
-    margin-right: 40px;
+    margin-right: 25px;
 }
 
 .notification::before {
@@ -87,7 +92,7 @@ input.search-bar {
     height: 100px;
     display: block;
     position: absolute;
-    right: 16px;
+    right: 55px;
 }
 
 .notification:hover .wrapper-notify-item-list {
@@ -208,6 +213,8 @@ input.search-bar {
     margin-right: 5px;
 }
 
+
+
 /* Account */
 
 .acc-box {
@@ -215,6 +222,10 @@ input.search-bar {
     background-color: #fff;
     border-radius: 34px;
     display: flex;
+}
+
+.acc-box img {
+    border-radius: 30px;
 }
 
 /* End header */
