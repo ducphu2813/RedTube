@@ -136,23 +136,6 @@ class PlaylistController extends Controller
         return view('playlist.playlist-all', ['userPlaylist' => $userPlaylist]);
     }
 
-    // Hiển thị danh sách phát trên trang chủ
-    public function showAllPlaylist()
-    {
-        //xử lý khi chưa login
-        if(session('loggedInUser') == null){
-            return view('playlist.login-noti');
-        }
-
-        $userPlaylist = Playlist::getPlaylistByUserId(session('loggedInUser'));
-
-        return view('playlist.playlist-all', ['userPlaylist' => $userPlaylist]);
-    }
-
-    public function playlistDetail($id){
-
-    }
-
     public function updateplaylistPlaylist(Request $request){
 
         $playlistId = $request->input('playlist_id');
