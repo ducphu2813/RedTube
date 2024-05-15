@@ -99,4 +99,19 @@ class SharePremium extends Model
         return $this->where('share_id', $shareId)->update($data);
     }
 
+    //create
+    public function createSharePremium(array $data): bool
+    {
+        $userId = $data['user_id'];
+        $premiumRegistrationId = $data['premium_registration_id'];
+        $createdDate = date('Y-m-d H:i:s');
+        $expiryDate = $data['expiry_date'];
+
+        return $this->insert([
+            'user_id' => $userId,
+            'premium_registration_id' => $premiumRegistrationId,
+            'created_date' => $createdDate,
+            'expiry_date' => $expiryDate,
+        ]);
+    }
 }

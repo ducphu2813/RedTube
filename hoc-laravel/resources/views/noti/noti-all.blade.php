@@ -31,6 +31,32 @@
 
 
     <script>
+        //phần event cho các nút chấp nhận và từ chối
 
+        $(document).ready(function() {
+
+            $('.handle-btn').click(function() {
+
+                let noti_id = $(this).attr('noti_id');
+                let action = $(this).attr('action');
+
+                $.ajax({
+                    url: '{{ route('clients.handleShare') }}',
+                    type: 'POST',
+                    data: {
+                        noti_id: noti_id,
+                        action: action,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+        });
     </script>
 </div>

@@ -195,6 +195,12 @@ Route::get('invitePremium', [PremiumController::class, 'invitePremium'])->name('
 //Xóa Share Premium
 Route::post('deleteSharePremium', [PremiumController::class, 'handleDeleteShare'])->name('clients.deleteSharePremium');
 
+//xử lý chấp nhận từ chối share premium
+Route::post('handleShare', [PremiumController::class, 'handleAcceptPremium'])->name('clients.handleShare');
+
+//hủy premium đang share
+Route::post('cancelShare', [PremiumController::class, 'handleCancelShare'])->name('clients.cancelShare');
+
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
 

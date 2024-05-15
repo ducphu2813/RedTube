@@ -96,13 +96,12 @@ class PremiumRegistration extends Model
         $result = self::query()
             ->where('user_id', $userId)
             ->where('end_date', '>', $currentDate)
+            ->orderBy('start_date', 'desc')
             ->first();
 
         return $result;
 
-
-//        "SELECT * FROM premium_registration WHERE user_id = :userId AND end_date > :currentDate LIMIT 1";
-
+        // "SELECT * FROM premium_registration WHERE user_id = :userId AND end_date > :currentDate LIMIT 1";
     }
 
     //lấy tất cả các gói premium của user
@@ -110,6 +109,7 @@ class PremiumRegistration extends Model
     {
         return self::query()
             ->where('user_id', $userId)
+            ->orderBy('start_date', 'desc')
             ->get();
     }
 

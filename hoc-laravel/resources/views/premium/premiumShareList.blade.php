@@ -64,9 +64,15 @@
                     <div class="modal-share-body--item--name">
                         {{ $noti->receiver->user_name }}
                     </div>
-                    <div class="noti-invate" style="color:#E8A207;">
-                        Chưa chấp nhận
-                    </div>
+                    @if($noti->expiry_date < date('Y-m-d H:i:s'))
+                        <div class="noti-invate" style="color:red;">
+                            Hết hiệu lực
+                        </div>
+                    @else
+                        <div class="noti-invate" style="color:#E8A207;">
+                            Chưa chấp nhận
+                        </div>
+                    @endif
                     <div>
                         <button class="del-share" obj_id="{{ $noti->noti_id }}" receiver_id="{{ $noti->receiver->user_id }}" obj="share_noti">
                             <i class="fa-solid fa-xmark"></i>

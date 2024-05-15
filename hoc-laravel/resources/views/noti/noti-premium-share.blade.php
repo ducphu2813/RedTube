@@ -16,11 +16,11 @@
         @if(strtotime($notification['expiry_date']) > strtotime(date('Y-m-d H:i:s')))
             <div class="noti-btn">
                 <div class="noti-btn-acp">
-                    <button class="btn btn-success">Chấp nhận</button>
+                    <button class="handle-btn btn btn-success" noti_id="{{ $notification['noti_id'] }}" action="accept">Chấp nhận</button>
                 </div>
 
                 <div class="noti-btn-dec">
-                    <button class="btn btn-danger">Từ chối</button>
+                    <button class="handle-btn btn btn-danger" noti_id="{{ $notification['noti_id'] }}" action="decline">Từ chối</button>
                 </div>
             </div>
         @else

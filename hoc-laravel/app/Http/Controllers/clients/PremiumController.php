@@ -20,7 +20,7 @@ class PremiumController extends Controller
 
     public function sharePage(Request $request)
     {
-
+        //lấy ra gói premium đang sử dụng hiện tại của user
         $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
 
         if($currentUserPremium == null){
@@ -179,6 +179,89 @@ class PremiumController extends Controller
         $data = $request->all();
 
         unset($data['_token']);
+
+        //lấy ra gói premium đang sử dụng hiện tại của user
+        $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
+
+        //record shared premium đang được share
+        $currentSharedPremium = SharePremium::getCurrentSharedPremiumByUser(session('loggedInUser'));
+
+        if($data['action'] == 'accept'){
+            if($currentUserPremium != null){
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Bạn đang sử dụng gói premium, không thể chấp nhận chia sẻ'
+                ]);
+            }
+            elseif($currentSharedPremium != null){
+                return response()->json([
+                    'status' => 400,
+                    'message' => 'Bạn đang sử dụng gói premium được chia sẻ, không thể chấp nhận chia sẻ'
+                ]);
+            }
+            else {
+                //nếu không bị bất cứ vấn đề nào ở trên thì chấp nhận chia sẻ
+                //đầu tiên xóa thông báo chia sẻ
+                $shareNotiModel = new ShareNoti();
+                $shareNoti = $shareNotiModel->getNotiById($data['noti_id']);
+                $shareNoti->deleteNotiById($shareNoti->noti_id);
+
+                //sau đó tạo 1 share premium mới
+                $sharePremiumModel = new SharePremium();
+                $newSharePremium = [
+                    'user_id' => session('loggedInUser'),
+                    'premium_registration_id' => $shareNoti->registration_id,
+                    'expiry_date' => $shareNoti->expiry_date,
+                ];
+
+                $sharePremiumModel->createSharePremium($newSharePremium);
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Chấp nhận chia sẻ thành công',
+                ]);
+            }
+        }
+        elseif ($data['action'] == 'decline'){
+
+            $shareNotiModel = new ShareNoti();
+            $shareNoti = $shareNotiModel->getNotiById($data['noti_id']);
+            $shareNoti->deleteNotiById($shareNoti->noti_id);
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Từ chối chia sẻ thành công',
+                'object' => $data,
+            ]);
+        }
+
+        return response()->json([
+            'status' => 400,
+            'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau',
+            'object' => $data,
+        ]);
+    }
+
+    //xử lý hủy share
+    public function handleCancelShare(Request $request){
+
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        //lấy share premium theo share_id ở trong request
+        $sharePremium = SharePremium::getShareById($data['share_id']);
+
+        //cập nhật ngày hết hạn là ngày hiện tại
+        $sharePremium['expiry_date'] = date('Y-m-d H:i:s');
+
+        //lưu vào dtb
+        $sharePremium->updateSharePremium($sharePremium->share_id, $sharePremium->toArray());
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Hủy premium được chia sẻ thành công',
+            'object' => $data,
+        ]);
     }
 
     //show danh sách người share

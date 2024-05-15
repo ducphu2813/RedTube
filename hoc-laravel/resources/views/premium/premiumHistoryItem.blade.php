@@ -17,7 +17,7 @@
 
     @if($shared_premium->expiry_date > date('Y-m-d H:i:s'))
         <div class="pre-share-quantity">
-            <i class="fa fa-xmark btn-detail-share" style="line-height: 31px"></i>
+            <i class="fa fa-xmark btn-detail-share cancel-btn" style="line-height: 31px" share_id="{{ $shared_premium->share_id }}"></i>
         </div>
     @else
         <div class="pre-share-quantity">
