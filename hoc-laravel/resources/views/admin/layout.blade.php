@@ -31,7 +31,7 @@
                 {{-- <li>
                     <img src="{{ asset('resources/img/chat.svg') }}" /><a href="">Bình luận</a>
                 </li> --}}
-                <li>
+                <li id="check-item">
                     <img src="{{ asset('resources/img/videotest.svg') }}" />
                     <a href="{{ route('admin.checkManager') }}">Kiểm duyệt</a>
                 </li>

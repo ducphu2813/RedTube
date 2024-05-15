@@ -37,4 +37,15 @@ class ReviewHistory extends Model
     {
         return $this->belongsTo(Video::class);
     }
+
+    public static function createNewReview($data)
+    {
+        return self::create($data);
+    }
+
+    public static function lastInsertId(){
+        return self::query()->latest('review_id')->first();
+    }
+
+
 }

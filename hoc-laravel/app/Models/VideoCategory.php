@@ -24,5 +24,29 @@ class VideoCategory extends Model
         return $this->belongsTo(Category::class);
     }
 
+    // Thêm thể loại vào trong video
+    public function addCategoryToVideo($video_id, $category_id)
+    {
+        $exists = $this->isCategoryInVideo($video_id, $category_id);
+
+        if(!$exists){
+            return $this->insert([
+                'video_id' => $video_id,
+                'category_id' => $category_id,
+            ]);
+        }
+
+        return null;
+    }
+
+    // Kiểm tra xem danh mục đã tồn tại trong video chưa
+    public function isCategoryInVideo($category_id, $video_id){
+        return self::query()
+            ->where('video_id', $video_id)
+            ->where('category_id', $category_id)
+            ->exists();
+    }
+
+    
     
 }

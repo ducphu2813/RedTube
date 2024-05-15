@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\admin\AdminController;
+use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashBoardController;
 use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
@@ -108,8 +109,16 @@ Route::prefix('admin')->group(function (){
     Route::post('changeRoleUser', [AdminController::class, 'changeRoleUser'])->name('admin.changeRoleUser');
     // Change status user
     Route::post('changeStatusUser', [AdminController::class, 'changeStatusUser'])->name('admin.changeStatusUser');
-    // Show check modal
+    // Show check modal accept
     Route::post('showCheckModal', [AdminController::class, 'showCheckModal'])->name('admin.showCheckModal');
+    // Show check modal ignore
+    Route::post('showCheckModalIgnore', [AdminController::class, 'showCheckModalIgnore'])->name('admin.showCheckModalIgnore');
+    // Accept video
+    Route::post('acceptVideo', [AdminController::class, 'acceptVideo'])->name('admin.acceptVideo');
+    // Ignore video
+    Route::post('ignoreVideo', [AdminController::class, 'ignoreVideo'])->name('admin.ignoreVideo');
+    // Add category
+    Route::post('createNewCategory', [CategoryController::class, 'createNewCategory'])->name('admin.createNewCategory');
     // --------------------Hết phần của Dương --------------------//
 });
 
