@@ -195,6 +195,7 @@ Route::get('membershipManager', [MemberShipController::class, 'showAllMembership
 Route::get('allMemberPackage', [MemberShipController::class, 'showAllMemberPackage'])->name('studio.showAllMembership');
 Route::get('membershipRegistration', [MemberShipController::class, 'showAllMembershipRegistration'])->name('studio.membershipRegistration');
 
+Route::get('', [StudioController::class, 'test'])->name('studio.test')->middleware('CheckLogin');
 // -------------------- Hết của Dương -------------------- //
 
 Route::get('studioPage/contents', [StudioController::class, 'contents'])->name('studio.contents')->middleware('CheckLogin');
@@ -202,6 +203,7 @@ Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVide
 Route::get('studioPage/contents/playlists', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+Route::get('studioPage/analysis', [StudioController::class, 'analysis'])->name('studio.analysis')->middleware('CheckLogin');
 
 Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');

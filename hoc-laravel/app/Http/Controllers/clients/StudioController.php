@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\clients;
+
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
 use App\Models\Users;
@@ -14,7 +15,8 @@ use Psy\TabCompletion\Matcher\FunctionsMatcher;
 
 class StudioController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $data = [
             'user' => Users::getUserById(session('loggedInUser')),
@@ -23,11 +25,13 @@ class StudioController extends Controller
         return view('studio.studioBase', $data);
     }
 
-    public function contents() {
+    public function contents()
+    {
         return view('studio.studioContents');
     }
 
-    public function contentsVideos(Request $request) {
+    public function contentsVideos(Request $request)
+    {
         $data = request()->all();
         $currentPage = $data['currentPage'] ?? 1;
         $itemPerPage = $data['itemPerPage'] ?? 10;
@@ -38,14 +42,15 @@ class StudioController extends Controller
         $totalItems = Video::where('user_id', $userId)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
-        if($currentPage > $totalPages) {
+        if ($currentPage > $totalPages) {
             return view('');
         }
 
         return view('studio.studioContentsVideos', ['videos' => $videos, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
-    public function contentsPlaylists() {
+    public function contentsPlaylists()
+    {
         $data = request()->all();
         $currentPage = $data['currentPage'] ?? 1;
         $itemPerPage = $data['itemPerPage'] ?? 10;
@@ -56,14 +61,15 @@ class StudioController extends Controller
         $totalItems = Playlist::where('user_id', $userId)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
-        if($currentPage > $totalPages) {
+        if ($currentPage > $totalPages) {
             return view('');
         }
 
         return view('studio.studioContentsPlaylists', ['playlists' => $playlists, 'totalPages' => $totalPages, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'pageDisplay' => $pageDisplay]);
     }
 
-    public function videoDetails() {
+    public function videoDetails()
+    {
         $data = request()->all();
         $video_id = $data['video_id'] ?? null;
         $currentPage = $data['currentPage'] ?? 1;
@@ -79,7 +85,8 @@ class StudioController extends Controller
         return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage]);
     }
 
-    public function pagination(Request $request) {
+    public function pagination(Request $request)
+    {
         $data = request()->all();
         $url = $data['url'];
         $totalPages = $data['totalPages'];
@@ -90,12 +97,14 @@ class StudioController extends Controller
         return view('studio.pagination', ['totalPages' => $totalPages, 'itemPerPage' => $itemPerPage, 'currentPage' => $currentPage, 'pageDisplay' => $pageDisplay, 'url' => $url]);
     }
 
-    public function premium() {
+    public function premium()
+    {
         return view('studio.studioPremium');
     }
 
 
-    public function profile(Request $request) {
+    public function profile(Request $request)
+    {
 
         $data = [
             'user' => Users::getUserById(session('loggedInUser')),
@@ -105,9 +114,10 @@ class StudioController extends Controller
     }
 
 
-    public function profileEdit(Request $request) {
+    public function profileEdit(Request $request)
+    {
 
-        if(!session('loggedInUser')){
+        if (!session('loggedInUser')) {
             return response()->json([
                 'status' => 401,
                 'message' => 'Bạn cần đăng nhập để thực hiện hành động này',
@@ -118,22 +128,22 @@ class StudioController extends Controller
         $user = Users::getUserById(session('loggedInUser'));
         unset($data['_token']);
 
-//        $newUserData = [];
+        //        $newUserData = [];
         $userModel = new Users;
 
         //kiểm tra xem có thay đổi ảnh hay không
-        if($request->hasFile('picture_url') && isset($data['picture_url'])){
+        if ($request->hasFile('picture_url') && isset($data['picture_url'])) {
             $file = $request->file('picture_url');
             $fileName = time() . $file->getClientOriginalName();
             $file->storeAs('public/img/', $fileName);
 
-            if($user->picture_url){
+            if ($user->picture_url) {
                 Storage::delete('public/img/' . $user->picture_url);
                 $user->picture_url = $fileName;
             }
             $data['picture_url_status'] = 'isChange';
             $data['new_picture_url'] = $fileName;
-//            $newUserData['picture_url'] = $fileName;
+            //            $newUserData['picture_url'] = $fileName;
             $newUserData = [
                 'user_name' => $data['user_name'],
                 'email' => $data['email'],
@@ -143,7 +153,7 @@ class StudioController extends Controller
             ];
 
             $userModel->updateUser($user->user_id, $newUserData);
-        }else{
+        } else {
             $newUserData = [
                 'user_name' => $data['user_name'],
                 'email' => $data['email'],
@@ -161,15 +171,27 @@ class StudioController extends Controller
         $data['message'] = 'Cập nhật thông tin thành công';
 
         return response()->json($data);
-
     }
 
-    public function channel() {
+    public function channel()
+    {
         return view('studio.studioChannel');
     }
 
     // Show all noti
-    public function showAllNoti(){
+    public function showAllNoti()
+    {
         return view('noti.noti-all');
+    }
+
+    public function test()
+    {
+        session()->flash('flag', 'noti');
+        return redirect()->route('clients.studioPage');
+    }
+
+    public function analysis()
+    {
+        return view('studio.studioAnalysis');
     }
 }

@@ -35,4 +35,6 @@ class VideoNotifications extends Model
     {
         return $this->belongsTo(Video::class);
     }
+
+    
 }
