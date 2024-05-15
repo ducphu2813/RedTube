@@ -52,6 +52,48 @@
         }
     </script>
 
+    <script>
+        //định dạng view
+        function formatViews(views) {
+
+            if (views >= 1000000000) {
+                return (views / 1000000000).toFixed(1) + ' Tỷ';
+            } else if (views >= 1000000) {
+                return (views / 1000000).toFixed(1) + ' Tr';
+            } else if (views >= 10000) {
+                return (views / 1000).toFixed(1) + ' N';
+            } else {
+                return views.toString();
+            }
+        }
+
+        //định dạng thời gian
+        function formatTime(time) {
+            const now = new Date();
+            const videoTime = new Date(time);
+            const diffTime = Math.abs(now - videoTime);
+            const diffMinutes = Math.floor(diffTime / (1000 * 60));
+            const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const diffWeeks = Math.ceil(diffDays / 7);
+            const diffMonths = Math.ceil(diffDays / 30);
+
+            if (diffMinutes < 60) {
+                return diffMinutes + ' phút trước';
+            } else if (diffHours < 24) {
+                return diffHours + ' tiếng trước';
+            } else if (diffDays <= 13) {
+                return diffDays + ' ngày trước';
+            } else if (diffWeeks <= 4) {
+                return diffWeeks + ' tuần trước';
+            } else if (diffDays <= 365) {
+                return diffMonths + ' tháng trước';
+            } else {
+                return videoTime.toLocaleDateString();
+            }
+        }
+    </script>
+
     <div id="top">
         <div class="logo">
             <svg xmlns="http://www.w3.org/2000/svg" id="yt-logo-updated-svg_yt7" class="external-icon" viewBox="0 0 90 20"
@@ -91,8 +133,9 @@
             </svg>
         </div>
 
+        {{-- seach box--}}
         <div class="search-container ">
-            <input type="text" name="search-bar" id="" class="search-bar" placeholder="Tìm kiếm">
+            <input type="text" name="search-bar" id="search-inp" class="search-bar" placeholder="Tìm kiếm">
             <button type="submit" class="search-btn">
                 <i class="fa-solid fa-magnifying-glass" style="color: #fff; font-size: 14px;"></i>
             </button>
@@ -199,8 +242,11 @@
         {{-- Chổ này là DANH SÁCH kênh đăng kí nên phải tách item --}}
         {{-- Sửa lại thành foreach --}}
         {{-- Sẽ lưu trong resources/channel nhé --}}
-        @component('channel.channel-detail', ['channels' => $channels])
-        @endcomponent
+        {{-- Đéo cần sửa lại chỗ nào, phải trong channel-detail thiết kế lại lúc chưa đăng ký kênh nào cho tao là đc--}}
+        @if(session('loggedInUser'))
+            @component('channel.channel-detail', ['followings' => $followings])
+            @endcomponent
+        @endif
 
         <ul class="list-container">
             <div class="list-title">Premium</div>
@@ -317,6 +363,45 @@
                 }
             });
             console.log('click');
+        });
+
+        //hàm xử lý tìm kiếm
+        function handleSearch() {
+            let searchValue = $('#search-inp').val().trim().replace(/\s+/g, ' ');
+
+            if (searchValue !== '') {
+
+                $.ajax({
+                    url: '{{ route('clients.searchVideo') }}',
+                    type: 'GET',
+                    data: {
+                        searchValue: searchValue
+                    },
+                    dataType: 'html',
+                    success: function(response) {
+                        $('#content').html(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+
+                console.log(searchValue);
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        // Script của search btn
+        $('.search-btn').on('click', function() {
+            handleSearch();
+        });
+
+        // Script của search input
+        $('#search-inp').on('keypress', function(event) {
+            if (event.key === 'Enter') {
+                handleSearch();
+            }
         });
     </script>
 @endsection

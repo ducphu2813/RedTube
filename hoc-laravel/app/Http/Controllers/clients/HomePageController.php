@@ -18,9 +18,17 @@ class HomePageController extends Controller
         $id = session('loggedInUser');
 
         $currentUserProfile = Users::getUserById($id);
-        $channels = $currentUserProfile->getUsersByFollowing();
 
-        return view('main.homePageBase', ['videos' => $videos, 'currentUserProfile' => $currentUserProfile, 'channels' => $channels]);  
+        //lấy danh sách kênh mà user đang follow
+        $followings = $currentUserProfile->following();
+
+        return view('main.homePageBase',
+            [
+                'videos' => $videos,
+                'currentUserProfile' => $currentUserProfile,
+                'followings' => $followings
+            ]
+        );
     }
 
     public function buyPremium(){

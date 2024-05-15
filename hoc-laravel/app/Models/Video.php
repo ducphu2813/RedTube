@@ -93,6 +93,11 @@ class Video extends Model
         return self::query()->where('user_id', $user_id)->get();
     }
 
+    //search theo title
+    public static function searchVideo($title){
+        return self::query()->where('title', 'like', '%' . $title . '%')->get();
+    }
+
     //hàm lấy 1 review của video
     public function review(): HasOne
     {

@@ -20,11 +20,13 @@ class PlaylistVideo extends Model
     ];
 
     //quan hệ với bảng playlist
+    //quan hệ với bảng playlist
     public function playlist(): BelongsTo{
 
         return $this->belongsTo(Playlist::class);
     }
 
+    //quan hệ với bảng video
     //quan hệ với bảng video
     public function video(): BelongsTo{
 
@@ -32,6 +34,7 @@ class PlaylistVideo extends Model
             ->belongsTo(Video::class, 'video_id', 'video_id');
     }
 
+    //hàm này là để thêm video vào playlist đó
     //hàm này là để thêm video vào playlist đó
     public function addVideoToPlaylist($playlist_id, $video_id){
 
@@ -67,6 +70,7 @@ class PlaylistVideo extends Model
             ->delete();
     }
 
+    //hàm này kiểm tra xem video có trong playlist chưa
     //hàm này kiểm tra xem video có trong playlist chưa
     public function isVideoInPlaylist($playlist_id, $video_id){
         return self::query()

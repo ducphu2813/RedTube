@@ -1,0 +1,1 @@
+<h1>Hoc laravel</h1>

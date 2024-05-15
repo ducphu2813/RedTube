@@ -4,7 +4,6 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
-use App\Models\Playlistplaylist;
 use App\Models\PlaylistVideo;
 use Illuminate\Http\Request;
 
@@ -56,6 +55,8 @@ class PlaylistController extends Controller
     //     }
     // }
 
+
+    // Tạo danh sách phát
     public function get() {
         
     }
@@ -120,6 +121,19 @@ class PlaylistController extends Controller
         }
 
         return view('playlist.playlistModal', ['currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'add']);
+    }
+
+    // Hiển thị danh sách phát trên trang chủ
+    public function showAllPlaylist()
+    {
+        //xử lý khi chưa login
+        if(session('loggedInUser') == null){
+            return view('playlist.login-noti');
+        }
+
+        $userPlaylist = Playlist::getPlaylistByUserId(session('loggedInUser'));
+
+        return view('playlist.playlist-all', ['userPlaylist' => $userPlaylist]);
     }
 
     // Hiển thị danh sách phát trên trang chủ

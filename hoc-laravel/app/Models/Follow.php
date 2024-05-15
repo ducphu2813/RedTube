@@ -14,9 +14,25 @@ class Follow extends Model
 
     protected $table = 'follow';
 
+    protected $table = 'follow';
+
     protected $casts = [
         'created_date' => 'datetime',
     ];
+
+    protected $fillable = [
+        'user_id',
+        'follower_id',
+        'created_date',
+    ];
+
+    //kiểm tra xem user_id đã được follow bởi follower_id chưa
+    public static function checkFollow($user_id, $follower_id)
+    {
+        return self::where('user_id', $user_id)
+            ->where('follower_id', $follower_id)
+            ->exists();
+    }
 
     protected $fillable = [
         'user_id',

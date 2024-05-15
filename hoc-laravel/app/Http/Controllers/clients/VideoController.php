@@ -4,10 +4,13 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\History;
+use App\Models\History;
 use App\Models\Playlist;
+use App\Models\Users;
 use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 
 class VideoController extends Controller{
 
@@ -17,6 +20,7 @@ class VideoController extends Controller{
     }
 
     public function videoDetail($id){
+        $video = Cache::remember('video_' . $id, 0, function () use ($id) {
         $video = Cache::remember('video_' . $id, 0, function () use ($id) {
             return Video::find($id);
         });

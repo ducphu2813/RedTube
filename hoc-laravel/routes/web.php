@@ -19,6 +19,8 @@ use App\Http\Controllers\clients\UsersController;
 use App\Http\Controllers\clients\VideoController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\test\testcontroller;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\RedirectResponse;
 
@@ -53,7 +55,7 @@ Route::middleware('CheckLogin')->prefix('api/playlists')->group(function() {
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
 
 //client route, school
-Route::middleware('CheckLogin')->prefix('schools')->group(function(){
+Route::middleware('CheckLogin')->prefix('schools')->group(function () {
 
     //lấy ra danh sách trường học(GET)
     Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
@@ -89,7 +91,7 @@ Route::middleware('CheckLogin')->prefix('schools')->group(function(){
 
 
 //admin route
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->group(function () {
 
 
     //1 ví dụ về route resource cho controller
@@ -247,6 +249,8 @@ Route::get('playVideo/{video_id}/{playlist_id}', [VideoController::class, 'playV
 //update ảnh đại diện
 Route::post('users/update-picture', [UsersController::class, 'updatePicture'])
     ->name('users.update-picture');
+//Hien thi thong ke
+Route::get('users/chart', [StudioController::class, 'Analysis'])->name('users.chart');
 
 
 

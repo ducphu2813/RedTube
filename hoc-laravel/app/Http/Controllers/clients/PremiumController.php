@@ -24,6 +24,9 @@ class PremiumController extends Controller
         $currentUserPremium = PremiumRegistration::getCurrentPremiumRegistrationByUser(session('loggedInUser'));
 
         //danh sách những người đã mời chia sẻ
+//        $receiverList =
+
+        //danh sách những người đã mời chia sẻ
         //$receiverList =
 
         if ($currentUserPremium == null) {
@@ -136,5 +139,25 @@ class PremiumController extends Controller
     public function noPremium(){
         return view('premium.no-premium-no-share');
 
+    }
+
+    public function getAllRegistrations(){
+
+        // Lấy tất cả gói premium (không quan tâm user_id)
+        // $data['listRegistrations'] = PremiumRegistration::getAllPremiumRegistrationsByUser($id);
+
+        // Lấy tất cả user đã được share gói premium
+        // $data['listShares'] = $data['listRegistrations']->sharedUsers();
+        // $data[]
+
+        // đếm user được share gói premium
+        // $data['countUser'] = $data['listShares']->getAllSharedUsersCount();
+
+        $data = PremiumRegistration::getAllNoCondition();
+        return view('premium.premiumWrapper', $data);
+    }
+
+    public function showModalPremium(){
+        return view('premium.premiumShareList');
     }
 }

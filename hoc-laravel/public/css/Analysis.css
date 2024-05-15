@@ -1,0 +1,13 @@
+.Chart {
+    display: flex;
+    /* justify-content: center; */
+    /* flex-direction: row; Chia đôi theo chiều ngang */
+}
+.chartOne,
+.chartTwo {
+    width: 50%;
+}
+.titleThongKe {
+    font-family: "Times New Roman", Times, serif;
+    text-align: center;
+}
