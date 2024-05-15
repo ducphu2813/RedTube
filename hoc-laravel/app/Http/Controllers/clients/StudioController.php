@@ -41,7 +41,7 @@ class StudioController extends Controller
 
         $userId = session('loggedInUser');
         $videos = Video::where('user_id', $userId)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
-        $totalItems = Video::where('user_id', $userId)->count();
+        $totalItems = Video::where('user_id', $userId)->where('active', 1)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
         if ($currentPage > $totalPages) {

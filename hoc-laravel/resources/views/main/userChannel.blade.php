@@ -24,25 +24,30 @@
 
             <div class="user__details">Mô tả</div>
 
-            @if ($logged_user_id != $user->user_id)
-                @if ($isFollowing == true)
-                    <button id="unsubcribe--btn">
-                        <i class="fa-solid fa-bell"></i>
-                        Hủy đăng ký
+            <div class="user__option">
+                @if ($logged_user_id != $user->user_id)
+                    @if ($isFollowing == true)
+                        <button class="btn" id="unsubcribe--btn">
+                            <i class="fa-solid fa-bell"></i>
+                            Hủy đăng ký
+                        </button>
+                        @else
+                        <button class="btn" id="subcribe--btn">
+                            <i class="fa-solid fa-bell"></i>
+                            Đăng ký
+                        </button>
+                     @endif
+
+                     <button class="btn" id="join--btn">
+                        Tham gia
                     </button>
-                    @else
-                    <button id="subcribe--btn">
-                        <i class="fa-solid fa-bell"></i>
-                        Đăng ký
-                    </button>
-                 @endif
-            @endif
+                @endif
+            </div>
+
         </div>
     </div>
 
     <ul class="content__option">
-        {{-- <li class="content__option--item selected">Videos</li>
-        <li class="content__option--item">Playlists</li> --}}
         <li class="content__option--item selected" data-url="{{ route('clients.userChannel.videos') }}">Videos</li>
         <li class="content__option--item" data-url="{{ route('clients.userChannel.playlists') }}">Playlists</li>
     </ul>
@@ -69,63 +74,6 @@
     </div>
 </div>
 
-{{-- <script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '{{ route('clients.userChannel.videos') }}',
-            type: 'GET',
-            data: {
-                'currentPage': 1,
-                'itemPerPage': 21
-            },
-            dataType: 'html',
-            success: function(data) {
-                $('#body').html(data);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching content:', error);
-            }
-        });
-
-        $('.content__option--item').on('click', function(event) {
-            $('.content__option--item').removeClass('selected');
-            $(this).addClass('selected');
-            var url = $(this).data('url');
-            $.ajax({
-                url: url,
-                type: 'GET',
-                dataType: 'html',
-                success: function(data) {
-                    $('#body').html(data);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching content:', error);
-                }
-            });
-
-            event.preventDefault();
-        });
-    });
-
-    set cung cho nay bi sai
-    function loadPage(page) {
-        $.ajax({
-            url: '{{ route('studio.contents.videos') }}',
-            type: 'GET',
-            data: {
-                'currentPage': page
-            },
-            dataType: 'html',
-            success: function(data) {
-                $('#body').html(data);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching content:', error);
-            }
-        });
-    }
-</script> --}}
-
 <script>
     $('#close--btn').on('click', function(event) {
         $('.modal__description').css('display', 'none');
@@ -139,17 +87,56 @@
         $.ajax({
             url: '{{ route('clients.userChannel.videos') }}',
             type: 'GET',
-            // data: {
-            //     // 'currentPage': 1,
-            //     'itemPerPage': 999
-            // },
+            data: {
+                user_id: {{ $user->user_id }},
+            },
             dataType: 'html',
             success: function(data) {
                 $('#body').html(data);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching content:', error);
+                console.log("lolol");
             }
+        });
+
+        $('.content__option--item').on('click', function(event) {
+            $('.content__option--item').removeClass('selected');
+            $(this).addClass('selected');
+            var url = $(this).data('url');
+            $.ajax({
+                url: url,
+                type: 'GET',
+                data: {
+                    user_id: {{ $user->user_id }},
+                },
+                dataType: 'html',
+                success: function(data) {
+                    $('#body').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching content:', error);
+                }
+            });
+
+            event.preventDefault();
+        });
+
+        $('#join--btn').on('click', function(event) {
+            $.ajax({
+                url: '{{ route('clients.userChannel.membershipModal') }}',
+                type: 'GET',
+                data: {
+                    user_id: {{ $user->user_id }},
+                },
+                dataType: 'html',
+                success: function(data) {
+                    $('#modal').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error joining channel:', error);
+                }
+            });
         });
     });
 </script>

@@ -139,10 +139,11 @@ Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipD
 //trang chính của đồ án
 Route::get('home', [HomePageController::class, 'index'])->name('clients.homePage');
 
-// Kênh của tôi
+// Kênh cá nhân
 Route::get('home/userChannel', [HomePageController::class, 'userChannel'])->name('clients.userChannel');
 Route::get('home/userChannel/videos', [HomePageController::class, 'userChannelVideos'])->name('clients.userChannel.videos');
 Route::get('home/userChannel/playlists', [HomePageController::class, 'userChannelPlaylists'])->name('clients.userChannel.playlists');
+Route::get('home/userChannel/membershipModal', [HomePageController::class, 'membershipModal'])->name('clients.userChannel.membershipModal');
 
 //????
 Route::get('playlistDetails', [PlaylistController::class, 'playlistDetails'])->name('playlist.playlistDetails');

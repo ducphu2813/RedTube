@@ -9,5 +9,4 @@
 {{-- Chổ này cho script control các video-item --}}
 {{-- Hình như làm random video chổ này --}}
 <script>
-
 </script>

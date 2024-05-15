@@ -91,34 +91,35 @@ button:hover {
     cursor: pointer;
 }
 
-#subcribe--btn {
+.user__option {
+    display: flex;
+}
+
+.btn {
     padding: 6px 16px;
     border-radius: 16px;
     color: white;
-    background-color: #3ea6ff;
+    margin-right: 16px;
     display: flex;
     align-items: center;
     border: none;
 }
 
-#subcribe--btn i {
+.btn i {
     font-size: 16px;
-    margin-right: 4px;
+    margin-right: 8px;
+}
+
+#subcribe--btn {
+    background-color: #3ea6ff;
 }
 
 #unsubcribe--btn {
-    padding: 6px 16px;
-    border-radius: 16px;
-    color: white;
     background-color: #ff4e45;
-    display: flex;
-    align-items: center;
-    border: none;
 }
 
-#unsubcribe--btn i {
-    font-size: 16px;
-    margin-right: 4px;
+#join--btn {
+    background-color: #af18c0;
 }
 
 .content__body {

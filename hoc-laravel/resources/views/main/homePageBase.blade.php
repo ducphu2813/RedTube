@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
 @endsection
 
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" crossorigin="anonymous"></script>
 {{-- Cái này là thanh tìm kiếm --}}
 @section('search')
     <script>
@@ -148,7 +150,7 @@
 @section('nav')
     <div id="left">
         <ul class="list-container">
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.videoReload') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
@@ -175,7 +177,7 @@
                     Kênh đăng ký
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.userChannel') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
@@ -191,7 +193,7 @@
         </ul>
         <ul class="list-container">
             <div class="list-title">Danh sách phát</div>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.playlistAll') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
@@ -202,7 +204,7 @@
                     Danh sách phát
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.watchLater') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
@@ -215,7 +217,7 @@
                     Xem sau
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.videoHistory') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24"
@@ -245,7 +247,7 @@
 
         <ul class="list-container">
             <div class="list-title">Premium</div>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.buyPremium') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
@@ -283,7 +285,7 @@
                     Premium cá nhân
                 </a>
             </li>
-            <li class="list-item">
+            <li class="list-item item">
                 <a href="{{ route('clients.noPremium') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" focusable="false"
@@ -310,6 +312,7 @@
 
 @section('scripts')
     <script>
+
         // Cái này để điều hướng thanh bên trái
         $(".list-item").on('click', function(event) {
             event.preventDefault();

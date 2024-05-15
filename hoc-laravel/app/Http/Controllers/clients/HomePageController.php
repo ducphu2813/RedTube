@@ -4,6 +4,8 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShareNoti;
+use App\Models\Membership;
+use App\Models\Playlist;
 use App\Models\Users;
 use App\Models\Video;
 use App\Models\VideoNotifications;
@@ -83,14 +85,26 @@ class HomePageController extends Controller
 
     public function userChannelVideos() {
         $data = request()->all();
-        $user_id = $data['user_id'] ?? session('loggedUser');
-        $videos = Video::getVideoByUserId($user_id);
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $videos = Video::where('user_id', $user_id)->where('active', 1)->get();
 
         return view('video.video-in-main-wrapper', ['videos' => $videos]);
     }
 
     public function userChannelPlaylists() {
+        $data = request()->all();
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $playlists = Playlist::where('user_id', $user_id)->get();
 
+        return view('playlist.playlist-all', ['userPlaylist' => $playlists]);
+    }
+
+    public function membershipModal() {
+        $data = request()->all();
+        $user_id = $data['user_id'] ?? session('loggedInUser');
+        $memberships = Membership::where('user_id', $user_id)->get();
+
+        return view('main.membershipModal', ['memberships' => $memberships]);
     }
 
 }

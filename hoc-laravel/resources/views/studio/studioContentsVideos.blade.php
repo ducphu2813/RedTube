@@ -87,6 +87,7 @@
     @endforeach
 </ul>
 
+
 <script>
     $('.content__body--list').ready(function() {
 

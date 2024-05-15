@@ -3,7 +3,6 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
-
 @endsection
 
 @section('search')
@@ -169,7 +168,6 @@
 @endsection
 
 @section('scripts')
-
     <script>
         $(document).ready(function() {
 
