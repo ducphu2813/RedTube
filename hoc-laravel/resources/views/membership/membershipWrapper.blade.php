@@ -39,6 +39,9 @@
                     dataType: 'html',
                     success: function(data) {
                         $('.content__body').html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
                 })
             } else {
@@ -48,6 +51,9 @@
                     dataType: 'html',
                     success: function(data) {
                         $('.content__body').html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
                     }
                 })
             }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\clients;
 
+use App\Models\Interaction;
 use App\Models\PremiumRegistration;
 use App\Models\SharePremium;
 use Illuminate\Support\Facades\Storage;
@@ -41,7 +42,7 @@ class VideoController extends Controller{
 
     public function create() {
         $data = request()->all();
-        
+
         Video::create([
             'title' => $data['title'],
             'user_id' => session('loggedInUser'),
@@ -163,6 +164,14 @@ class VideoController extends Controller{
 
         $userId = session('loggedInUser');
 
+        $reaction = null;
+
+        $interactionModel = new Interaction();
+
+        if($userId){
+            $reaction = $interactionModel->findInteraction($userId, $id);
+        }
+
         //phần lưu lịch sử xem và tăng view
 //        if($userId){
 //            //lưu lịch sử xem video
@@ -215,7 +224,8 @@ class VideoController extends Controller{
                         'videosInPlayList' => $videosInPlayList,
                         'videoPlaylist' => $videoPlaylist,
                         'current_premium' => $current_premium,
-                        'current_shared_premium' => $current_shared_premium
+                        'current_shared_premium' => $current_shared_premium,
+                        'reaction' => $reaction,
                     ]
                 );
             }
@@ -228,7 +238,8 @@ class VideoController extends Controller{
                 'playlists' => $playlists,
                 'currentUserProfile' => $currentUserProfile,
                 'current_premium' => $current_premium,
-                'current_shared_premium' => $current_shared_premium
+                'current_shared_premium' => $current_shared_premium,
+                'reaction' => $reaction,
             ]
         );
     }

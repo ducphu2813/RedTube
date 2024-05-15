@@ -213,6 +213,9 @@ Route::get('membershipManager', [MemberShipController::class, 'showAllMembership
 Route::get('allMemberPackage', [MemberShipController::class, 'showAllMemberPackage'])->name('studio.showAllMembership');
 Route::get('membershipRegistration', [MemberShipController::class, 'showAllMembershipRegistration'])->name('studio.membershipRegistration');
 
+//xử lý hủy membership
+Route::post('cancelMembership', [MemberShipController::class, 'handleCancel'])->name('membership.cancelMemberPackage');
+
 Route::get('', [StudioController::class, 'test'])->name('studio.test')->middleware('CheckLogin');
 // -------------------- Hết của Dương -------------------- //
 

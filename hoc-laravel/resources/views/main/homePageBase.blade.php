@@ -118,7 +118,7 @@
                     </header>
                     {{-- Thông báo --}}
                     <div class="show-noti wrapper-header-notify-list">
-                        @component('noti.noti-new')
+                        @component('noti.noti-new', ['notifications' => $notifications])
                         @endcomponent
                     </div>
                 </div>
@@ -390,5 +390,8 @@
                 handleSearch();
             }
         });
+
+        //xử lý accept decline notification
+
     </script>
 @endsection

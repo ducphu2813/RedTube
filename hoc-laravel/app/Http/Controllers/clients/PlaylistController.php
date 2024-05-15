@@ -58,12 +58,12 @@ class PlaylistController extends Controller
     // }
 
     public function get() {
-        
+
     }
 
     public function create() {
         $data = request()->all();
-        
+
         Playlist::create([
             'user_id' => session('loggedInUser'),
             'name' => $data['name'],
@@ -117,7 +117,7 @@ class PlaylistController extends Controller
     public function playlistDetails()
     {
         $data = request()->all();
-        $playlist_id = $data['playlist_id'] ?? null; 
+        $playlist_id = $data['playlist_id'] ?? null;
         $currentPage = $data['currentPage'] ?? 1;
         $itemPerPage = $data['itemPerPage'] ?? 10;
 
@@ -146,21 +146,21 @@ class PlaylistController extends Controller
 
     }
 
-    public function updateplaylistPlaylist(Request $request){
+    public function updateVideoPlaylist(Request $request){
 
         $playlistId = $request->input('playlist_id');
-        $playlistId = $request->input('playlist_id');
+        $videoId = $request->input('video_id');
         $isChecked = $request->input('is_checked');
 
-        $playlistplaylist = new Playlist();
+        $playlistVideo = new PlaylistVideo();
 
-        //cần kiểm tra xem playlist_id và playlist_id có tồn tại không
+        //cần kiểm tra xem playlist_id và video_id có tồn tại không
 
         if($isChecked == 'true'){
-            if($playlistplaylist->addplaylistToPlaylist($playlistId, $playlistId)){
+            if($playlistVideo->addVideoToPlaylist($playlistId, $videoId)){
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Thêm playlist vào playlist thành công'
+                    'message' => 'Thêm video vào playlist thành công'
                 ]);
             }
             else{
@@ -173,10 +173,10 @@ class PlaylistController extends Controller
 
         }
         else{
-            if($playlistplaylist->removeplaylistFromPlaylist($playlistId, $playlistId)){
+            if($playlistVideo->removeVideoFromPlaylist($playlistId, $videoId)){
                 return response()->json([
                     'status' => 200,
-                    'message' => 'Xóa playlist khỏi playlist thành công'
+                    'message' => 'Xóa video khỏi playlist thành công'
                 ]);
             }
             else{
@@ -190,7 +190,7 @@ class PlaylistController extends Controller
         //cái này để debug
 //        return response()->json([
 //            'playlist_id' => $playlistId,
-//            'playlist_id' => $playlistId,
+//            'video_id' => $videoId,
 //            'is_checked' => $isChecked
 //        ]);
     }

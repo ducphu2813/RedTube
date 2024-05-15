@@ -13,6 +13,7 @@ class InteractionController extends Controller
 
     }
 
+    //xử lý khi bấm like/dislike
     public function handleLike(Request $request)
     {
         $user_id = $request->input('user_id');

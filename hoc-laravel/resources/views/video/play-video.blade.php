@@ -200,21 +200,57 @@
 
                     @endif
 
+                    {{-- phần like, dislike và lưu video--}}
                     <div class="icon">
-                        <div class="change-status interact" id="like">
-                            <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
-                            </i>
-                        </div>
-                        <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        <div class="change-status interact" id="dislike">
-                            <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
-                            </i>
-                        </div>
-                        <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+
+                        @if($reaction == null)
+                            {{-- nút like--}}
+                            <div class="change-status interact" id="like">
+                                <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+
+                            {{-- nút dislike--}}
+                            <div class="change-status interact" id="dislike">
+                                <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                        @elseif($reaction->reaction == 1)
+                            {{-- nút like--}}
+                            <div class="change-status interact" id="like">
+                                <i class="fa-regular fa-thumbs-up up-clicked"><span class="para">50N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+
+                            {{-- nút dislike--}}
+                            <div class="change-status interact" id="dislike">
+                                <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                        @elseif($reaction->reaction == 0)
+                            {{-- nút like--}}
+                            <div class="change-status interact" id="like">
+                                <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+
+                            {{-- nút dislike--}}
+                            <div class="change-status interact" id="dislike">
+                                <i class="fa-regular fa-thumbs-down down-clicked"><span class="para">10N</span>
+                                </i>
+                            </div>
+                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                        @endif
+
                         <div class="change-status">
                             <i class="fa-solid fa-list" onclick="openModal()"><span class="para">Lưu</span></i>
-
                         </div>
+
                     </div>
                 </div>
                 <hr>
@@ -307,40 +343,6 @@
                 this.textContent = "Xem thêm";
             }
         });
-
-        /* Like and Dislike */
-        // document.getElementsByClassName("para").addEventListener("click", function() {
-        //     this.classList.toggle("clicked");
-        // });
-        // var lastClicked = null;
-        //
-        // function buttonClickHandler() {
-        //   if (lastClicked === this) {
-        //     // Nếu nút đã được nhấn lần trước là nút này, thì xóa lớp "clicked"
-        //     this.classList.remove("clicked");
-        //     lastClicked = null;
-        //   } else {
-        //     // Nếu không, loại bỏ lớp "clicked" từ nút cuối cùng được nhấn (nếu có)
-        //     if (lastClicked) {
-        //       lastClicked.classList.remove("clicked");
-        //     }
-        //     // Thêm lớp "clicked" vào nút này và cập nhật biến lastClicked
-        //     this.classList.add("clicked");
-        //     lastClicked = this;
-        //   }
-        // }
-
-        // // Lắng nghe sự kiện click cho tất cả các nút like
-        // var likeButtons = document.querySelectorAll('.fa-thumbs-up');
-        // likeButtons.forEach(function(button) {
-        //   button.addEventListener('click', buttonClickHandler);
-        // });
-
-        // // Lắng nghe sự kiện click cho tất cả các nút dislike
-        // var dislikeButtons = document.querySelectorAll('.fa-thumbs-down');
-        // dislikeButtons.forEach(function(button) {
-        //   button.addEventListener('click', buttonClickHandler);
-        // });
 
 
         $(document).ready(function() {
@@ -442,7 +444,9 @@
                             //khi hủy like/dislike
                             if ($('#like i').hasClass('up-clicked')) {
                                 $('#like i').removeClass('up-clicked');
-                            } else if ($('#dislike i').hasClass('down-clicked')){
+                            }
+
+                            if ($('#dislike i').hasClass('down-clicked')){
                                 $('#dislike i').removeClass('down-clicked');
                             }
                         }

@@ -212,6 +212,7 @@ class StudioController extends Controller
     public function test()
     {
         session()->flash('flag', 'noti');
+
         return redirect()->route('clients.studioPage');
     }
 
