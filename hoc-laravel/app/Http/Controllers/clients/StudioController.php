@@ -4,7 +4,9 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\ShareNoti;
 use App\Models\Users;
+use App\Models\VideoNotifications;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +40,7 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('user_id', $userId)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::where('user_id', $userId)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItems = Video::where('user_id', $userId)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -75,14 +77,12 @@ class StudioController extends Controller
         $currentPage = $data['currentPage'] ?? 1;
         $itemPerPage = $data['itemPerPage'] ?? 10;
 
-        $video = null;
-        if ($video_id !== null) {
-            $video = Cache::remember('video_' . $video_id, 0, function () use ($video_id) {
-                return Video::find($video_id);
-            });
+        if ($video_id) {
+            $video = Video::find($video_id);
+            return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'edit']);
         }
 
-        return view('studio.videoDetailsModal', ['video' => $video, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage]);
+        return view('studio.videoDetailsModal', ['video' => null, 'currentPage' => $currentPage, 'itemPerPage' => $itemPerPage, 'flag' => 'add']);
     }
 
     public function pagination(Request $request)
@@ -179,14 +179,40 @@ class StudioController extends Controller
     }
 
     // Show all noti
-    public function showAllNoti()
-    {
-        return view('noti.noti-all');
+    public function showAllNoti(){
+
+        $userId = session('loggedInUser');
+
+        //lấy tất cả thông báo của user về video
+        $videoNotis = VideoNotifications::getNotificationByUserId($userId)->toArray();
+        foreach ($videoNotis as &$noti) {
+            $noti['type'] = 'video';
+            $noti['video_title'] = Video::getVideoById($noti['video_id'])->title;
+//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+        }
+
+        //lấy tất cả thông báo chia sẻ của user
+        $shareNotis = ShareNoti::getNotiByReceiver($userId)->toArray();
+        foreach ($shareNotis as &$noti) {
+            $noti['type'] = 'share';
+            $noti['sender_name'] = Users::getUserById($noti['sender_id'])->user_name;
+//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+        }
+
+        //gộp 2 mảng lại với nhau và sắp xếp theo created_date
+        $notifications = array_merge($videoNotis, $shareNotis);
+
+        usort($notifications, function ($a, $b) {
+            return strtotime($b['created_date']) - strtotime($a['created_date']);
+        });
+
+        return view('noti.noti-all', ['notifications' => $notifications]);
     }
 
     public function test()
     {
         session()->flash('flag', 'noti');
+
         return redirect()->route('clients.studioPage');
     }
 

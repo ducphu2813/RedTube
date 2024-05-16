@@ -41,8 +41,14 @@ class Users extends Model
         return self::query()->where('user_id', $id)->first();
     }
 
+    //tìm user theo tên, trả về danh sách user
     public static function getUsersByName($name){
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
+    }
+
+    //tìm user theo tên, tìm theo đúng chính xác tên, trả về user đầu tiên
+    public static function getUserByName($name){
+        return self::whereRaw('BINARY `user_name` = ?', [$name])->first();
     }
 
     public function getPlaylists(){
@@ -160,4 +166,27 @@ class Users extends Model
     }
     //cách dùng: $user = Users::find(1);
     // $user->isFollowed(2) để kiểm tra xem user có được user có id = 2 follow không
+
+    //lấy các gói membership của user(người tạo)
+    public function memberships(): HasMany
+    {
+        return $this->hasMany(Membership::class, 'user_id');
+    }
+    //cách dùng: $user = Users::find(1);
+    // $memberships = $user->memberships;
+
+    //kiểm tra xem user có đăng ký gói membership nào của user hiện tại không
+    public function hasMembershipFrom($creator_id, $subscriber_id)
+    {
+        // Lấy tất cả gói membership của User A
+        $memberships = Membership::where('user_id', $creator_id)->pluck('membership_id');
+
+        // Kiểm tra xem User B có đăng ký bất kỳ gói membership nào của User A hay không
+        return UserMembership::where('user_id', $subscriber_id)
+            ->whereIn('membership_id', $memberships)
+            ->where('end_date', '>', now())
+            ->exists();
+    }
+    //cách dùng: $user = Users::find(1);
+    // $user->hasMembershipFrom(2, 3) để kiểm tra xem user có đăng ký gói membership nào của user có id = 2 không
 }

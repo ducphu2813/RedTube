@@ -118,13 +118,13 @@
                     </header>
                     {{-- Thông báo --}}
                     <div class="show-noti wrapper-header-notify-list">
-                        @component('noti.noti-new')
+                        @component('noti.noti-new', ['notifications' => $notifications])
                         @endcomponent
                     </div>
                 </div>
             </div>
 
-            
+
             {{-- phần icon user nhỏ phía trên bên phải --}}
             <div class="acc-box">
                 @if (session('loggedInUser') && $currentUserProfile->picture_url)
@@ -378,5 +378,20 @@
         $('.acc-box').on('click', function() {
             $('#logged-in-feat').toggleClass('show');
         });
+
+        //tạo 1 event khi trang vừa được load, kiểm tra trên url có tham số là searchValue hay không
+        //nếu có thì gọi hàm handleSearch
+        $(document).ready(function() {
+            let url = new URL(window.location.href);
+            let searchValue = url.searchParams.get('searchValue');
+
+            if (searchValue) {
+                $('#search-inp').val(searchValue);
+                handleSearch();
+            }
+        });
+
+        //xử lý accept decline notification
+
     </script>
 @endsection

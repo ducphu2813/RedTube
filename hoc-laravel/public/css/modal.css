@@ -1,135 +1,143 @@
-/* modal */
-.modal-pl{
-    height: 100%;
-	width: 100%;
-	background-color: rgba(0, 0, 0, 0.6);
-	position: fixed;
-	top: 0;
-	left: 0;
-    display: none;
-	z-index: 0;
-}
-
-.modal-info-wrapper {
-    width: 40%;
-    height: 70%;
-    background-color: white;
+.modal__popup {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    z-index: 1;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    flex-direction: column;
-    justify-content: space-around;
+    right: 0px;
+    left: 0px;
+    top: 0px;
+    bottom: 0px;
+    z-index: 3;
+    width: 100%; /* Full width */
+    height: 100%;
 }
 
-.modal-info-content--item{
-    border: 1px solid #444;
+.modal__overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-form {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    padding: 7px;
+    width: 520px;
     border-radius: 4px;
-}
-.modal-fee{
-    flex: 4;
-}
-
-.modal-duration{
-    flex: 3;
-    margin-left: 5px;
+    background-color: #282828;
+    overflow-y: hidden;
+    padding: 0px 16px;
+    color: white;
 }
 
-.wrap-data{
+.modla__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-self: center;
+    font-size: 28px;
+    margin: 12px 0px;
+    font-weight: bold;
 }
 
-.wrap-value{
-    
-}
-
-.modal-membership-duration{
+.modal__title {
     display: flex;
-    margin: auto;
-    flex: 1;
-    flex-direction: row-reverse;
+    justify-content: center;
+    align-self: center;
+    font-size: 28px;
+    margin: 12px 0px;
+    font-weight: bold;
 }
 
-#ms-duration{
-    /* height: 100%; */
+.modal__body {
+    margin-bottom: 32px;
 }
 
-.modal-info-content--item label{
-    font-size: 14px;
+.modal__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 16px;
 }
 
-.modal-info-content--item input{
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+}
+
+.form-group > * {
+    width: 100%;
+    font-size: 16px;
+}
+
+.form-group > input[type="file"] {
+    margin-bottom: 8px;
+    border: solid 2px #3f3f3f;
+    color: white;
     border: none;
-    padding-left: 2px;
+    width: 100%;
 }
 
-#modal-name{
-    height: 30px;
+.form-group > label {
+    font-size: 16px;
+    margin-bottom: 6px;
 }
 
-#modal-description{
-    height: 100px;
+.form-group > textarea {
+    border-radius: 4px;
+    padding: 4px 0px 4px 8px;
+    background-color: var(--primary-color);
     resize: none;
-    border: none;
+    border: solid 2px #3f3f3f;
+    color: white;
 }
 
-.modal-info-content--item input:focus,
-.modal-info-content--item textarea:focus{
+.form-group > input {
+    border-radius: 4px;
+    padding: 12px 8px;
+    background-color: var(--primary-color);
+    border: solid 2px #3f3f3f;
+    color: white;
+}
+
+.form-group > select {
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 8px;
+}
+
+.form-group > select:focus {
     outline: none;
 }
 
-.modal-info-content--item input:focus label{
-    color:blue;
+.form-group > textarea:focus {
+    outline: none;
+    color: white
 }
 
-#modal-info-header{
-    padding: 5px 10px;
-    border-bottom: 1px solid #000;
+option {
+    color: black;
 }
 
-#modal-info-content {
-    height: 65%;
+.option {
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
-    padding: 0 20px;
+    align-items: center;
+    width: 100%;
 }
 
-#modal-info-btn {
-    display: flex;
-    justify-content: flex-end;
-    border-top: 1px solid;
-    padding-top: 1%;
-}
-
-.modal-btn{
-    margin-right: 20px;
+.option > button {
+    padding: 8px 24px;
+    font-size: 16px;
+    color: white;
     border: none;
-    background-color: #000;
-    border-radius: 5px;
-    width: 60px;
-    height: 40px;
-    color: #fff;
+    border-radius: 2px;
 }
 
-.modal-btn:hover{
-    background-color: #333;
-    transition: .2s;
+.close--btn {
+    background-color: #ff4e45;
 }
 
-/* End modal */
-
-/* Modal of membership */
-
-
-
-/* Modal of playlists */
+.save--btn {
+    background-color: #3ea6ff;
+}

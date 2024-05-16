@@ -64,4 +64,11 @@ class Interaction extends Model
                     ->delete();
 
     }
+
+    //tìm interaction dựa vào user_id và video_id
+    public function findInteraction($user_id, $video_id){
+        return $this->where('user_id', $user_id)
+                    ->where('video_id', $video_id)
+                    ->first();
+    }
 }

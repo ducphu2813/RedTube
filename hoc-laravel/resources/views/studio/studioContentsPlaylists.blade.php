@@ -13,10 +13,6 @@
 
         </div>
 
-        <div class="item__display">
-            Chế độ
-        </div>
-
         <div class="item__createdate">
             Ngày tạo
         </div>
@@ -49,27 +45,60 @@
                 </div>
             </div>
 
-            <div class="item__display">
-                @if ($playlist->display_mode == 0)
-                    <i class="fa-solid fa-earth-americas"></i>
-                    <div class="item__display--text">Riêng tư</div>
-                @else
-                    <i class="fa-solid fa-lock"></i>
-                    <div class="item__display--text">Công khai</div>
-                @endif
-
-            </div>
-
             <div class="item__createdate">{{ $playlist->created_date }}</div>
 
-            <div class="item__count">{{ $playlist->created_date }}</div>
+            <div class="item__count">0</div>
         </li>
     @endforeach
 </ul>
 
 <script>
     $('.content__body--list').ready(function() {
-    
+        $('.content__body--list').ready(function() {
+            $('.edit--btn').on('click', function(event) {
+                var playlist_id = $(this).attr('playlist_id')
+                $.ajax({
+                    url: '{{ route('playlist.playlistDetails') }}',
+                    type: 'GET',
+                    data: {
+                        playlist_id: playlist_id,
+                        currentPage: {{ $currentPage }},
+                        itemPerPage: {{ $itemPerPage }}
+                    },
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#modal').html(data)
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching content:', error);
+                    }
+                });
+                event.preventDefault();
+            });
+
+            $('.delete--btn').on('click', function(event) {
+                var playlist_id = $(this).attr('playlist_id')
+                $.ajax({
+                    url: '{{ route('api.playlists.delete') }}',
+                    type: 'DELETE',
+                    data: {
+                        playlist_id: playlist_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#modal').empty();
+                        loadPage(1, '{{ route('studio.contents.playlists') }}', {{ $itemPerPage }})
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching content:', error);
+                    }
+                });
+                event.preventDefault();
+            });
+            
+        });
+
         $.ajax({
             url: '{{ route('studio.pagination') }}',
             type: 'GET',

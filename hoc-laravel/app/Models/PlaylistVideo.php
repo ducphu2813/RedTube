@@ -47,6 +47,11 @@ class PlaylistVideo extends Model
 
     }
 
+    public static function deleteAllFromPlaylist($playlist_id)
+    {
+        PlaylistVideo::where('playlist_id', $playlist_id)->delete();
+    }   
+
     //hàm này là xóa video khỏi playlist
     public function removeVideoFromPlaylist($playlist_id, $video_id){
 

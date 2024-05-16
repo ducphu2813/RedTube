@@ -44,6 +44,13 @@ Route::middleware('CheckLogin')->prefix('api/videos')->group(function() {
     Route::delete('/', [VideoController::class, 'delete'])->name('api.videos.delete');
 });
 
+// Playlist CRUD
+Route::middleware('CheckLogin')->prefix('api/playlists')->group(function() {
+    Route::get('/', [PlaylistController::class, 'get'])->name('api.playlists.get');
+    Route::post('/', [PlaylistController::class, 'create'])->name('api.playlists.create');
+    Route::put('/', [PlaylistController::class, 'edit'])->name('api.playlists.edit');
+    Route::delete('/', [PlaylistController::class, 'delete'])->name('api.playlists.delete');
+});
 
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
 
@@ -147,7 +154,9 @@ Route::get('home/userChannel/videos', [HomePageController::class, 'userChannelVi
 Route::get('home/userChannel/playlists', [HomePageController::class, 'userChannelPlaylists'])->name('clients.userChannel.playlists');
 
 //????
+Route::get('playlistDetails', [PlaylistController::class, 'playlistDetails'])->name('playlist.playlistDetails');
 Route::get('createPlaylist', [PlaylistController::class, 'showCreatePlaylist'])->name('playlist.createPlaylist');
+//????
 Route::get('studioPage', [StudioController::class, 'index'])
     ->middleware('CheckLogin')
     ->name('clients.studioPage');
@@ -170,7 +179,7 @@ Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('client
 Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('clients.videoReload');
 
 // Modal premium
-Route::get('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
+Route::post('modalPremium', [PremiumController::class, 'showModalPremium'])->name('clients.modalPremium');
 
 // Test screen video
 Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
@@ -193,6 +202,15 @@ Route::get('receiveShare', [PremiumController::class, 'receiveShare'])->name('cl
 // Nút invate trong premium
 Route::get('invitePremium', [PremiumController::class, 'invitePremium'])->name('clients.invitePremium');
 
+//Xóa Share Premium
+Route::post('deleteSharePremium', [PremiumController::class, 'handleDeleteShare'])->name('clients.deleteSharePremium');
+
+//xử lý chấp nhận từ chối share premium
+Route::post('handleShare', [PremiumController::class, 'handleAcceptPremium'])->name('clients.handleShare');
+
+//hủy premium đang share
+Route::post('cancelShare', [PremiumController::class, 'handleCancelShare'])->name('clients.cancelShare');
+
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
 
@@ -203,6 +221,9 @@ Route::get('', [PaymentController::class, 'payWithMomo'])->name('clients.payWith
 Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('studio.membershipManager');
 Route::get('allMemberPackage', [MemberShipController::class, 'showAllMemberPackage'])->name('studio.showAllMembership');
 Route::get('membershipRegistration', [MemberShipController::class, 'showAllMembershipRegistration'])->name('studio.membershipRegistration');
+
+//xử lý hủy membership
+Route::post('cancelMembership', [MemberShipController::class, 'handleCancel'])->name('membership.cancelMemberPackage');
 
 Route::get('', [StudioController::class, 'test'])->name('studio.test')->middleware('CheckLogin');
 // -------------------- Hết của Dương -------------------- //

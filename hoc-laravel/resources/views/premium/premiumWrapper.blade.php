@@ -1,41 +1,50 @@
 <link rel="stylesheet" href="{{ asset('/css/premium.css') }}">
 <div class="content__title">
     Premium
-    <span class="premium-check-own">
-        <div>
-            <i class="fa-solid fa-crown" style="fill: #fff"></i>
-        </div>
-    </span>
-    <span class="premium-check-share">
-        <span class="has-share" >
-            <i class="fa-solid fa-star"></i>
+    @if($current_premium != null)
+        <span class="premium-check-own">
+            <div>
+                <i class="fa-solid fa-crown" style="fill: #fff"></i>
+            </div>
         </span>
-        <span class="info-share">
-            Bạn được chia sẻ bởi: Dương Đẹp Trai <br>
-            Ngày hết hạn: 1/1/2022
+
+
+    @elseif($current_shared_premium != null)
+        <span class="premium-check-share">
+            <span class="has-share" >
+                <i class="fa-solid fa-star"></i>
+            </span>
+            <span class="info-share">
+                Bạn được chia sẻ bởi: {{ $current_shared_premium->premiumRegistration->user->user_name }} <br>
+                Ngày hết hạn: {{  $current_shared_premium->expiry_date  }}
+            </span>
         </span>
-    </span>
+
+    @endif
 </div>
 
 
-
-<button class="modal-share-btn--item">
-    <span class="span"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 23 21" height="21"
-            width="23" class="svg-icon">
-            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="black"
-                d="M1.97742 19.7776C4.45061 17.1544 7.80838 15.5423 11.5068 15.5423C15.2053 15.5423 18.5631 17.1544 21.0362 19.7776M16.2715 6.54229C16.2715 9.17377 14.1383 11.307 11.5068 11.307C8.87535 11.307 6.74212 9.17377 6.74212 6.54229C6.74212 3.91082 8.87535 1.77759 11.5068 1.77759C14.1383 1.77759 16.2715 3.91082 16.2715 6.54229Z">
-            </path>
-        </svg></span>
-    <span class="lable">Invite</span>
-</button>
+{{--nguyên cái button share--}}
+@if($current_premium != null)
+    <button class="modal-share-btn--item">
+        <span class="span"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 23 21" height="21"
+                width="23" class="svg-icon">
+                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="black"
+                    d="M1.97742 19.7776C4.45061 17.1544 7.80838 15.5423 11.5068 15.5423C15.2053 15.5423 18.5631 17.1544 21.0362 19.7776M16.2715 6.54229C16.2715 9.17377 14.1383 11.307 11.5068 11.307C8.87535 11.307 6.74212 9.17377 6.74212 6.54229C6.74212 3.91082 8.87535 1.77759 11.5068 1.77759C14.1383 1.77759 16.2715 3.91082 16.2715 6.54229Z">
+                </path>
+            </svg></span>
+        <span class="lable">Invite</span>
+    </button>
+@endif
 
 <ul class="content__option">
     <li class="content__option--item selected" id="myPre">Premium Của Tôi</li>
     <li class="content__option--item" id="sharedPre">Premium Được Chia Sẻ</li>
 </ul>
 
+{{-- đây là chỗ của table--}}
 <div class="content__body">
-    @component('premium.premiumShareWrapper')
+    @component('premium.premiumShareWrapper', ['all_premium' => $all_premium])
     @endcomponent
 </div>
 

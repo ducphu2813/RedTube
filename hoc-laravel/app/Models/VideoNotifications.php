@@ -23,7 +23,7 @@ class VideoNotifications extends Model
     ];
 
     protected $casts = [
-        'created_date' => 'datetime',
+//        'created_date' => 'datetime',
     ];
 
     public function user(): BelongsTo
@@ -36,8 +36,9 @@ class VideoNotifications extends Model
         return $this->belongsTo(Video::class);
     }
 
-    public function createVideoNotification(){
-        
+    //lấy tất cả theo user_id
+    public static function getNotificationByUserId($user_id)
+    {
+        return self::query()->where('user_id', $user_id)->get();
     }
-    
 }

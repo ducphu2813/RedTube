@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\clients;
 
+use App\Models\Interaction;
 use App\Models\PremiumRegistration;
 use App\Models\SharePremium;
 use Illuminate\Support\Facades\Storage;
@@ -40,19 +41,44 @@ class VideoController extends Controller{
     }
 
     public function create() {
+        $data = request()->all();
 
+        Video::create([
+            'title' => $data['title'],
+            'user_id' => session('loggedInUser'),
+            'created_date' => now(),
+            'view' => 0,
+            'description' => $data['description'],
+            'display_mode' => $data['display_mode'],
+            'membership' => 0,
+            'active' => 1,
+            'video_path' => $data['video_path'],
+            'thumbnail_path' => $data['thumbnail_path'],
+            'is_approved' => 0
+        ]);
     }
 
     public function edit(Request $request) {
         $data = request()->all();
 
+        $userId = session('loggedInUser');
+
         $video_id = $data['video_id'];
 
         $video = Video::find($video_id);
 
+        $newVideoPath = null;
+        $newThumbnailPath = null;
+
+        //nếu video tồn tại thì lấy đường dẫn video và thumbnail cũ
+        if($video){
+            $newVideoPath = $video->video_path;
+            $newThumbnailPath = $video->thumbnail_path;
+        }
+
         if($request->hasFile('video_path')){
             //xóa video cũ
-            if($video->video_path){
+            if($video && $video->video_path){
                 Storage::delete('public/video/' . $video->video_path);
             }
             //lấy file từ request
@@ -60,9 +86,9 @@ class VideoController extends Controller{
             //lấy extension của file
             $videoExtension = $video_file->getClientOriginalExtension();
             //tạo tên mới cho video
-            $video_path_name =  $video->video_id . time() . '.' . $videoExtension;
+            $video_path_name =  time() . '.' . $videoExtension;
             //lưu đường dẫn video mới
-            $video->video_path = $video_path_name;
+            $newVideoPath = $video_path_name;
             //lưu video
             $video_file->storeAs('public/video/', $video_path_name);
         }
@@ -70,7 +96,7 @@ class VideoController extends Controller{
         if($request->hasFile('thumbnail_path')){
 
             //xóa thumbnail cũ
-            if($video->thumbnail_path){
+            if($video && $video->thumbnail_path){
                 Storage::delete('public/thumbnail/' . $video->thumbnail_path);
             }
             //lấy file từ request
@@ -78,9 +104,9 @@ class VideoController extends Controller{
             //lấy extension của file
             $thumbnailExtension = $thumbnail_file->getClientOriginalExtension();
             //tạo tên mới cho thumbnail
-            $thumbnail_path_name =  $video->video_id . time() . '.' . $thumbnailExtension;
+            $thumbnail_path_name =  time() . '.' . $thumbnailExtension;
             //lưu đường dẫn thumbnail mới
-            $video->thumbnail_path = $thumbnail_path_name;
+            $newThumbnailPath = $thumbnail_path_name;
             //lưu thumbnail
             $thumbnail_file->storeAs('public/thumbnail/', $thumbnail_path_name);
         }
@@ -88,14 +114,30 @@ class VideoController extends Controller{
         $newVideo = [
             'video_id' => $data['video_id'],
             'title' => $data['title'],
+            'user_id' => $userId,
             'description' => $data['description'],
             'display_mode' => $data['display_mode'],
-            'video_path' => $video->video_path,
-            'thumbnail_path' => $video->thumbnail_path,
+            'video_path' => $newVideoPath,
+            'thumbnail_path' => $newThumbnailPath,
         ];
 
         $videoModel = new Video();
-        $videoModel->updateVideo($video_id, $newVideo);
+
+        if($data['video_id']){
+            $videoModel->updateVideo($video_id, $newVideo);
+        }else{
+            unset($newVideo['video_id']);
+            $newVideo['created_date'] = date('Y-m-d H:i:s');
+            $newVideo['active'] = 1;
+            $newVideo['view'] = 0;
+
+            //cái này sẽ cần sửa lại thêm trong giao diện
+            $newVideo['membership'] = 0;
+
+            //khi nào xong chức năng duyệt video thì sửa lại thành 0
+            $newVideo['is_approved'] = 1;
+            $videoModel->createVideo($newVideo);
+        }
 
         return response()->json($newVideo);
     }
@@ -121,6 +163,14 @@ class VideoController extends Controller{
         $videoModel = new Video();
 
         $userId = session('loggedInUser');
+
+        $reaction = null;
+
+        $interactionModel = new Interaction();
+
+        if($userId){
+            $reaction = $interactionModel->findInteraction($userId, $id);
+        }
 
         //phần lưu lịch sử xem và tăng view
 //        if($userId){
@@ -174,7 +224,8 @@ class VideoController extends Controller{
                         'videosInPlayList' => $videosInPlayList,
                         'videoPlaylist' => $videoPlaylist,
                         'current_premium' => $current_premium,
-                        'current_shared_premium' => $current_shared_premium
+                        'current_shared_premium' => $current_shared_premium,
+                        'reaction' => $reaction,
                     ]
                 );
             }
@@ -187,7 +238,8 @@ class VideoController extends Controller{
                 'playlists' => $playlists,
                 'currentUserProfile' => $currentUserProfile,
                 'current_premium' => $current_premium,
-                'current_shared_premium' => $current_shared_premium
+                'current_shared_premium' => $current_shared_premium,
+                'reaction' => $reaction,
             ]
         );
     }

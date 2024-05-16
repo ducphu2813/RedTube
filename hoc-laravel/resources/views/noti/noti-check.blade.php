@@ -5,10 +5,10 @@
 
     <div class="noti-info">
         <div>
-            Trạng thái:
+            {{ $notification['message'] }} - {{ $notification['created_date'] }}
         </div>
         <div style="visible: hidden">
-            Lí do:
+            Video: {{ $notification['video_title'] }}
         </div>
     </div>
 

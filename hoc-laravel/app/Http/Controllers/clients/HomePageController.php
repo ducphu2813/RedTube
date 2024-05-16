@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\ShareNoti;
 use App\Models\Users;
 use App\Models\Video;
+use App\Models\VideoNotifications;
 use Illuminate\Http\Request;
 
 class HomePageController extends Controller
@@ -13,9 +15,9 @@ class HomePageController extends Controller
 
         $videos = Video::getAllVideo();
 
-        $id = session('loggedInUser');
+        $userId = session('loggedInUser');
 
-        $currentUserProfile = Users::getUserById($id);
+        $currentUserProfile = Users::getUserById($userId);
 
         if(!$currentUserProfile){
             return view('main.homePageBase',
@@ -30,11 +32,35 @@ class HomePageController extends Controller
         //lấy danh sách kênh mà user đang follow
         $followings = $currentUserProfile->following();
 
+        //lấy tất cả thông báo của user về video
+        $videoNotis = VideoNotifications::getNotificationByUserId($userId)->toArray();
+        foreach ($videoNotis as &$noti) {
+            $noti['type'] = 'video';
+            $noti['video_title'] = Video::getVideoById($noti['video_id'])->title;
+//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+        }
+
+        //lấy tất cả thông báo chia sẻ của user
+        $shareNotis = ShareNoti::getNotiByReceiver($userId)->toArray();
+        foreach ($shareNotis as &$noti) {
+            $noti['type'] = 'share';
+            $noti['sender_name'] = Users::getUserById($noti['sender_id'])->user_name;
+//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+        }
+
+        //gộp 2 mảng lại với nhau và sắp xếp theo created_date
+        $notifications = array_merge($videoNotis, $shareNotis);
+
+        usort($notifications, function ($a, $b) {
+            return strtotime($b['created_date']) - strtotime($a['created_date']);
+        });
+
         return view('main.homePageBase',
             [
                 'videos' => $videos,
                 'currentUserProfile' => $currentUserProfile,
-                'followings' => $followings
+                'followings' => $followings,
+                'notifications' => $notifications,
             ]
         );
     }

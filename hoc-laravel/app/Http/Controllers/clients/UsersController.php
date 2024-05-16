@@ -105,7 +105,7 @@ class UsersController extends Controller{
 
         $user = Users::getUserById(session('loggedInUser'));
 
-        //tất cả record premium của user
+        //tất cả record đăng ký premium của user
         $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));
 
         //record premium đang sử dụng

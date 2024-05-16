@@ -2,7 +2,6 @@
 @section('title', 'Studio')
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
 
 @endsection
@@ -185,11 +184,14 @@
                         success: function(data) {
                             $('#modal').html(data);
                             $('.modal-pl').css('display', 'flex');
+                        },
+                        error: function(data) {
+                            console.log(data);
                         }
                     })
                 } else if (index == 1) {
                     $.ajax({
-                        url: '{{ route('playlist.createPlaylist') }}',
+                        url: '{{ route('playlist.playlistDetails') }}',
                         type: 'GET',
                         dataType: 'html',
                         success: function(data) {

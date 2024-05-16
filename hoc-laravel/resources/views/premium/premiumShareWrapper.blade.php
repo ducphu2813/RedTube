@@ -18,29 +18,46 @@
     </div>
 
     {{-- Chổ này đổ data của gói premium --}}
-    @for ($i = 0; $i < 5; $i++)
-        @component('premium.premiumShareItem')
-        @endcomponent
-    @endfor
+    @if($all_premium->count() > 0)
+        @foreach($all_premium as $premium)
+            @component('premium.premiumShareItem', ['premium' => $premium])
+            @endcomponent
+        @endforeach
+    @endif
+
+{{--    @for ($i = 0; $i < 5; $i++)--}}
+{{--        @component('premium.premiumShareItem')--}}
+{{--        @endcomponent--}}
+{{--    @endfor--}}
 </div>
 
 <script>
+
     // Hiển thị danh sách người được chia sẻ premium
     // Kèm theo nút đóng modal
     $(document).ready(function() {
 
         //nút coi chi tiết share
         $('.btn-detail-share').click(function() {
+
+            let registration_id = $(this).attr('pre-id');
             // console.log('click')
             $.ajax({
                 url: '{{ route('clients.modalPremium') }}',
-                type: 'GET',
+                type: 'POST',
+                data: {
+                    registration_id: registration_id,
+                    _token: '{{ csrf_token() }}'
+                },
                 success: function(data) {
                     $('#modal').append(data);
                     $('.modal-share-premium').css('display', 'flex');
                     $('.close-modal').click(function() {
                         $('#modal').empty();
                     });
+                },
+                error: function(data) {
+                    console.log(data);
                 }
             })
         });

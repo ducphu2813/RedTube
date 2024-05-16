@@ -23,8 +23,44 @@
     </div>
 
     {{-- Chổ này đổ data của premium được người khác chia sẻ --}}
-    @for ($i = 0; $i < 5; $i++)
-        @component('premium.premiumHistoryItem')
-        @endcomponent
-    @endfor
+    @if($all_shared_premium->count() > 0)
+        @foreach($all_shared_premium as $shared_premium)
+            @component('premium.premiumHistoryItem', ['shared_premium' => $shared_premium])
+            @endcomponent
+        @endforeach
+    @endif
+
+
+{{--    @for ($i = 0; $i < 5; $i++)--}}
+{{--        @component('premium.premiumHistoryItem')--}}
+{{--        @endcomponent--}}
+{{--    @endfor--}}
+
+    <script>
+
+        //event cho nút hủy ở tab được share
+        $(document).ready(function() {
+
+            $('.cancel-btn').click(function(event) {
+                event.preventDefault();
+                let share_id = $(this).attr('share_id');
+
+                $.ajax({
+                    url: '{{ route('clients.cancelShare') }}',
+                    type: 'POST',
+                    data: {
+                        share_id: share_id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+        });
+    </script>
 </div>

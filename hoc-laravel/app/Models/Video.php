@@ -25,7 +25,7 @@ class Video extends Model
 
     protected $fillable = [
         'title',
-        'users_id',
+        'user_id',
         'created_date',
         'view',
         'description',
@@ -131,6 +131,11 @@ class Video extends Model
     }
 
     // Dương không code nữa
+
+    //hàm create video
+    public function createVideo($data){
+        return $this->create($data);
+    }
 
 
     //tăng view của video

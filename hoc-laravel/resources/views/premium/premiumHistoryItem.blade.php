@@ -1,21 +1,28 @@
 <a class="my-premium-info" href="">
     <div class="my-premium-user-name">
-        Nguyễn Văn A
+        {{ $shared_premium->premiumRegistration->user->user_name }}
     </div>
 
     <div class="my-premium-name">
-        Gói dữ dằn
+        {{ $shared_premium->premiumRegistration->package->name }}
     </div>
 
     <div class="my-premium-start">
-        1/1/2024
+        {{ $shared_premium->created_date }}
     </div>
 
     <div class="my-premium-end">
-        1/2/2024
+        {{  $shared_premium->expiry_date  }}
     </div>
 
-    <div class="pre-share-quantity">
-        <i class="fa fa-xmark btn-detail-share" style="line-height: 31px"></i>
-    </div>
+    @if($shared_premium->expiry_date > date('Y-m-d H:i:s'))
+        <div class="pre-share-quantity">
+            <i class="fa fa-xmark btn-detail-share cancel-btn" style="line-height: 31px" share_id="{{ $shared_premium->share_id }}"></i>
+        </div>
+    @else
+        <div class="pre-share-quantity">
+            Đã hết hạn
+        </div>
+    @endif
+
 </a>
