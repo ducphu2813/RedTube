@@ -117,6 +117,7 @@ class VideoController extends Controller{
             'user_id' => $userId,
             'description' => $data['description'],
             'display_mode' => $data['display_mode'],
+            'membership' => $data['membership'],
             'video_path' => $newVideoPath,
             'thumbnail_path' => $newThumbnailPath,
         ];
@@ -130,9 +131,7 @@ class VideoController extends Controller{
             $newVideo['created_date'] = date('Y-m-d H:i:s');
             $newVideo['active'] = 1;
             $newVideo['view'] = 0;
-
-            //cái này sẽ cần sửa lại thêm trong giao diện
-            $newVideo['membership'] = 0;
+            $newVideo['membership'] = $data['membership'];
 
             //khi nào xong chức năng duyệt video thì sửa lại thành 0
             $newVideo['is_approved'] = 1;
@@ -248,7 +247,7 @@ class VideoController extends Controller{
     // Hàm load video trang chủ
     public function reloadVideoList(){
 
-        $videos = Video::getAllVideo();
+        $videos = Video::getAllAvailableVideo();
 
         $id = session('loggedInUser');
         $currentUserProfile = Users::getUserById($id);

@@ -136,7 +136,13 @@
                 {{-- or nếu video là của chính mình--}}
                 {{-- or nếu video có membership và user đã tham gia membership--}}
                 {{-- thì cho coi vide0--}}
-                @if($video->membership == 0 || (session('loggedInUser') == $video->user->user_id) || ($video->user->memberships()->exists() && $video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) ))
+                @if( (!$video->display_mode || !$video->is_approved || !$video->active) && (session('loggedInUser') != $video->user->user_id))
+                    {{-- video bị ẩn hoặc chưa được duyệt hoặc bị khóa --}}
+                    <div class="membership-info">
+                        Không tìm thấy video
+                    </div>
+
+                @elseif($video->membership == 0 || (session('loggedInUser') == $video->user->user_id) || ($video->user->memberships()->exists() && $video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) ))
                     <video controls autoplay>
                         @if( ($current_premium == null && $current_shared_premium == null) || (!session('loggedInUser')) )
                             <source src="{{ asset('storage/video/ads.mp4') }}" type="video/mp4">
@@ -155,7 +161,6 @@
                         Hãy đăng ký tham gia làm thành viên của kênh này để xem video đặc quyền riêng
                         <button>Tham gia</button>
                     </div>
-
                 @endif
                 <div class="tag">
                     <a href="">#Music</a> <a href="">#Trending</a>
@@ -201,59 +206,69 @@
                     @endif
 
                     {{-- phần like, dislike và lưu video--}}
-                    <div class="icon">
 
-                        @if($reaction == null)
-                            {{-- nút like--}}
-                            <div class="change-status interact" id="like">
-                                <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                    @if( (!$video->display_mode || !$video->is_approved || !$video->active) && (session('loggedInUser') != $video->user->user_id))
 
-                            {{-- nút dislike--}}
-                            <div class="change-status interact" id="dislike">
-                                <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        @elseif($reaction->reaction == 1)
-                            {{-- nút like--}}
-                            <div class="change-status interact" id="like">
-                                <i class="fa-regular fa-thumbs-up up-clicked"><span class="para">50N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                    @else
+                        <div class="icon">
 
-                            {{-- nút dislike--}}
-                            <div class="change-status interact" id="dislike">
-                                <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        @elseif($reaction->reaction == 0)
-                            {{-- nút like--}}
-                            <div class="change-status interact" id="like">
-                                <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                            @if($reaction == null)
+                                {{-- nút like--}}
+                                <div class="change-status interact" id="like">
+                                    <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
 
-                            {{-- nút dislike--}}
-                            <div class="change-status interact" id="dislike">
-                                <i class="fa-regular fa-thumbs-down down-clicked"><span class="para">10N</span>
-                                </i>
-                            </div>
-                            <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
-                        @endif
+                                {{-- nút dislike--}}
+                                <div class="change-status interact" id="dislike">
+                                    <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                            @elseif($reaction->reaction == 1)
+                                {{-- nút like--}}
+                                <div class="change-status interact" id="like">
+                                    <i class="fa-regular fa-thumbs-up up-clicked"><span class="para">50N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
 
-                        <div class="change-status">
-                            <i class="fa-solid fa-list" onclick="openModal()"><span class="para">Lưu</span></i>
+                                {{-- nút dislike--}}
+                                <div class="change-status interact" id="dislike">
+                                    <i class="fa-regular fa-thumbs-down"><span class="para">10N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                            @elseif($reaction->reaction == 0)
+                                {{-- nút like--}}
+                                <div class="change-status interact" id="like">
+                                    <i class="fa-regular fa-thumbs-up"><span class="para">50N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+
+                                {{-- nút dislike--}}
+                                <div class="change-status interact" id="dislike">
+                                    <i class="fa-regular fa-thumbs-down down-clicked"><span class="para">10N</span>
+                                    </i>
+                                </div>
+                                <i class="fa-solid fa-window-minimize fa-rotate-90"></i>
+                            @endif
+
+                            <div class="change-status">
+                                <i class="fa-solid fa-list" onclick="openModal()"><span class="para">Lưu</span></i>
+                            </div>
+
                         </div>
 
-                    </div>
+                    @endif
                 </div>
                 <hr>
+
+                @if( (!$video->display_mode || !$video->is_approved || !$video->active) && (session('loggedInUser') != $video->user->user_id))
+
+                @else
                 <div class="discription">
                     <p class="expandable-content">
                         <span>
@@ -267,13 +282,20 @@
                     </p>
                     <button id="btn-expand">Xem thêm</button>
                 </div>
-                {{-- Phần này là phần comment --}}
-                @component('comments.comment-video-wrapper', [
-                    'comments' => $video->getRootComments,
-                    'video' => $video,
-                    'currentUserProfile' => $currentUserProfile,
-                ])
-                @endcomponent
+
+                @endif
+
+                @if( (!$video->display_mode || !$video->is_approved || !$video->active) && (session('loggedInUser') != $video->user->user_id))
+
+                @else
+                    {{-- Phần này là phần comment --}}
+                    @component('comments.comment-video-wrapper', [
+                        'comments' => $video->getRootComments,
+                        'video' => $video,
+                        'currentUserProfile' => $currentUserProfile,
+                    ])
+                    @endcomponent
+                @endif
             </div>
 
             {{-- Phần này là phần sidebar, chứa playlist và video đề xuất --}}

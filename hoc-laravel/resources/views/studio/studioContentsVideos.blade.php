@@ -41,35 +41,35 @@
                 </button>
             </div>
 
-            <div class="item__content">
-                <div class="item__thumbnail">
-                    {{-- phần thumbnail--}}
+            <a href="http://127.0.0.1:8000/playVideo/{{ $video->video_id }}">
+                <div class="item__content">
+                    <div class="item__thumbnail">
+                        {{-- phần thumbnail--}}
 
-                    @if($video->thumbnail_path)
-                        <img src="{{ asset('storage/thumbnail/' . $video->thumbnail_path) }}" alt="" class="item__thumbnail--img">
+                        @if($video->thumbnail_path)
+                            <img src="{{ asset('storage/thumbnail/' . $video->thumbnail_path) }}" alt="" class="item__thumbnail--img">
 
-                    @else
-                        <img src="{{ asset('storage/thumbnail/default-thumbnail.jpg') }}" alt="" class="item__thumbnail--img">
+                        @else
+                            <img src="{{ asset('storage/thumbnail/default-thumbnail.jpg') }}" alt="" class="item__thumbnail--img">
 
-                    @endif
+                        @endif
 
+                    </div>
+
+                    <div class="item__info">
+                        <h5 class="item__title">{{ $video->title }}</h5>
+
+                        <div class="item__description">{{ $video->description }}</div>
+                    </div>
                 </div>
-
-                <div class="item__info">
-                    <h5 class="item__title">{{ $video->title }}</h5>
-
-                    <div class="item__description">{{ $video->description }}</div>
-                </div>
-            </div>
-
-
+            </a>
 
             <div class="item__display">
                 @if ($video->display_mode == 0)
-                    <i class="fa-solid fa-earth-americas"></i>
+                    <i class="fa-solid fa-lock"></i>
                     <div class="item__display--text">Riêng tư</div>
                 @else
-                    <i class="fa-solid fa-lock"></i>
+                    <i class="fa-solid fa-earth-americas"></i>
                     <div class="item__display--text">Công khai</div>
                 @endif
 

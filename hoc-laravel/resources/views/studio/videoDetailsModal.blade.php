@@ -60,6 +60,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="membership">Loại video</label>
+                            <select id="membership_mode" name="membership">
+                                <option value="0" {{ $video->membership != 1 ? 'selected' : '' }}>Thường</option>
+                                <option value="1" {{ $video->membership == 1 ? 'selected' : '' }}>Đặc quyền</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <div class="option">
                                 <button class="close--btn" id="close--btn">Hủy</button>
                                 <button class="save--btn" id="save--btn" type="button">Lưu</button>
@@ -121,6 +129,14 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="membership">Loại video</label>
+                            <select id="membership_mode" name="membership">
+                                <option value="0">Thường</option>
+                                <option value="1">Đặc quyền</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <div class="option">
                                 <button class="close--btn" id="close--btn">Hủy</button>
                                 <button class="save--btn" id="save--btn">Lưu</button>
@@ -158,6 +174,7 @@
                 formData.append('title', $('#title').val());
                 formData.append('description', $('#description').val());
                 formData.append('display_mode', $('#display_mode').val());
+                formData.append('membership', $('#membership_mode').val());
                 formData.append('_token', '{{ csrf_token() }}');
                 formData.append('_method', 'PUT');
 

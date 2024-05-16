@@ -227,6 +227,9 @@ Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('st
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
 Route::get('studioPage/analysis', [StudioController::class, 'analysis'])->name('studio.analysis')->middleware('CheckLogin');
 
+//lấy dữ liệu thống kê theo năm
+Route::post('studioPage/getAnalysisByYear', [StudioController::class, 'getAnalysisByYear'])->name('studio.getAnalysisByYear')->middleware('CheckLogin');
+
 Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');
 

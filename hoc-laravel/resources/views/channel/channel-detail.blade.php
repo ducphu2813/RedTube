@@ -14,7 +14,7 @@
     @else
         {{-- nếu đã đăng ký kênh --}}
         @foreach($followings as $following)
-            <li class="list-item" user_id='{{ $following->user->user_id }}'>
+            <li class="list-item user-item" user_id='{{ $following->user->user_id }}'>
                 <a href="{{ route('clients.userChannel') }}">
                 <span class="list-icon">
                     {{--icon avatar trong 1 component kênh đăng ký--}}
@@ -61,8 +61,8 @@
                 success: function(data) {
                     $('#content').html(data);
                 },
-                error: function(jqXHR, textStatus, errorThrown, data) {
-                    console.log('AJAX error:', textStatus, errorThrown);
+                error: function(data) {
+                    console.log(data);
                 }
             });
             event.preventDefault();

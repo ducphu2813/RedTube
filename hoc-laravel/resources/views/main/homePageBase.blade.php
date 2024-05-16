@@ -100,48 +100,53 @@
             </button>
         </div>
 
-        {{-- Này chưa đăng nhập --}}
-        {{-- <div class="wrapper-right-icon" style="margin-right: 10px">
-            <div class="not-login">
-                <a href="{{ route('login-register') }}" class="login-btn">Đăng nhập</a>
+
+        @if(!session('loggedInUser'))
+            {{-- Này chưa đăng nhập --}}
+             <div class="wrapper-right-icon" style="margin-right: 10px">
+                <div class="not-login">
+                    <a href="{{ route('login-register') }}" class="login-btn">Đăng nhập</a>
+                </div>
             </div>
-        </div> --}}
+        @else
 
-        {{-- Này đã login --}}
-        <div class="wrapper-right-icon">
+            {{-- Này đã login --}}
+            <div class="wrapper-right-icon">
 
-            <div class="notification">
-                <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
-                <div class="new-noti"></div>
-                <div class="wrapper-notify-item-list">
-                    <header class="header-notify">
-                        <h4>Thông báo</h4>
-                        <a href="{{ route('studio.test') }}">Xem tất cả</a>
-                    </header>
-                    {{-- Thông báo --}}
-                    <div class="show-noti wrapper-header-notify-list">
-                        @component('noti.noti-new', ['notifications' => $notifications])
-                        @endcomponent
+                <div class="notification">
+                    <i class="fa-solid fa-bell" style="color: #ffffff;"></i>
+                    <div class="new-noti"></div>
+                    <div class="wrapper-notify-item-list">
+                        <header class="header-notify">
+                            <h4>Thông báo</h4>
+                            <a href="{{ route('studio.test') }}">Xem tất cả</a>
+                        </header>
+                        {{-- Thông báo --}}
+                        <div class="show-noti wrapper-header-notify-list">
+                            @component('noti.noti-new', ['notifications' => $notifications])
+                            @endcomponent
+                        </div>
                     </div>
+                </div>
+
+
+                {{-- phần icon user nhỏ phía trên bên phải --}}
+                <div class="acc-box">
+                    @if (session('loggedInUser') && $currentUserProfile->picture_url)
+                        <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32"
+                            height="32">
+                    @else
+                        <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
+                    @endif
+                    {{-- Cái này là thanh đăng xuất --}}
+                    <ul id="logged-in-feat">
+                        <li class="logged-feat"><a href="{{ route('clients.studioPage') }}">Studio</a></li>
+                        <li class="logged-feat"><a href="{{ route('auth.logout') }}">Đăng xuất</a></li>
+                    </ul>
                 </div>
             </div>
 
-
-            {{-- phần icon user nhỏ phía trên bên phải --}}
-            <div class="acc-box">
-                @if (session('loggedInUser') && $currentUserProfile->picture_url)
-                    <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32"
-                        height="32">
-                @else
-                    <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="32" height="32">
-                @endif
-                {{-- Cái này là thanh đăng xuất --}}
-                <ul id="logged-in-feat">
-                    <li class="logged-feat"><a href="{{ route('clients.studioPage') }}">Studio</a></li>
-                    <li class="logged-feat"><a href="{{ route('auth.logout') }}">Đăng xuất</a></li>
-                </ul>
-            </div>
-        </div>
+        @endif
 
     </div>
 @endsection

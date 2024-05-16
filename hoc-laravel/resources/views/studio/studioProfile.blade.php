@@ -70,7 +70,7 @@
                     <i class="fa-solid fa-users"></i>
                 </div>
 
-                <span>12000 subcribers</span>
+                <span>{{ $totalFollow }} subcribers</span>
             </div>
 
             <div class="info__item">
@@ -78,7 +78,7 @@
                     <i class="fa-brands fa-youtube"></i>
                 </div>
 
-                <span>230 videos</span>
+                <span>{{ $totalVideos }} videos</span>
             </div>
 
             <div class="info__item">
@@ -86,7 +86,7 @@
                     <i class="fa-solid fa-eye"></i>
                 </div>
 
-                <span>12000000 views</span>
+                <span>{{ $totalViews }} views</span>
             </div>
 
             <div class="info__item">
@@ -94,7 +94,7 @@
                     <i class="fa-solid fa-heart"></i>
                 </div>
 
-                <span>3256 likes</span>
+                <span>{{ $totalLikes }} likes</span>
             </div>
 
             <div class="info__item">
@@ -102,7 +102,7 @@
                     <i class="fa-solid fa-circle-info"></i>
                 </div>
 
-                <span>tham gia 12/12/2012</span>
+                <span>Tham gia: {{ $user->created_date }}</span>
             </div>
         </div>
     </div>

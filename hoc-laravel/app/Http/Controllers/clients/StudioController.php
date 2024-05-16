@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Follow;
 use App\Models\Playlist;
 use App\Models\ShareNoti;
+use App\Models\UserMembership;
 use App\Models\Users;
 use App\Models\VideoNotifications;
 use Illuminate\Http\Request;
@@ -106,9 +108,23 @@ class StudioController extends Controller
     public function profile(Request $request)
     {
 
+        $user = Users::getUserById(session('loggedInUser'));
+
         $data = [
-            'user' => Users::getUserById(session('loggedInUser')),
+            'user' => $user,
         ];
+
+        //lấy tổng số video của user
+        $data['totalVideos'] = $user->videoCount();
+
+        //lấy tổng số view của user
+        $data['totalViews'] = $user->totalView();
+
+        //lấy tổng follow của user
+        $data['totalFollow'] = $user->totalFollow();
+
+        //lấy tổng lượt like của user
+        $data['totalLikes'] = $user->totalLikes();
 
         return view('studio.studioProfile', $data);
     }
@@ -219,5 +235,28 @@ class StudioController extends Controller
     public function analysis()
     {
         return view('studio.studioAnalysis');
+    }
+
+    public function getAnalysisByYear(Request $request)
+    {
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $userId = session('loggedInUser');
+
+        $year = $data['year'];
+
+        //lấy dữ liệu thống kê lượt đăng ký theo từng tháng của user
+        $data['followStats'] = Follow::getFollowStatsByYear($year, $userId);
+
+        //lấy dữ liệu thống kê của membership
+        $data['membershipStats'] = UserMembership::getMembershipStatsByYear($year, $userId);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Lấy dữ liệu thành công',
+            'data' => $data,
+        ]);
     }
 }

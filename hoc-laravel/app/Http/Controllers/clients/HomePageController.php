@@ -15,7 +15,7 @@ class HomePageController extends Controller
 {
     public function index(){
 
-        $videos = Video::getAllVideo();
+        $videos = Video::getAllAvailableVideo();
 
         $userId = session('loggedInUser');
 

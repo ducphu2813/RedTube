@@ -115,10 +115,22 @@ class Video extends Model
     public static function getAllVideoNotApproved(){
         return self::query()->where('is_approved', 0)->get();
     }
-    
+
     //hàm này lấy tất cả video
     public static function getAllVideo(){
-        return self::query()->get();
+        return self::query()
+            ->orderBy('created_date', 'desc')
+            ->get();
+    }
+
+    //hàm lấy các video có thể coi ở home
+    public static function getAllAvailableVideo(){
+        return self::query()
+            ->where('is_approved', '=', 1)
+            ->where('active', '=', 1)
+            ->where('display_mode', '=', 1)
+            ->orderBy('created_date', 'desc')
+            ->get();
     }
 
     //hàm này update video theo id

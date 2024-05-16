@@ -42,13 +42,25 @@ hiện ở tab được share(v)
 xử lý gửi thông báo share(v)
 nút chấp nhận, từ chối(v)
 nút hủy ở tab được share(v)
-lấy giao diện membership trong studio(x)
+làm premium của studio(v)
+lấy giao diện membership trong studio(v)
+làm nút hủy trong studio(v)
+
+thống kê(v)
+
+làm thêm combobox membership trong edit video(v)
+
+những video không thể coi(sẽ hiện không tìm thấy video)
+- video chưa được duyệt/bị gỡ(is_approved = 0)
+- video bị ẩn bởi user(display_mode = 0)
+- video bị xóa bởi user(active = 0)
+(v)
+
+
 
 đợi giao diện trang thanh toán, mua membership, mua premium(x)
-membership trong studio(phần dđăng ký của ng khác) (x)
 form đăng ký(mua) membership(x)
 form đăng ký(mua) premium(x)
-làm premium của studio(x)
 
 xử lý xóa history(x)
 cần cải tiến thanh tab bên trái ẩn đi 1 vài item khi chưa login (x)

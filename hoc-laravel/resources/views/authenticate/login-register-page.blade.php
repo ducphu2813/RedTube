@@ -101,8 +101,8 @@
                                 window.location.href = redirectUrl;
                                 localStorage.removeItem('redirect_after_login');
                             } else {
-                                //nếu không có url trước đó, chuyển về trang dashboard
-                                window.location.href = '{{ route('users.dashboard') }}';
+                                //nếu không có url trước đó, chuyển về trang home
+                                window.location.href = '{{ route('clients.homePage') }}';
                             }
                         }
 
@@ -155,8 +155,8 @@
                                 window.location.href = redirectUrl;
                                 localStorage.removeItem('redirect_after_login');
                             } else {
-                                //nếu không có url trước đó, chuyển về trang dashboard
-                                window.location.href = '{{ route('users.dashboard') }}';
+                                //nếu không có url trước đó, chuyển về trang home
+                                window.location.href = '{{ route('clients.homePage') }}';
                             }
                         }
 
@@ -166,7 +166,7 @@
 
                             //khi đăng ký thất bại, hiện các message validate lên
                             var fields = ['user_name', 'password', 'email', 'confirm_password'];
-                            
+
                             fields.forEach(function(field) {
                                 if(response.message[field] === undefined) {
                                     response.message[field] = '';
@@ -176,7 +176,7 @@
                             fields.forEach(function(field) {
                                 var invalidField = document.getElementById('register_' + field).nextElementSibling;
                                 invalidField.innerText = response.message[field];
-                            });    
+                            });
                         }
                     }
                 });

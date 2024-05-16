@@ -189,4 +189,27 @@ class Users extends Model
     }
     //cách dùng: $user = Users::find(1);
     // $user->hasMembershipFrom(2, 3) để kiểm tra xem user có đăng ký gói membership nào của user có id = 2 không
+
+    //lấy tổng số video của user
+    public function videoCount(){
+        return $this->hasMany(Video::class, 'user_id')->count();
+    }
+
+    //lấy tổng view của user từ tất cả video
+    public function totalView(){
+        return $this->hasMany(Video::class, 'user_id')->sum('view');
+    }
+
+    //lấy tổng follow của user
+    public function totalFollow(){
+        return $this->hasMany(Follow::class, 'user_id')->count();
+    }
+
+    //lấy tổng like của user
+    public function totalLikes(){
+        return $this->hasManyThrough(Interaction::class, Video::class, 'user_id', 'video_id')
+            ->where('reaction', 1)
+            ->count();
+    }
+
 }

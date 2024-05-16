@@ -49,4 +49,43 @@ class UserMembership extends Model
     {
         return self::query()->where('subscription_id', $subscription_id)->first();
     }
+
+    //lấy dữ liệu thống kê
+    public static function getMembershipStatsByYear($year, $creator_id)
+    {
+        // Khởi tạo mảng để lưu trữ số lượng người đăng ký và tổng số tiền trong từng tháng
+        $monthlySubscriptions = [];
+        $monthlyRevenue = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlySubscriptions[$month] = 0;
+            $monthlyRevenue[$month] = 0;
+        }
+
+        // Lấy tất cả các lịch sử đăng ký membership trong năm mà membership_id thuộc về user hiện tại
+        $memberships = self::query()
+            ->whereYear('start_date', $year)
+            ->whereHas('membership', function ($query) use ($creator_id) {
+                $query->where('user_id', $creator_id);
+            })
+            ->get();
+
+        // Tính toán số lượng người đăng ký và tổng số tiền trong từng tháng
+        foreach ($memberships as $membership) {
+            $month = $membership->start_date->month;
+            $monthlySubscriptions[$month]++;
+            $monthlyRevenue[$month] += $membership->membership->price;
+        }
+
+        // Tính tổng số lượng người đăng ký và tổng số tiền trong năm
+        $totalSubscriptions = array_sum($monthlySubscriptions);
+        $totalRevenue = array_sum($monthlyRevenue);
+
+        // Trả về mảng chứa số lượng người đăng ký và tổng số tiền trong từng tháng, cũng như tổng số người đăng ký và tổng số tiền trong năm
+        return [
+            'monthlySubscriptions' => $monthlySubscriptions,
+            'monthlyRevenue' => $monthlyRevenue,
+            'totalSubscriptions' => $totalSubscriptions,
+            'totalRevenue' => $totalRevenue,
+        ];
+    }
 }
