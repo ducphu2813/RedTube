@@ -253,17 +253,17 @@ class Video extends Model
     }
 
     //lấy danh sách video dựa trên danh sách category_id
-//    public static function getVideosByCategoryIds($categoryIds)
-//    {
-//        return self::query()
-//            ->whereHas('getCategories', function ($query) use ($categoryIds) {
-//                $query->whereIn('category.category_id', $categoryIds);
-//            })
-//            ->distinct()
-//            ->get();
-//
-//        // SELECT * FROM video WHERE video_id IN (SELECT video_id FROM video_category WHERE category_id IN (1, 2, 3))
-//    }
+    public static function getRelatedVideos($categoryIds)
+    {
+        return self::query()
+            ->whereHas('getCategories', function ($query) use ($categoryIds) {
+                $query->whereIn('category.category_id', $categoryIds);
+            })
+            ->distinct()
+            ->get();
+
+        // SELECT * FROM video WHERE video_id IN (SELECT video_id FROM video_category WHERE category_id IN (1, 2, 3))
+    }
 
     // Hàm lấy số lượt like của video
     public function getLikesCount()

@@ -194,7 +194,7 @@ class VideoController extends Controller{
         }, $video->getCategories()->get()->toArray());
 
 //        dd($categoryIds);
-        $relatedVideos = $videoModel->getVideosByCategoryIds($categoryIds);
+        $relatedVideos = $videoModel->getRelatedVideos($categoryIds);
 
         //playlist của user để cho chức năng thêm hoặc xóa video khỏi playlist
         $playlists = Playlist::getPlaylistByUserId($userId);
