@@ -150,3 +150,105 @@
 	top: -30px;
 	left: -30px;
 }
+
+#review-modal-btn-cancel {
+	--color-ignore: #ff3300;
+	font-family: inherit;
+	display: inline-block;
+	width: 6em;
+	height: 2.6em;
+	line-height: 2.5em;
+	overflow: hidden;
+	cursor: pointer;
+	margin: 20px;
+	font-size: 17px;
+	z-index: 1;
+	color: var(--color-ignore);
+	border: 2px solid var(--color-ignore);
+	border-radius: 6px;
+	position: relative;
+	text-align: center;
+}
+
+#review-modal-btn-cancel::before {
+	position: absolute;
+	content: "";
+	background: var(--color-ignore);
+	width: 150px;
+	height: 200px;
+	z-index: -1;
+	border-radius: 50%;
+}
+
+#review-modal-btn-cancel:hover {
+	color: white;
+}
+
+#review-modal-btn-cancel:before {
+	top: 100%;
+	left: 100%;
+	transition: 0.3s all;
+}
+
+#review-modal-btn-cancel:hover::before {
+	top: -30px;
+	left: -30px;
+}
+
+
+/* Cho nút ignore */
+.review-modal-container-ignore{
+	background-color: rgba(0, 0, 0, .5);
+	position: absolute;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	display: flex;
+    top: 0;
+    bottom: 0;
+	align-items: stretch;
+}
+
+.review-modal-ignore{
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	margin: auto;
+	height: 40%;
+	width: 30%;
+	justify-content: space-between;
+}
+
+.review-modal-ignore-info{
+	color: #000;
+	align-self: center;
+}
+
+.review-modal-ignore-info h2{
+	text-align: center;
+}
+
+.review-modal-ignore-info h5{
+	margin: 0;
+}
+
+.message-group{
+	margin-left: 12px;
+}
+
+.message-item{
+
+}
+
+.review-modal-container-ignore .review-modal-btn {
+	
+}
+
+.group-info{
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	margin-top: 20px;
+}

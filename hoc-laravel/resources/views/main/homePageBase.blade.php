@@ -273,7 +273,7 @@
 
 {{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
 @section('content')
-    @component('video.video-in-main-wrapper', ['videos' => $videos])
+    @component('video.video-in-main-wrapper', ['videos' => $videos, 'listCate' => $listCate])
     @endcomponent
 @endsection
 
@@ -293,12 +293,15 @@
                     console.log(response);
 
                     $('#content').html(response);
+                    handleCate();
                 },
                 error: function(response) {
                     console.log(response);
                 }
             });
         });
+
+        handleCate();
 
         //hàm xử lý tìm kiếm
         function handleSearch() {
@@ -315,6 +318,8 @@
                     dataType: 'html',
                     success: function(response) {
                         $('#content').html(response);
+                        handleCate();
+                        handleCateSearch();
                     },
                     error: function(response) {
                         console.log(response);
@@ -325,6 +330,8 @@
             } else {
                 alert('Vui lòng nhập từ khóa tìm kiếm');
             }
+            // Cái này giữ để load sự kiện
+
         }
 
         // Script của search btn
@@ -358,10 +365,56 @@
             if (searchValue) {
                 $('#search-inp').val(searchValue);
                 handleSearch();
+
             }
         });
 
         //xử lý accept decline notification
 
+        // Xử lý chọn cate
+        function handleCate(){
+            $('.video-category-item').click(function() {
+                $(this).toggleClass('video-category-item-clicked');
+            })
+        }
+
+        // Xử lý chọn cate
+        function handleCateSearch(){
+            $('.video-category-item-search').click(function() {
+                $(this).toggleClass('video-category-item-clicked');
+            })
+        }
+
+        // sự kiện click vào danh mục video
+        $(document).on('click', '.video-category-item', function() {
+            var cate = [];
+            $('.video-category-item-clicked').each(function() {
+                cate.push($(this).attr('id'));
+            });
+            $.ajax({
+                url: "{{ route('clients.filterVideo') }}",
+                method: 'POST',
+                data: {
+                    category_ids: cate,
+                    _token: "{{ csrf_token() }}"
+                },
+                cache: false,
+                success: function(response) {
+                    console.log(response);
+                    $('#video-main-wrapper').html(response);
+                    // if (response == "") {
+                    //     $('#videoWrapper').html(
+                    //         "<h2 style='text-align: center; margin-top: 50px'>Không có dữ liệu</h2>"
+                    //         );
+                    // }
+                    // console.log(response.videos);
+                    // console.log(response);
+                    // bindItemBtnChange(); // Gán lại sự kiện sau khi cập nhật nội dung HTML
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
+        });
     </script>
 @endsection

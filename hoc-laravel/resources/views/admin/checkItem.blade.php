@@ -14,10 +14,10 @@
         <p>{{ $check->title }}</p>
     </div>
     <div class="item-btn">
-        <div class="icon-btn">
+        <div class="icon-btn icon-btn-ign">
             <img src="{{ asset('resources/img/delete.svg') }}" alt="">
         </div>
-        <div class="icon-btn">
+        <div class="icon-btn icon-btn-acp">
             <img src="{{ asset('resources/img/check.svg') }}" alt="">
         </div>
     </div>
