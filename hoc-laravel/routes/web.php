@@ -192,6 +192,8 @@ Route::get('studioPage/contents/videos', [StudioController::class, 'contentsVide
 Route::get('studioPage/contents/playlists', [StudioController::class, 'contentsPlaylists'])->name('studio.contents.playlists')->middleware('CheckLogin');
 Route::get('studioPage/premium', [StudioController::class, 'premium'])->name('studio.premium')->middleware('CheckLogin');
 Route::get('studioPage/profile', [StudioController::class, 'profile'])->name('studio.profile')->middleware('CheckLogin');
+Route::get('studioPage/transaction/history', [StudioController::class, 'transactionHistory'])->name('studio.transaction.history')->middleware('CheckLogin');
+Route::get('studioPage/transactionDetails', [StudioController::class, 'transactionDetails'])->name('studio.transactionDetails')->middleware('CheckLogin');
 
 Route::get('studioPage/videoDetails', [StudioController::class, 'videoDetails'])->name('studio.videoDetails')->middleware('CheckLogin');    
 Route::get('studioPage/pagination', [StudioController::class, 'pagination'])->name('studio.pagination')->middleware('CheckLogin');

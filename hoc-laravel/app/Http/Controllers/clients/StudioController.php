@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 use App\Http\Controllers\Controller;
 use App\Models\Playlist;
+use App\Models\PremiumRegistration;
 use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -33,7 +34,7 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('user_id', $userId)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItems = Video::where('user_id', $userId)->where('active', 1)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -101,7 +102,18 @@ class StudioController extends Controller
         return view('studio.studioProfile', $data);
     }
 
-    
+    // lich su giao dich
+    public function transactionHistory() {
+        $transactions = PremiumRegistration::with('premiumPackage')->where('user_id', session("LoggedInUser"))->get();
+        return view('studio.studioTransactionHistory', ['transactions' => $transactions]);
+    }
+
+    //modal lich su giao dich
+    public function transactionDetails() {
+        return view('studio.transactionDetailsModal');
+    }
+
+
     public function profileEdit(Request $request) {
 
         if(!session('loggedInUser')){

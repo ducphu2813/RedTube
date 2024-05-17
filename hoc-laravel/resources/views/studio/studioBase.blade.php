@@ -137,6 +137,19 @@
                 </a>
             </li>
             <li class="list-item">
+                <a href="{{ route('studio.transaction.history') }}">
+                    <span class="list-icon">
+                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope tp-yt-iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                            <g width="24" height="24" viewBox="0 0 24 24" class="style-scope tp-yt-iron-icon">
+                                <path d="M2 6V20H22V6H2ZM5 11H7V13H5V11ZM15 17H5V15H15V17ZM19 17H17V15H19V17ZM19 13H9V11H19V13Z" class="style-scope tp-yt-iron-icon">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    Lịch sử giao dịch
+                </a>
+            </li>
+            <li class="list-item">
                 <a href="">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -166,7 +179,6 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
             // handle creator list
             $('.create-item').on('click', function(event) {
                 var index = $(this).index();
@@ -227,81 +239,21 @@
 
             // handle left navigator
             $('.list-item').on('click', function() {
-                event.preventDefault();
+
                 var link = $(this).find('a').attr('href');
                 $.ajax({
                     url: link,
                     type: 'GET',
+                    data: {
+                        currentPage: 1,
+                        itemPerPage: 10
+                    },
                     dataType: 'html',
                     success: function(data) {
                         $('#content').html(data);
                     }
                 });
-// =======
-//             $('.list-item').on('click', function(event) {
-//                 var index = $(this).index();
-//                 if (index == 0) {
-//                     $.ajax({
-//                         url: '{{ route('studio.contents') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                 } else if (index == 1) {
-
-//                 } else if (index == 2) {
-// // <<<<<<< HEAD
-// //                     // console.log('Thông tin kênh');
-// // =======
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                     $.ajax({
-//                         url: '{{ route('studio.profile') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-// // <<<<<<< HEAD
-// //                         },
-// //                         // error: function(xhr, status, error) {
-// //                         //     console.error('Error fetching content:', error);
-// //                         // }
-// //                     });
-// //                     event.preventDefault();
-// // =======
-//                         }
-//                     });
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                 } else if (index == 3) {
-//                     $.ajax({
-//                         url: '{{ route('membership.membershipManager') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                 } else {
-//                     $.ajax({
-//                         url: '{{ route('premium.premiumManager') }}',
-//                         type: 'GET',
-//                         dataType: 'html',
-//                         success: function(data) {
-//                             $('#content').html(data);
-//                         }
-//                     });
-//                     event.preventDefault();
-// // <<<<<<< HEAD
-// //                     event.preventDefault();
-// // =======
-
-// // >>>>>>> 155f1bff40af973bfbaf1faf29173e4b61a28425
-//                 }
-
-//                 $('#content').empty()
-//                 event.preventDefault();
-// >>>>>>> Dung
+                event.preventDefault();
             });
         });
     </script>
