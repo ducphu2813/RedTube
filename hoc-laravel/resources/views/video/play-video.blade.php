@@ -314,7 +314,7 @@
                 {{-- @endcomponent --}}
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
-                @component('video.video-hint-wrapper')
+                @component('video.video-hint-wrapper', ['relatedVideos' => $relatedVideos])
                 @endcomponent
             </div>
         </div>
@@ -453,22 +453,39 @@
                             //khi like
                             $('#like i').addClass('up-clicked');
                             if ($('#dislike i').hasClass('down-clicked')) {
+
+                                dislike -= 1;
+                                document.querySelector('#like span').textContent = (dislike) + '';
+
                                 $('#dislike i').removeClass('down-clicked');
                             }
+                            like += 1;
+                            document.querySelector('#like span').textContent = (like) + '';
 
                         } else if (response.status === 'disliked') {
                             //khi dislike
                             $('#dislike i').addClass('down-clicked');
                             if ($('#like i').hasClass('up-clicked')) {
+                                like -= 1;
+                                document.querySelector('#dislike span').textContent = (like) + '';
+
                                 $('#like i').removeClass('up-clicked');
                             }
+                            dislike += 1;
+                            document.querySelector('#dislike span').textContent = (dislike) + '';
                         } else if (response.status === 'unset_react') {
                             //khi hủy like/dislike
                             if ($('#like i').hasClass('up-clicked')) {
+                                like -= 1;
+                                document.querySelector('#like span').textContent = (like) + '';
+
                                 $('#like i').removeClass('up-clicked');
                             }
 
                             if ($('#dislike i').hasClass('down-clicked')){
+                                dislike -= 1;
+                                document.querySelector('#dislike span').textContent = (dislike) + '';
+
                                 $('#dislike i').removeClass('down-clicked');
                             }
                         }
@@ -513,6 +530,13 @@
 
 
         });
+
+        //xử lý hiện lượt like và dislike
+        var like = parseInt('{{ $video->getLikesCount() }}');
+        var dislike = parseInt('{{ $video->getDislikesCount() }}');
+
+        document.querySelector('#like span').textContent = like + '';
+        document.querySelector('#dislike span').textContent = dislike + '';
     </script>
 </body>
 

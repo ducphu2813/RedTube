@@ -62,6 +62,8 @@ class Video extends Model
             'video_id',  // khóa chính của bảng Video
             'category_id' // khóa ngoại của bảng Category
         );
+
+        // SELECT * FROM category WHERE category_id IN (SELECT category_id FROM video_category WHERE video_id = $this->video_id)
     }
 
     public function getTags(): HasManyThrough{
@@ -168,5 +170,23 @@ class Video extends Model
             })
             ->distinct()
             ->get();
+
+        // SELECT * FROM video WHERE video_id IN (SELECT video_id FROM video_category WHERE category_id IN (1, 2, 3))
+    }
+
+    // Hàm lấy số lượt like của video
+    public function getLikesCount()
+    {
+        return $this->hasMany(Interaction::class, 'video_id')
+            ->where('reaction', 1)
+            ->count();
+    }
+
+    // Hàm lấy số lượt dislike của video
+    public function getDislikesCount()
+    {
+        return $this->hasMany(Interaction::class, 'video_id')
+            ->where('reaction', 0)
+            ->count();
     }
 }

@@ -137,6 +137,11 @@ Route::get('membershipManager', [MemberShipController::class, 'showAllMembership
 Route::get('membershipEdit/{id}', [MemberShipController::class, 'showMembershipDetail'])
     ->name('membership.membershipEdit')
     ->middleware('CheckLogin');
+
+//handle create member package
+Route::post('createMemberPackage', [MemberShipController::class, 'createMemberPackage'])
+    ->middleware('CheckLogin')
+    ->name('membership.createMemberPackage');
 // end Membership
 
 //trang chính của đồ án

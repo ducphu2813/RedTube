@@ -57,20 +57,22 @@ những video không thể coi(sẽ hiện không tìm thấy video)
 (v)
 
 
-đợi giao diện trang thanh toán, mua membership, mua premium(x)
-form đăng ký(mua) membership(x)
-form đăng ký(mua) premium(x)
+đợi giao diện trang thanh toán, mua membership, mua premium(v)
+form đăng ký(mua) membership(v)
+form đăng ký(mua) premium(v)
 
 thống kê admin(v)
 
 sửa lại coi kênh của người khác(v)
 
-tạo membership(x)
+tạo membership(v)
 
-hiện lượt like/dislike(x)
-hiện video recommend khi đang xem video(x)
+hiện lượt like/dislike(v)
+hiện video recommend khi đang xem video(v)
 
-lấy giao diện về(admin, payment history)(x)
+lấy giao diện lịch sử thanh toán(x)
+
+lấy giao diện về(admin)(x)
 
 
 

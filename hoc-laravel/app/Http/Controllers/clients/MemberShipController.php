@@ -64,9 +64,28 @@ class MemberShipController extends Controller
         );
     }
 
-    public function createMemberPackage(Request $request, $id) {
-        $ms = Membership::getMembershipById($id);
-        return response()->json($ms);
+    public function createMemberPackage(Request $request) {
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $newData = [
+            'user_id' => session('loggedInUser'),
+            'name' => $data['name'],
+            'description' => $data['description'],
+            'duration' => $data['duration'],
+            'price' => $data['price']
+        ];
+
+        Membership::createMembership($newData);
+
+        return response()->json(
+            [
+                'status' => 200,
+                'message' => 'Tạo gói membership thành công',
+                'data' => $data
+            ]
+        );
     }
 
     //xử lý hủy gói đăng ký

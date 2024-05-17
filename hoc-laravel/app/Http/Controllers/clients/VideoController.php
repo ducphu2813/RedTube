@@ -187,6 +187,14 @@ class VideoController extends Controller{
 //        //tăng view của video
 //        $videoModel->increaseView($id);
 
+        //lấy danh sách video related
+        $categoryIds = array_map(function($category) {
+            return $category['category_id'];
+        }, $video->getCategories()->get()->toArray());
+
+//        dd($categoryIds);
+        $relatedVideos = $videoModel->getVideosByCategoryIds($categoryIds);
+
         //playlist của user để cho chức năng thêm hoặc xóa video khỏi playlist
         $playlists = Playlist::getPlaylistByUserId($userId);
 
@@ -225,6 +233,7 @@ class VideoController extends Controller{
                         'current_premium' => $current_premium,
                         'current_shared_premium' => $current_shared_premium,
                         'reaction' => $reaction,
+                        'relatedVideos' => $relatedVideos
                     ]
                 );
             }
@@ -239,6 +248,7 @@ class VideoController extends Controller{
                 'current_premium' => $current_premium,
                 'current_shared_premium' => $current_shared_premium,
                 'reaction' => $reaction,
+                'relatedVideos' => $relatedVideos
             ]
         );
     }

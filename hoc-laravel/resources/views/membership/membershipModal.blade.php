@@ -8,23 +8,23 @@
         <div id="modal-info-content">
             <div class="modal-info-content--item">
                 <label for="modal-name">Tên gói thành viên</label>
-                <input type="text" name="modal-name" id="modal-name" placeholder="Tên gói thành viên">
+                <input type="text" name="modal-name" id="modal-name" placeholder="Tên gói thành viên" required>
             </div>
 
             <div class="modal-info-content--item">
                 <label for="modal-description">Mô tả</label>
-                <textarea name="modal-description" id="modal-description" placeholder="Mô tả""></textarea>
+                <textarea name="modal-description" id="modal-description" placeholder="Mô tả" required></textarea>
             </div>
 
             <div class="wrap-data">
                 <div class="modal-info-content--item modal-fee">
                     <label for="modal-name">Phí thành viên</label>
-                    <input type="text" name="modal-name" id="modal-name" placeholder="Phí thành viên">
+                    <input type="number" name="modal-name" id="modal-name" placeholder="Phí thành viên" required>
                 </div>
                 <div class="modal-info-content--item modal-duration">
                     <label for="modal-name">Thời hạn gói</label>
                     <div class="wrap-value">
-                        <input type="text" name="modal-name" id="modal-name" placeholder="Thời hạn gói">
+                        <input type="number" name="modal-name" id="modal-name" placeholder="Thời hạn gói">
                         <span>tháng</span>
                     </div>
 
@@ -46,5 +46,48 @@
 
     modalInfoBtnCreate.addEventListener('click', function() {
 
+    });
+
+    //event tạo gói thành viên
+    $('#modal-info-btn--create').click(function() {
+        var name = $('#modal-name').val();
+        var description = $('#modal-description').val();
+        var fee = $('.modal-fee input').val();
+        var duration = $('.modal-duration input').val();
+
+        //validation
+        if (name == '' || description == '' || fee == '' || duration == '') {
+            alert('Vui lòng nhập đầy đủ thông tin');
+            return;
+        }else{
+            if (fee < 0 || duration < 0) {
+                alert('Vui lòng nhập số lớn hơn 0');
+                return;
+            }
+            else if (duration > 12) {
+                alert('Thời hạn không được lớn hơn 1 năm');
+                return;
+            }
+        }
+
+        $.ajax({
+            url: '{{ route('membership.createMemberPackage') }}',
+            type: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}',
+                name: name,
+                description: description,
+                price: fee,
+                duration: duration*30
+            },
+            success: function(data) {
+                alert(data.message);
+                console.log(data);
+                $('#modal').empty();
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
     });
 </script>

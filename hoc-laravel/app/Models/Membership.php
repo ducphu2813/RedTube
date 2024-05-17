@@ -42,8 +42,8 @@ class Membership extends Model
 
     // Dương không muốn code nữa
 
-    public function createMembership($data){
-        return $this->create($data);
+    public static function createMembership($data){
+        return self::query()->create($data);
     }
 
     //lấy các gói membership theo user id(người tạo)
