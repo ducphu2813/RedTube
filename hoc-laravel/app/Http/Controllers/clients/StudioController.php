@@ -7,6 +7,7 @@ use App\Models\Follow;
 use App\Models\Playlist;
 use App\Models\ShareNoti;
 use App\Models\UserMembership;
+use App\Models\PremiumRegistration;
 use App\Models\Users;
 use App\Models\VideoNotifications;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('user_id', $userId)->where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItems = Video::where('user_id', $userId)->where('active', 1)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -127,6 +128,17 @@ class StudioController extends Controller
         $data['totalLikes'] = $user->totalLikes();
 
         return view('studio.studioProfile', $data);
+    }
+
+    // lich su giao dich
+    public function transactionHistory() {
+        $transactions = PremiumRegistration::with('premiumPackage')->where('user_id', session("LoggedInUser"))->get();
+        return view('studio.studioTransactionHistory', ['transactions' => $transactions]);
+    }
+
+    //modal lich su giao dich
+    public function transactionDetails() {
+        return view('studio.transactionDetailsModal');
     }
 
 

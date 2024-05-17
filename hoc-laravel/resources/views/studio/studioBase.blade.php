@@ -141,6 +141,19 @@
                 </a>
             </li>
             <li class="list-item">
+                <a href="{{ route('studio.transaction.history') }}">
+                    <span class="list-icon">
+                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false" class="style-scope tp-yt-iron-icon" style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                            <g width="24" height="24" viewBox="0 0 24 24" class="style-scope tp-yt-iron-icon">
+                                <path d="M2 6V20H22V6H2ZM5 11H7V13H5V11ZM15 17H5V15H15V17ZM19 17H17V15H19V17ZM19 13H9V11H19V13Z" class="style-scope tp-yt-iron-icon">
+                                </path>
+                            </g>
+                        </svg>
+                    </span>
+                    Lịch sử giao dịch
+                </a>
+            </li>
+            <li class="list-item">
                 <a href="{{ route('clients.showAllNoti') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
@@ -240,6 +253,10 @@
                 $.ajax({
                     url: link,
                     type: 'GET',
+                    data: {
+                        currentPage: 1,
+                        itemPerPage: 10
+                    },
                     dataType: 'html',
                     success: function(data) {
                         $('#content').html(data);
@@ -291,7 +308,7 @@
                     $('#content').show(); // Show the content
                 }, 100); // Delay of 1 second
             });
-            
+
         }
     </script>
 @endsection
