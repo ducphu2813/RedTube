@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Arr;
 
 class Users extends Model
 {
@@ -32,7 +33,8 @@ class Users extends Model
         'role',
     ];
 
-    public static function getAllUsers(){
+    public static function getAllUsers()
+    {
         return self::query()->get();
     }
 
@@ -42,52 +44,62 @@ class Users extends Model
     }
 
     //tìm user theo tên, trả về danh sách user
-    public static function getUsersByName($name){
+    public static function getUsersByName($name)
+    {
         return self::where('user_name', 'LIKE', '%' . $name . '%')->get();
     }
 
     //tìm user theo tên, tìm theo đúng chính xác tên, trả về user đầu tiên
-    public static function getUserByName($name){
+    public static function getUserByName($name)
+    {
         return self::whereRaw('BINARY `user_name` = ?', [$name])->first();
     }
 
-    public function getPlaylists(){
+    public function getPlaylists()
+    {
         return $this->hasMany(Playlist::class, 'user_id', 'user_id');
     }
 
-    public function createUser($data){
+    public function createUser($data)
+    {
         return $this->create($data);
     }
 
-    public function updateUser($id, $data){
+    public function updateUser($id, $data)
+    {
         return $this->where('user_id', $id)->update($data);
     }
 
-    public function deleteUser($id){
+    public function deleteUser($id)
+    {
         return $this->where('user_id', $id)->delete();
     }
 
 
     // Đếm ngày user
-    public static function countUser($year){
+    public static function countUser($year)
+    {
         return self::whereYear('created_Date', $year)->count();
     }
 
-    public function videos(): HasMany{
+    public function videos(): HasMany
+    {
 
         return $this->hasMany(Video::class, 'user_id');
     }
 
-    public function comments(): HasMany{
+    public function comments(): HasMany
+    {
 
         return $this->hasMany(Comment::class, 'user_id');
     }
 
-//     public static function lastInsertId(){
-//         return self::query()->latest('user_id')->first();
-//     }
+    //     public static function lastInsertId(){
+    //         return self::query()->latest('user_id')->first();
+    //     }
 
-    public function videoNoti(): HasMany{
+    public function videoNoti(): HasMany
+    {
         return $this->hasMany(VideoNotifications::class, 'user_id');
     }
     //đây là hàm lấy các thông báo duyệt video của user
@@ -95,7 +107,8 @@ class Users extends Model
     // $user = Users::find(1);
     // $videoNoti = $user->videoNoti;
 
-    public static function lastInsertId(){
+    public static function lastInsertId()
+    {
         $lastUser = self::query()->latest('user_id')->first();
         return $lastUser ? (int) $lastUser->user_id : null;
     }
@@ -109,17 +122,20 @@ class Users extends Model
         return $this->hasMany(Follow::class, 'user_id')->count();
     }
 
-    public function videosCount() {
+    public function videosCount()
+    {
         return $this->hasMany(Video::class, 'user_id')->count();
     }
 
     //lấy danh sách Users dựa trên danh sách được follow bởi user
-    public function getUsersByFollowing(){
+    public function getUsersByFollowing()
+    {
         return $this->belongsToMany(Users::class, 'follow', 'follower_id', 'user_id')->get();
     }
 
     //lấy danh sách Users dựa trên danh sách đang follow user
-    public function getUsersBFollowed(){
+    public function getUsersBFollowed()
+    {
         return $this->belongsToMany(Users::class, 'follow', 'user_id', 'follower_id');
     }
 
@@ -153,14 +169,16 @@ class Users extends Model
     //$following->isEmpty() để kiểm tra xem user có đang follow ai không
 
     //kiểm tra xem user có follow user khác không
-    public function isFollowing($user_id){
+    public function isFollowing($user_id)
+    {
         return $this->hasMany(Follow::class, 'follower_id')->where('user_id', $user_id)->exists();
     }
     //cách dùng: $user = Users::find(1);
     // $user->isFollowing(2) để kiểm tra xem user có follow user có id = 2 không
 
     //kiểm tra xem user có được user khác follow không
-    public function isFollowed($user_id){
+    public function isFollowed($user_id)
+    {
 
         return $this->hasMany(Follow::class, 'user_id')->where('follower_id', $user_id)->exists();
     }
@@ -189,4 +207,59 @@ class Users extends Model
     }
     //cách dùng: $user = Users::find(1);
     // $user->hasMembershipFrom(2, 3) để kiểm tra xem user có đăng ký gói membership nào của user có id = 2 không
+
+    // Dương code
+    public static function getUsers()
+    {
+        return self::where('role', 1)->get();
+    }
+
+    public static function getUsersReviewer()
+    {
+        return self::where('role', 2)->get();
+    }
+
+    public static function getUsersAdmin()
+    {
+        return self::where('role', 3)->get();
+    }
+
+    public function getActiveUsersFromList($users)
+    {
+        return $users->filter(function ($user) {
+            return $user['active'] == 1;
+        });
+    }
+
+    public function getInactiveUsersFromList($users)
+    {
+        return $users->filter(function ($user) {
+            return $user['active'] == 0;
+        });
+    }
+
+    // tìm kiếm theo tên user từ 1 danh sách sẵn có
+    public function getUsersByNameSimilarity($users, $user_name)
+    {
+        // Mảng ánh xạ các ký tự tiếng Việt có dấu với các ký tự Latin không dấu
+        $vietnameseChars = array('à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ằ', 'ắ', 'ẳ', 'ẵ', 'ặ', 'â', 'ầ', 'ấ', 'ẩ', 'ẫ', 'ậ', 'đ', 'è', 'é', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ề', 'ế', 'ể', 'ễ', 'ệ', 'ì', 'í', 'ỉ', 'ĩ', 'ị', 'ò', 'ó', 'ỏ', 'õ', 'ọ', 'ô', 'ồ', 'ố', 'ổ', 'ỗ', 'ộ', 'ơ', 'ờ', 'ớ', 'ở', 'ỡ', 'ợ', 'ù', 'ú', 'ủ', 'ũ', 'ụ', 'ư', 'ừ', 'ứ', 'ử', 'ữ', 'ự', 'ỳ', 'ý', 'ỷ', 'ỹ', 'ỵ');
+        $latinChars = array('a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'y', 'y', 'y', 'y', 'y');
+
+        return $users->filter(function ($user) use ($user_name, $vietnameseChars, $latinChars) {
+            // thay thế các ký tự tiếng việt có dấu bằng các ký tự latin
+            $userWithoutMark = str_replace($vietnameseChars, $latinChars, $user->user_name);
+            $userNameWithoutMark = str_replace($vietnameseChars, $latinChars, $user_name);
+
+            // loại bỏ các ký tự không phải chữ cái và số từ chuỗi tên video và tên video_name
+            $userCleaned = preg_replace('/[^a-zA-Z0-9]/', '', $userWithoutMark);
+            $userNameCleaned = preg_replace('/[^a-zA-Z0-9]/', '', $userNameWithoutMark);
+
+            // chuyển về chữ thường
+            $userLowerCase = mb_strtolower($userCleaned);
+            $userNameLowerCase = mb_strtolower($userNameCleaned);
+
+            // Sử dụng hàm strpos() để kiểm tra xem tên video có chứa video_name không
+            return strpos($userLowerCase, $userNameLowerCase) !== false;
+        });
+    }
 }

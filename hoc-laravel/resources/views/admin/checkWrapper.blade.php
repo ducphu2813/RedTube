@@ -1,3 +1,4 @@
+<div class="review-all-header">Video chưa duyệt</div>
 <div id="checkWrapper">
 
     @foreach ($listCheck as $check)

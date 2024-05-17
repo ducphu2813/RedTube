@@ -36,6 +36,11 @@ class VideoNotifications extends Model
         return $this->belongsTo(Video::class);
     }
 
+    public static function createNewNotification($data)
+    {
+        return self::create($data);
+    }
+
     //lấy tất cả theo user_id
     public static function getNotificationByUserId($user_id)
     {

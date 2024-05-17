@@ -20,12 +20,12 @@ class ReviewHistory extends Model
         'reviewer_id',
         'video_id',
         'note',
-        'review_date',
+        'review_time',
         'review_status',
     ];
 
     protected $casts = [
-        'review_date' => 'datetime',
+        'review_time' => 'datetime',
     ];
 
     public function reviewer(): BelongsTo
@@ -35,7 +35,11 @@ class ReviewHistory extends Model
 
     public function video(): BelongsTo
     {
-        return $this->belongsTo(Video::class);
+        return $this->belongsTo(Video::class, 'video_id');
+    }
+
+    public static function getAllReviewHistory(){
+        return self::query()->get();
     }
 
     public static function createNewReview($data)

@@ -7,6 +7,7 @@ use App\Models\PremiumRegistration;
 use App\Models\SharePremium;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\History;
 use App\Models\Playlist;
 use App\Models\Users;
@@ -250,6 +251,8 @@ class VideoController extends Controller{
 
         $videos = Video::getAllVideo();
 
+        $listCate = Category::getAll();
+
         $id = session('loggedInUser');
         $currentUserProfile = Users::getUserById($id);
 
@@ -257,6 +260,7 @@ class VideoController extends Controller{
             [
                 'videos' => $videos,
                 'currentUserProfile' => $currentUserProfile,
+                'listCate' => $listCate
             ]
         );
     }
@@ -266,13 +270,15 @@ class VideoController extends Controller{
 
         $data = $request->all();
 
+        $categories = Category::getAll();
+
 //        if(isset($data['category_id'])){
 //            $videos = Video::getVideoByCategoryId($data['category_id']);
 //            return view('video.video-search', ['videos' => $videos]);
 //        }
 
         $videos = Video::searchVideo($data['searchValue']);
-        return view('video.video-search', ['videos' => $videos]);
+        return view('video.video-search', ['videos' => $videos, 'listCate' => $categories]);
     }
 
     // Hàm xem video theo kênh đăng kí, đổ data là video theo kênh user đã đăng kí

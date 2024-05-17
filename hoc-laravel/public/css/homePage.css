@@ -432,3 +432,55 @@ div.wrapper-right-icon {
     margin-left: 240px;
     overflow: auto;
 }
+
+/* Filter */
+
+.video-category-filter {
+    color: #fff;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+}
+
+
+.video-category-container {
+    display: flex;
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #999;
+    justify-content: space-between;
+    overflow-x: auto; /* Thêm thanh cuộn ngang */
+}
+
+.video-category-container::-webkit-scrollbar {
+    height: 8px; /* Chiều cao của thanh cuộn ngang */
+}
+
+.video-category-container::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Màu nền của track */
+    border-radius: 10px;
+}
+
+.video-category-container::-webkit-scrollbar-thumb {
+    background: #888; /* Màu của thanh cuộn */
+    border-radius: 10px;
+}
+
+.video-category-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Màu của thanh cuộn khi hover */
+}
+.video-category-item-search,
+.video-category-item {
+    min-width: fit-content;
+    padding: 6px 8px;
+    border: 2px solid #999;
+    border-radius: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    display: flex;
+}
+
+.video-category-item-clicked {
+	border-color: rgb(0, 123, 255) !important;
+}

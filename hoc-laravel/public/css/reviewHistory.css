@@ -1,0 +1,46 @@
+/* lich su duyet */
+.review-all-header{
+	font-size: 30px;
+	margin-bottom: 40px;
+	font-weight: 500;
+}
+
+.review-all-wrapper{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.review-all-item{
+    display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex: 1;
+	text-align: center;
+    min-height: 80px;
+    border-bottom: 1px solid #dedede;
+}
+
+.review-all-avt img{
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	background-color: red;
+}
+
+.review-all-avt,
+.review-all-thumb,
+.review-all-info{
+	flex: 1;
+	text-align: center;
+}
+
+.review-all-info{
+	flex: 3;
+}
+
+.review-all-thumb img{
+	width: 100px;
+	height: 70px;
+	background-color: red;
+}

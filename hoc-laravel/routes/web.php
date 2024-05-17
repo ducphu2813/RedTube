@@ -108,8 +108,8 @@ Route::prefix('admin')->group(function (){
     Route::get('userManager', [AdminController::class, 'showUserList'])->name('admin.userManager');
     // Show test
     Route::get('checkManager', [AdminController::class, 'showCheckList'])->name('admin.checkManager');
-    // Show comment
-    Route::get('commentManager', [AdminController::class, 'showCommentList'])->name('admin.commentManager');
+    // Show review history
+    Route::get('history', [AdminController::class, 'showReviewHistoryList'])->name('admin.reviewHistoryListManager');
     // Show chart
     Route::get('showChart', [AdminController::class, 'showChartList'])->name('admin.showChart');
     // Change role user
@@ -126,6 +126,13 @@ Route::prefix('admin')->group(function (){
     Route::post('ignoreVideo', [AdminController::class, 'ignoreVideo'])->name('admin.ignoreVideo');
     // Add category
     Route::post('createNewCategory', [CategoryController::class, 'createNewCategory'])->name('admin.createNewCategory');
+    // filter video by cate
+    Route::post('filterVideo', [AdminController::class, 'filterVideoList'])->name('admin.filterVideo');
+
+    Route::get('filterVideo', [AdminController::class, 'filterVideoList'])->name('admin.filterVideo');
+
+    // filter user
+    Route::post('filterUser', [AdminController::class, 'filterUserList'])->name('admin.filterUser');
     // --------------------Hết phần của Dương --------------------//
 });
 
@@ -175,6 +182,9 @@ Route::get('showHistory', [HistoryController::class, 'showHistory'])->name('clie
 // Hiển thị danh sách video tìm kiếm
 Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('clients.searchVideo');
 
+// Hiển thị danh sách vieo lọc từ tìm kiếm
+Route::post('filterSearchVideo', [HomePageController::class, 'filterSearchVideo'])->name('clients.filterVideoFromSearch'); 
+
 // Hiển thị lại trang video
 Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('clients.videoReload');
 
@@ -185,6 +195,8 @@ Route::post('modalPremium', [PremiumController::class, 'showModalPremium'])->nam
 Route::get('playVideo', [VideoController::class, 'playVideo'])->name('clients.playVideo');
 // Route::get('studioPage', [StudioController::class, 'index'])->name('clients.studioPage')->middleware('CheckLogin');
 
+// Hiển thị tất cả video lọc trong home
+Route::post('filterVideo', [HomePageController::class, 'filterVideo'])->name('clients.filterVideo');
 
 // Premium Registaration
 Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])->name('premium.premiumManager');

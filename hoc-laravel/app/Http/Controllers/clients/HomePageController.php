@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\ShareNoti;
 use App\Models\Users;
 use App\Models\Video;
@@ -11,7 +12,10 @@ use Illuminate\Http\Request;
 
 class HomePageController extends Controller
 {
-    public function index(){
+    public function index()
+    {
+
+        $categories = Category::getAll();
 
         $videos = Video::getAllVideo();
 
@@ -19,8 +23,9 @@ class HomePageController extends Controller
 
         $currentUserProfile = Users::getUserById($userId);
 
-        if(!$currentUserProfile){
-            return view('main.homePageBase',
+        if (!$currentUserProfile) {
+            return view(
+                'main.homePageBase',
                 [
                     'videos' => $videos,
                     'currentUserProfile' => null,
@@ -37,7 +42,7 @@ class HomePageController extends Controller
         foreach ($videoNotis as &$noti) {
             $noti['type'] = 'video';
             $noti['video_title'] = Video::getVideoById($noti['video_id'])->title;
-//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+            //            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
         }
 
         //lấy tất cả thông báo chia sẻ của user
@@ -45,7 +50,7 @@ class HomePageController extends Controller
         foreach ($shareNotis as &$noti) {
             $noti['type'] = 'share';
             $noti['sender_name'] = Users::getUserById($noti['sender_id'])->user_name;
-//            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
+            //            $noti['created_date'] = $noti['created_date']->format('Y-m-d H:i:s');
         }
 
         //gộp 2 mảng lại với nhau và sắp xếp theo created_date
@@ -55,21 +60,25 @@ class HomePageController extends Controller
             return strtotime($b['created_date']) - strtotime($a['created_date']);
         });
 
-        return view('main.homePageBase',
+        return view(
+            'main.homePageBase',
             [
                 'videos' => $videos,
                 'currentUserProfile' => $currentUserProfile,
                 'followings' => $followings,
                 'notifications' => $notifications,
+                'listCate' => $categories
             ]
         );
     }
 
-    public function buyPremium(){
+    public function buyPremium()
+    {
         return view('premium.privatePremiumBuy');
     }
 
-    public function userChannel() {
+    public function userChannel()
+    {
         $data = request()->all();
         $logged_user_id = session('loggedInUser');
         $user_id = $data['user_id'] ?? $logged_user_id;
@@ -81,7 +90,8 @@ class HomePageController extends Controller
         return view('main.userChannel', ['logged_user_id' => $logged_user_id, 'user' => $user, 'followers' => $followers, 'videoCounts' => $videoCounts, 'isFollowing' => $isFollowing]);
     }
 
-    public function userChannelVideos() {
+    public function userChannelVideos()
+    {
         $data = request()->all();
         $user_id = $data['user_id'] ?? session('loggedUser');
         $videos = Video::getVideoByUserId($user_id);
@@ -89,8 +99,55 @@ class HomePageController extends Controller
         return view('video.video-in-main-wrapper', ['videos' => $videos]);
     }
 
-    public function userChannelPlaylists() {
-
+    public function userChannelPlaylists()
+    {
     }
 
+    public function filterVideo(Request $request)
+    {
+        $data = $request->all();
+        $category_ids = $data['category_ids'] ?? [];
+
+        $listVideo = Video::getAllVideo();
+
+        $arrayVideo = [];
+        // Lọc video dựa trên danh mục (nếu có)
+        if (isset($category_ids) && count($category_ids) > 0) {
+            $listVideo = Video::getVideosByCategoryIds($category_ids, $listVideo);
+        }
+
+        foreach ($listVideo as $video) {
+            $item = view('video.video-in-main-item', ['video' => $video])->render();
+            array_push($arrayVideo, $item);
+        }
+        return response()->json($arrayVideo);
+    }
+
+    public function filterSearchVideo(Request $request)
+    {
+        $data = $request->all();
+        $title = $data['keyword'] ?? '';
+        $category_ids = $data['category_ids'] ?? [];
+        $arrayVideo = [];
+        
+        if($title === ''){
+            $listVideo = Video::getVideosByCategoryIds($category_ids, Video::getAllVideo());
+            if(!isset($category_ids) || count($category_ids) == 0 || $category_ids == null || $category_ids == []){
+                $listVideo = Video::getAllVideo();
+            }
+        }else{
+            $listVideo = Video::searchVideo($title);
+    
+    
+            // Lọc video dựa trên danh mục (nếu có)
+            if (isset($category_ids) && count($category_ids) > 0) {
+                $listVideo = Video::getVideosByCategoryIds($category_ids, $listVideo);
+            }
+        }
+        foreach ($listVideo as $video) {
+            $item = view('video.video-in-main-item', ['video' => $video])->render();
+            array_push($arrayVideo, $item);
+        }
+        return response()->json($arrayVideo);
+    }
 }
