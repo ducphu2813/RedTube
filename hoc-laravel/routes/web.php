@@ -91,7 +91,7 @@ Route::middleware('CheckLogin')->prefix('schools')->group(function(){
 
 
 //admin route
-Route::prefix('admin')->group(function (){
+Route::prefix('admin')->middleware('CheckLogin')->middleware('CheckPermissionMiddleware')->group(function (){
 
 
     //1 ví dụ về route resource cho controller
@@ -192,7 +192,7 @@ Route::get('showHistory', [HistoryController::class, 'showHistory'])->name('clie
 Route::get('searchVideo', [VideoController::class, 'searchVideo'])->name('clients.searchVideo');
 
 // Hiển thị danh sách vieo lọc từ tìm kiếm
-Route::post('filterSearchVideo', [HomePageController::class, 'filterSearchVideo'])->name('clients.filterVideoFromSearch'); 
+Route::post('filterSearchVideo', [HomePageController::class, 'filterSearchVideo'])->name('clients.filterVideoFromSearch');
 
 // Hiển thị lại trang video
 Route::get('videoReload', [VideoController::class, 'reloadVideoList'])->name('clients.videoReload');

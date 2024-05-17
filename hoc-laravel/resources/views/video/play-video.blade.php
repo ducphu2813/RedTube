@@ -136,7 +136,7 @@
                 {{-- or nếu video là của chính mình--}}
                 {{-- or nếu video có membership và user đã tham gia membership--}}
                 {{-- thì cho coi vide0--}}
-                @if( (!$video->display_mode || !$video->is_approved || !$video->active) && (session('loggedInUser') != $video->user->user_id))
+                @if( (!$video->display_mode || $video->is_approved == 0 || !$video->active || $video->is_approved == null) && (session('loggedInUser') != $video->user->user_id))
                     {{-- video bị ẩn hoặc chưa được duyệt hoặc bị khóa --}}
                     <div class="membership-info">
                         Không tìm thấy video

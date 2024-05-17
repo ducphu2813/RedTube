@@ -136,7 +136,7 @@ class HomePageController extends Controller
         $data = $request->all();
         $category_ids = $data['category_ids'] ?? [];
 
-        $listVideo = Video::getAllVideo();
+        $listVideo = Video::getAllAvailableVideo();
 
         $arrayVideo = [];
         // Lọc video dựa trên danh mục (nếu có)
@@ -159,9 +159,9 @@ class HomePageController extends Controller
         $arrayVideo = [];
 
         if($title === ''){
-            $listVideo = Video::getVideosByCategoryIds($category_ids, Video::getAllVideo());
+            $listVideo = Video::getVideosByCategoryIds($category_ids, Video::getAllAvailableVideo());
             if(!isset($category_ids) || count($category_ids) == 0 || $category_ids == null || $category_ids == []){
-                $listVideo = Video::getAllVideo();
+                $listVideo = Video::getAllAvailableVideo();
             }
         }else{
             $listVideo = Video::searchVideo($title);

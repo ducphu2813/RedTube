@@ -12,7 +12,9 @@ class CheckPermissionMiddleware
         // test middleware
 //        $homeUrl = route('home');
 //        return redirect($homeUrl);
-        
+        if(session('userPermission') == 1){
+            return redirect()->route('clients.homePage');
+        }
         return $next($request);
     }
 }

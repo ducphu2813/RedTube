@@ -59,6 +59,7 @@ class VideoController extends Controller{
         ]);
     }
 
+    //hàm này để upload video và vừa để update video
     public function edit(Request $request) {
         $data = request()->all();
 
@@ -135,7 +136,7 @@ class VideoController extends Controller{
             $newVideo['membership'] = $data['membership'];
 
             //khi nào xong chức năng duyệt video thì sửa lại thành 0
-            $newVideo['is_approved'] = 1;
+//            $newVideo['is_approved'] = 0;
             $videoModel->createVideo($newVideo);
         }
 

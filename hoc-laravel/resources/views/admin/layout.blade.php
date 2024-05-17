@@ -20,14 +20,16 @@
                 <a href=""><img src="{{ asset('resources/img/youtube.svg') }}" alt="BinaryBook" /></a>
             </div>
             <ul>
-                <li class="" flag="video">
-                    <img src="{{ asset('resources/img/video.svg') }}" />
-                    <a href="{{ route('admin.videoManager') }}">Video</a>
-                </li>
-                <li class="" flag="user">
-                    <img src="{{ asset('resources/img/user.svg') }}" />
-                    <a href="{{ route('admin.userManager') }}">Người dùng</a>
-                </li>
+                @if(session('userPermission') == 3)
+                    <li class="" flag="video">
+                        <img src="{{ asset('resources/img/video.svg') }}" />
+                        <a href="{{ route('admin.videoManager') }}">Video</a>
+                    </li>
+                    <li class="" flag="user">
+                        <img src="{{ asset('resources/img/user.svg') }}" />
+                        <a href="{{ route('admin.userManager') }}">Người dùng</a>
+                    </li>
+                @endif
                 <li class="">
                     <img src="{{ asset('resources/img/videotest.svg') }}" />
                     <a href="{{ route('admin.checkManager') }}">Kiểm duyệt</a>
@@ -36,10 +38,12 @@
                     <img src="{{ asset('resources/img/history.svg') }}" />
                     <a href="{{ route('admin.reviewHistoryListManager') }}">Lịch sử duyệt</a>
                 </li>
-                <li class="">
-                    <img src="{{ asset('resources/img/analytics.svg') }}" />
-                    <a href="{{ route('admin.showChart') }}">Thống kê</a>
-                </li>
+                    @if(session('userPermission') == 3)
+                        <li class="">
+                            <img src="{{ asset('resources/img/analytics.svg') }}" />
+                            <a href="{{ route('admin.showChart') }}">Thống kê</a>
+                        </li>
+                    @endif
             </ul>
         </div>
 
