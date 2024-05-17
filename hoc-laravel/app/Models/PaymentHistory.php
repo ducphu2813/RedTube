@@ -44,6 +44,15 @@ class PaymentHistory extends Model
     //get by user id
     public static function getPaymentHistoryByUserId($user_id)
     {
-        return self::where('user_id', $user_id)->get();
+        return self::where('user_id', $user_id)
+            ->orderBy('payment_date', 'desc')
+            ->get();
+    }
+
+    //get by payment id
+    public static function getPaymentHistoryByPaymentId($payment_id)
+    {
+        return self::where('payment_id', $payment_id)
+            ->first();
     }
 }

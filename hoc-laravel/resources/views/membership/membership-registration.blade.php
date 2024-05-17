@@ -20,7 +20,7 @@
 @foreach($listMembershipRegistered as $membershipRegistered)
     <div class="regis-membership-container">
         <div class="regis-membership-name">
-            {{ $membershipRegistered->user->channel_name }}
+            {{ $membershipRegistered->membership->user->channel_name }}
         </div>
         <div class="regis-membership-name">
             {{ $membershipRegistered->membership ? $membershipRegistered->membership->name : 'N/A' }}

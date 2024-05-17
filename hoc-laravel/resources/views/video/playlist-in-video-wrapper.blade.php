@@ -6,12 +6,10 @@
         </div>
         <div>
             <span>{{$videoPlaylist->user->channel_name}}</span>
-            <span>-</span>
-            <span>1/20</span> <!-- 1/20 là số video trong playlist -->
+            <span></span>
+            <span></span> <!-- 1/20 là số video trong playlist -->
         </div>
         <div>
-            <i class="fa-solid fa-rotate-left"></i>
-            <i class="fa-solid fa-shuffle"></i>
         </div>
     </div>
 
@@ -19,7 +17,7 @@
     <span class="show-list">
 
         @foreach($videosInPlayList as $videoInPL)
-            @component('video.playlist-in-video-item', ['videoInPL' => $videoInPL, 'videoPlaylist' => $videoPlaylist])
+            @component('video.playlist-in-video-item', ['videoInPL' => $videoInPL, 'videoPlaylist' => $videoPlaylist, 'video' => $video])
             @endcomponent
         @endforeach
 

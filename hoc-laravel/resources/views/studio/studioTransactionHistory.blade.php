@@ -13,7 +13,7 @@
         </div>
 
         <div class="item__content">
-            Tên sản phẩm
+            Người thanh toán
         </div>
 
         <div class="item__buyDate">
@@ -25,33 +25,41 @@
         </div>
     </li>
 
-        <li class="content__body--item">
-            <div class="item__optionbox">
-                <button class="item__optionbox--btn edit--btn">
-                    <i class="fa-solid fa-pen-to-square"></i>
-                </button>
-            </div>
+        @foreach($payments as $payment)
+            <li class="content__body--item">
+                <div class="item__optionbox">
+                    <button class="item__optionbox--btn edit--btn">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </button>
+                </div>
+                <input type="hidden" value="{{ $payment->payment_id }}">
 
-            <div class="item__content">
-                Gói premium siêu provip
-            </div>
+                <div class="item__content">
+                    {{$payment->full_name}}
+                </div>
 
-            <div class="item__buyDate">
-                2024-05-07 12:00:00
-            </div>
+                <div class="item__buyDate">
+                    {{ $payment->payment_date }}
+                </div>
 
-            <div class="item__totals">
-                120000 &dstrok;
-            </div>
-        </li>
+                <div class="item__totals">
+                    {{ $payment->amount }} &dstrok;
+                </div>
+            </li>
+        @endforeach
 </div>
 
 <script>
     $('.edit--btn').on('click', function(event) {
+        var payment_id = $(this).parent().next().val();
         $.ajax({
             url: '{{ route('studio.transactionDetails') }}',
-            type: 'GET',
-            dataType: 'html',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                payment_id: payment_id,
+                _token: '{{ csrf_token() }}'
+            },
             success: function(data) {
                 $('#modal').html(data)
             },

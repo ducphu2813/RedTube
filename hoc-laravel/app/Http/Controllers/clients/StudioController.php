@@ -4,6 +4,7 @@ namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Follow;
+use App\Models\PaymentHistory;
 use App\Models\Playlist;
 use App\Models\ShareNoti;
 use App\Models\UserMembership;
@@ -43,7 +44,7 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::where('user_id', $userId)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItems = Video::where('user_id', $userId)->where('active', 1)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -132,13 +133,23 @@ class StudioController extends Controller
 
     // lich su giao dich
     public function transactionHistory() {
-        $transactions = PremiumRegistration::with('premiumPackage')->where('user_id', session("LoggedInUser"))->get();
-        return view('studio.studioTransactionHistory', ['transactions' => $transactions]);
+
+        $payments = PaymentHistory::getPaymentHistoryByUserId(session('loggedInUser'));
+
+
+        return view('studio.studioTransactionHistory', ['payments' => $payments]);
     }
 
     //modal lich su giao dich
-    public function transactionDetails() {
-        return view('studio.transactionDetailsModal');
+    public function transactionDetails(Request $request){
+
+        $data = $request->all();
+
+        unset($data['_token']);
+
+        $payment = PaymentHistory::getPaymentHistoryByPaymentId($data['payment_id']);
+
+        return view('studio.transactionDetailsModal', ['payment' => $payment]);
     }
 
 

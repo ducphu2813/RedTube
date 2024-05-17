@@ -8,7 +8,7 @@
                 <span class="list-icon">
                     <img src="{{ asset('resources/img/ocean.jpg') }}" alt="">
                 </span>
-                Không 1 ai
+                Bạn chưa đăng ký ai
             </a>
         </li>
     @else

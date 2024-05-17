@@ -159,7 +159,7 @@
                     <div class="membership-info">
                         Video dành cho thành viên
                         Hãy đăng ký tham gia làm thành viên của kênh này để xem video đặc quyền riêng
-                        <button>Tham gia</button>
+                        <button class="join-btn">Tham gia</button>
                     </div>
                 @endif
                 <div class="tag">
@@ -195,13 +195,13 @@
                     @endif
 
                     @if( ($video->user->memberships()->exists() && $video->user->hasMembershipFrom($video->user->user_id, session('loggedInUser')) ))
-                        <button type="button" id="join-btn">Đã Tham gia</button>
+                        <button type="button" id="join-btn" class="join-btn">Đã Tham gia</button>
 
                     @elseif(session('loggedInUser') == $video->user->user_id)
                         {{--nếu là chính mình thì không hiện nút tham gia--}}
 
                     @elseif($video->user->memberships()->exists())
-                        <button type="button" id="join-btn">Tham gia</button>
+                        <button type="button" id="join-btn" class="join-btn">Tham gia</button>
 
                     @endif
 
@@ -307,6 +307,7 @@
                     @component('video.playlist-in-video-wrapper', [
                         'videosInPlayList' => $videosInPlayList,
                         'videoPlaylist' => $videoPlaylist,
+                        'video' => $video,
                     ])
                     @endcomponent
                 @endif
@@ -325,10 +326,29 @@
     @component('video.video-modal', ['playlists' => $playlists, 'video' => $video])
     @endcomponent
 
+    <div id="modal"></div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
     <script>
+        //xử lý nút tham gia
+        $('.join-btn').on('click', function(event) {
+            $.ajax({
+                url: '{{ route('clients.userChannel.membershipModal') }}',
+                type: 'GET',
+                data: {
+                    user_id: {{ $video->user->user_id }},
+                },
+                dataType: 'html',
+                success: function(data) {
+                    $('#modal').html(data);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error joining channel:', error);
+                }
+            });
+        });
 
         //search bar
         //hàm xử lý tìm kiếm

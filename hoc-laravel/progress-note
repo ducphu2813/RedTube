@@ -70,12 +70,10 @@ tạo membership(v)
 hiện lượt like/dislike(v)
 hiện video recommend khi đang xem video(v)
 
-lấy giao diện lịch sử thanh toán(x)
+lấy giao diện lịch sử thanh toán(v)
 
 lấy giao diện về(admin)(x)
 
 
-
-xử lý xóa history(x)
 cần cải tiến thanh tab bên trái ẩn đi 1 vài item khi chưa login (x)
-highlight video đang coi trong playlist(x)
+highlight video đang coi trong playlist(v)
