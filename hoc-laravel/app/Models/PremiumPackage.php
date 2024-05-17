@@ -27,6 +27,7 @@ class PremiumPackage extends Model{
         return self::query()->get();
     }
 
+    //tìm theo id
     public static function getPackageById($id){
         return self::query()->where('package_id', $id)->first();
     }
@@ -41,5 +42,10 @@ class PremiumPackage extends Model{
 
     public function deletePackage($id){
         return $this->where('package_id', $id)->delete();
+    }
+
+    //lấy tất cả gói premium cho trang mua gói
+    public static function getAllPremiumPackages(){
+        return self::query()->get();
     }
 }

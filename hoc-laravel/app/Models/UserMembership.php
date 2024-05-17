@@ -88,4 +88,10 @@ class UserMembership extends Model
             'totalRevenue' => $totalRevenue,
         ];
     }
+
+    //create
+    public static function createUserMembership($data)
+    {
+        return self::query()->create($data);
+    }
 }

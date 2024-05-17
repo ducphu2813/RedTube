@@ -212,4 +212,34 @@ class Users extends Model
             ->count();
     }
 
+    //lấy dữ liệu thống kê cho admin
+    public static function getUserRegistrationStatsByYear($year)
+    {
+        // Khởi tạo mảng để lưu trữ số lượng người dùng đăng ký trong từng tháng
+        $monthlyRegistrations = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyRegistrations[$month] = 0;
+        }
+
+        // Lấy tất cả người dùng đăng ký trong năm
+        $users = self::query()
+            ->whereYear('created_date', $year)
+            ->get();
+
+        // Tính toán số lượng người dùng đăng ký trong từng tháng
+        foreach ($users as $user) {
+            $month = $user->created_date->month;
+            $monthlyRegistrations[$month]++;
+        }
+
+        // Tính tổng số lượng người dùng đăng ký trong năm
+        $totalRegistrations = array_sum($monthlyRegistrations);
+
+        // Trả về mảng chứa số lượng người dùng đăng ký trong từng tháng, cũng như tổng số người dùng đăng ký trong năm
+        return [
+            'monthlyRegistrations' => $monthlyRegistrations,
+            'totalRegistrations' => $totalRegistrations,
+        ];
+    }
+
 }

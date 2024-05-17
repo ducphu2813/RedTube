@@ -131,6 +131,8 @@ class Video extends Model
             ->where('display_mode', '=', 1)
             ->orderBy('created_date', 'desc')
             ->get();
+
+        // SELECT * FROM video WHERE is_approved = 1 AND active = 1 AND display_mode = 1 ORDER BY created_date DESC
     }
 
     //hàm này update video theo id
@@ -155,5 +157,16 @@ class Video extends Model
         $video = $this->find($id);
         $video->view = $video->view + 1;
         $video->save();
+    }
+
+    //lấy danh sách video dựa trên danh sách category_id
+    public static function getVideosByCategoryIds($categoryIds)
+    {
+        return self::query()
+            ->whereHas('getCategories', function ($query) use ($categoryIds) {
+                $query->whereIn('category.category_id', $categoryIds);
+            })
+            ->distinct()
+            ->get();
     }
 }

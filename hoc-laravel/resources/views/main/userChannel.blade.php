@@ -25,23 +25,60 @@
             <div class="user__details">Mô tả</div>
 
             <div class="user__option">
-                @if ($logged_user_id != $user->user_id)
-                    @if ($isFollowing == true)
-                        <button class="btn" id="unsubcribe--btn">
-                            <i class="fa-solid fa-bell"></i>
-                            Hủy đăng ký
-                        </button>
-                        @else
-                        <button class="btn" id="subcribe--btn">
-                            <i class="fa-solid fa-bell"></i>
-                            Đăng ký
-                        </button>
-                     @endif
 
-                     <button class="btn" id="join--btn">
-                        Tham gia
+                {{-- phần nút đăng ký --}}
+                @if(!session('loggedInUser'))
+                    <button class="btn" id="subcribe--btn">
+                        <i class="fa-solid fa-bell"></i>
+                        Đăng ký
+                    </button>
+                @elseif(session('loggedInUser') == $user->user_id)
+                    {{-- nếu là chính mình thì không hiện nút đăng ký --}}
+                    <button type="button" id="sub-btn" style="visibility: hidden"></button>
+                @elseif(session('loggedInUser') && $user->isFollowed(session('loggedInUser')))
+                    <button class="btn" id="unsubcribe--btn">
+                        <i class="fa-solid fa-bell"></i>
+                        Đã đăng ký
+                    </button>
+                @elseif(session('loggedInUser') && !$user->isFollowed(session('loggedInUser')))
+                    <button class="btn" id="subcribe--btn">
+                        <i class="fa-solid fa-bell"></i>
+                        Đăng ký
                     </button>
                 @endif
+
+                @if( ($user->memberships()->exists() && $user->hasMembershipFrom($user->user_id, session('loggedInUser')) ))
+                    <button class="btn" id="join--btn">
+                        Đã tham gia
+                    </button>
+
+                @elseif(session('loggedInUser') == $user->user_id)
+                    {{--nếu là chính mình thì không hiện nút tham gia--}}
+
+                @elseif($user->memberships()->exists())
+                    <button class="btn" id="join--btn">
+                        Tham gia
+                    </button>
+
+                @endif
+
+{{--                @if ($logged_user_id != $user->user_id)--}}
+{{--                    @if ($isFollowing == true)--}}
+{{--                        <button class="btn" id="unsubcribe--btn">--}}
+{{--                            <i class="fa-solid fa-bell"></i>--}}
+{{--                            Hủy đăng ký--}}
+{{--                        </button>--}}
+{{--                        @else--}}
+{{--                        <button class="btn" id="subcribe--btn">--}}
+{{--                            <i class="fa-solid fa-bell"></i>--}}
+{{--                            Đăng ký--}}
+{{--                        </button>--}}
+{{--                     @endif--}}
+
+{{--                     <button class="btn" id="join--btn">--}}
+{{--                        Tham gia--}}
+{{--                    </button>--}}
+{{--                @endif--}}
             </div>
 
         </div>

@@ -118,6 +118,9 @@ Route::prefix('admin')->group(function (){
     // Show check modal
     Route::post('showCheckModal', [AdminController::class, 'showCheckModal'])->name('admin.showCheckModal');
     // --------------------Hết phần của Dương --------------------//
+
+    //lấy data thống kê
+    Route::post('analysis', [AdminController::class, 'getChartData'])->name('admin.analysis');
 });
 
 // --------------------Cái này của Dương -------------------- //
@@ -185,7 +188,7 @@ Route::get('premiumManager', [PremiumController::class, 'getAllRegistrations'])-
 Route::get('showVideoByChannel', [VideoController::class, 'showVideoByChannel'])->name('clients.showVideoByChannel');
 
 // Không có premium
-Route::get('noPremium', [PremiumController::class, 'noPremium'])->name('clients.noPremium');
+Route::get('buyPremium', [PremiumController::class, 'buyPremium'])->name('clients.buyPremium');
 
 // Chuyển giữa 2 premium
 Route::get('mySharePremium', [PremiumController::class, 'mySharePremium'])->name('clients.mySharePremium');
@@ -206,8 +209,6 @@ Route::post('cancelShare', [PremiumController::class, 'handleCancelShare'])->nam
 // Hiển thị tất cả thông báo
 Route::get('showAllNoti', [StudioController::class, 'showAllNoti'])->name('clients.showAllNoti');
 
-// Thanh toán momo
-Route::get('', [PaymentController::class, 'payWithMomo'])->name('clients.payWithMomo');
 
 // Chuyển tab membership
 Route::get('membershipManager', [MemberShipController::class, 'showAllMembership'])->name('studio.membershipManager');
@@ -390,6 +391,16 @@ Route::post('follow', [FollowController::class, 'handleFollow'])
 Route::post('like', [InteractionController::class, 'handleLike'])
     ->name('like.handle');
 
+//trang thanh toán
+Route::post('buyPackage', [PaymentController::class, 'toPaymentPage'])
+    ->name('buyPackage');
+
+Route::get('payment-page', [PaymentController::class, 'showPayment'])
+    ->name('payment.payment-page');
+
+//xử lý thanh toán
+Route::post('payment', [PaymentController::class, 'handlePayment'])
+    ->name('payment.handle');
 
 
 //

@@ -24,51 +24,30 @@
             </a>
 
             <div class="premium-intro margin-item" style="padding: 0 100px;">
-                Chọn gói thành viên phù hợp với bạn
+                Chọn gói Premium phù hợp với bạn
             </div>
 
             <div class="premium-buy-list margin-item" id="buyform">
-                <div class="premium-buy-item margin-item">
-                    <div class="premium-buy-title">
-                        Gói 1 tháng
-                    </div>
-                    <div class="premium-buy-info">
-                        <div class="premium-price margin-item">
-                            Giá chỉ: 119.000đ
-                        </div>
-                        <div class="premium-buy-btn">
-                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="premium-buy-item margin-item">
-                    <div class="premium-buy-title">
-                        Gói 3 tháng
-                    </div>
-                    <div class="premium-buy-info">
-                        <div class="premium-price margin-item">
-                            Giá chỉ: 349.000đ
+                @foreach($premiums as $premium)
+                    <div class="premium-buy-item margin-item">
+                        <div class="premium-buy-title">
+                            {{ $premium->name }}
                         </div>
-                        <div class="premium-buy-btn">
-                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
+                        <div class="premium-buy-info">
+                            <div class="premium-price margin-item">
+                                Giá chỉ: {{ $premium->price }}đ
+                            </div>
+                            <div class="premium-price margin-item">
+                                Thời hạn: {{ $premium->duration/30 }} tháng
+                            </div>
+                            <div class="premium-buy-btn">
+                                <a href="" class="premium-buy" flag="premium" pack_id="{{ $premium->package_id }}">Mua ngay</a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach
 
-                <div class="premium-buy-item margin-item">
-                    <div class="premium-buy-title">
-                        Gói 6 tháng
-                    </div>
-                    <div class="premium-buy-info">
-                        <div class="premium-price margin-item">
-                            Giá chỉ: 679.000đ
-                        </div>
-                        <div class="premium-buy-btn">
-                            <a href="{{ route('clients.payWithMomo') }}" class="premium-buy">Dùng ngay</a>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             <div class="premium-intro margin-item">
@@ -156,15 +135,35 @@
 {{-- Script mua ở này --}}
 <script>
     $(document).ready(function() {
-        $('.premium-buy-btn').click(function() {
-            
-            console.log('Mua thành công');
-        });
 
         $('.premium-buy-to-form').click(function() {
             $('html, body').animate({
                 scrollTop: $("#buyform").offset().top
             }, 2000);
+        });
+
+        //event cho nút mua
+        $('.premium-buy').click(function(event) {
+            event.preventDefault();
+
+            var pack_id = $(this).attr('pack_id');
+            var flag = $(this).attr('flag');
+            $.ajax({
+                url: '{{ route('buyPackage') }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    pack_id: pack_id,
+                    flag: flag
+                },
+                success: function(data) {
+                    console.log(data);
+                    window.location.href = '/payment-page';
+                },
+                error: function(data) {
+                    console.log(data);
+                }
+            });
         });
     });
 </script>

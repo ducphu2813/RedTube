@@ -14,7 +14,7 @@
                             <div class="membership__list-item__name">{{ $membership->name }}</div>
                             <div class="membership__list-item__details">
                                 <div class="membership__list-item__price">{{ $membership->price }} &dstrok;</div>
-                                <div class="membership__list-item__duration">{{ $membership->duration }}</div>
+                                <div class="membership__list-item__duration">Thời hạn: {{ $membership->duration/30 }} tháng</div>
                                 <div class="member__list-item__description" style="display: none">{{ $membership->description }}</div>
                             </div>
                         </li>
@@ -23,15 +23,12 @@
 
                 <div class="membership__info">
                     <div class="membership__info-name">Gold</div>
-                    <div class="membership__info-pirce">12000 &dstrok; / 1 tháng</div>
+                    <div class="membership__info-pirce">Giá: </div>
                     <button class="membership__info-join--btn" id="join--btn" membership_id="membership_id">
                         Tham gia
                     </button>
                     <div class="membership__info-description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat                        
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat                        
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat                        
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat                        
+
                     </div>
                 </div>
             </div>
@@ -52,7 +49,7 @@
                 $('#modal').empty();
                 event.preventDefault();
             });
-    
+
             $('#save--btn').on('click', function(event) {
 
             });
@@ -70,8 +67,9 @@
 
                 setMembershipInfo($(this));
             });
-            
+
             function setMembershipInfo(item) {
+
                 // Get details from the selected item
                 var membership_id = item.attr('membership_id');
                 var name = item.find('.membership__list-item__name').text();
@@ -84,7 +82,30 @@
                 $('.membership__info-price').text(price + "&dstrok; / " + duration);
                 $('.membership__info-description').text(description);
                 $('.membership__info-join--btn').attr('membership_id', membership_id);
+                $('.membership__info-pirce').text("Giá: "+price);
             }
+        });
+
+        //event cho nút join
+        $('.membership__info-join--btn').click(function(event) {
+            event.preventDefault();
+            var membership_id = $(this).attr('membership_id');
+            $.ajax({
+                url: '{{ route('buyPackage') }}',
+                type: 'POST',
+                data: {
+                    pack_id: membership_id,
+                    _token: '{{ csrf_token() }}',
+                    flag: 'membership',
+                },
+                success: function(response) {
+                    console.log(response);
+                    window.location.href = '/payment-page';
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
         });
     </script>
 </div>

@@ -304,13 +304,11 @@ class PremiumController extends Controller
 
     // Chưa mua premium cá nhân
     public function buyPremium(){
-        return view('premium.privatePremiumBuy');
-    }
 
-    // Chưa mua premium cá nhân nên không share được
-    public function noPremium(){
-        return view('premium.no-premium-no-share');
+        //lấy tất cả gói premium
+        $premiums = PremiumPackage::getAllPremiumPackages();
 
+        return view('premium.privatePremiumBuy', ['premiums' => $premiums]);
     }
 
     // Danh sách đăng ký premium của bản thân

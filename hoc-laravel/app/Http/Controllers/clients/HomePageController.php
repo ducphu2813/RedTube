@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\clients;
 
 use App\Http\Controllers\Controller;
+use App\Models\PremiumPackage;
 use App\Models\ShareNoti;
 use App\Models\Membership;
 use App\Models\Playlist;
@@ -68,7 +69,11 @@ class HomePageController extends Controller
     }
 
     public function buyPremium(){
-        return view('premium.privatePremiumBuy');
+
+        //lấy tất cả gói premium
+        $premiums = PremiumPackage::getAllPremiumPackages();
+
+        return view('premium.privatePremiumBuy', ['premiums' => $premiums]);
     }
 
     public function userChannel() {
@@ -80,7 +85,17 @@ class HomePageController extends Controller
         $videoCounts = $user->videosCount();
         $isFollowing = $user->isFollowing($logged_user_id);
 
-        return view('main.userChannel', ['logged_user_id' => $logged_user_id, 'user' => $user, 'followers' => $followers, 'videoCounts' => $videoCounts, 'isFollowing' => $isFollowing]);
+        $currentUserProfile = Users::getUserById(session('loggedInUser'));
+
+        return view('main.userChannel',
+            [
+                'logged_user_id' => $logged_user_id,
+                'user' => $user,
+                'followers' => $followers,
+                'videoCounts' => $videoCounts,
+                'isFollowing' => $isFollowing
+            ]
+        );
     }
 
     public function userChannelVideos() {

@@ -33,20 +33,28 @@ class Comment extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(Users::class, 'user_id', 'user_id');
+
+        //select * from users where user_id = ?
     }
 
     public function video(): BelongsTo
     {
         return $this->belongsTo(Video::class, 'video_id', 'video_id');
+
+        //select * from video where video_id = ?
     }
 
     public function reply(): BelongsTo
     {
         return $this->belongsTo(Comment::class, 'reply_id');
+
+        //select * from comment where comment_id = ?
     }
 
     public function getReplyComments(): HasMany{
         return $this->hasMany(Comment::class, 'reply_id', 'comment_id');
+
+        // select * from comment where reply_id = ?
     }
 
     public static function getRootCommentsByVideoId(int $videoId): Collection{
@@ -56,6 +64,8 @@ class Comment extends Model
             ->whereNull('reply_id')
             ->orderBy('created_date', 'desc')
             ->get();
+
+        // select * from comment where video_id = ? and reply_id is null order by created_date desc
     }
 
     public static function getReplyCommentsByCommentId(int $commentId): Collection{

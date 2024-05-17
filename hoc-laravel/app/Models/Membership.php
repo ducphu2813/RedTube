@@ -34,6 +34,7 @@ class Membership extends Model
         return self::query()->get();
     }
 
+    //lấy membership theo id
     public static function getMembershipById($id){
 
         return self::query()->where('membership_id', $id)->first();

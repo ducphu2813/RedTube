@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\PremiumRegistration;
 use App\Models\Users;
 use App\Models\Video;
 use Illuminate\Support\Facades\Cache;
@@ -84,9 +85,29 @@ class AdminController extends Controller
 
         return view('admin.checkIsApproved', ['video' => $video]);
     }
-    
+
     // Analysis data
     public function showChartList(){
+
         return view('admin.chartWrapper');
+    }
+
+    // hàm lấy dữ liệu cho biểu đồ
+    public function getChartData(Request $request){
+        $data = $request->all();
+        $year = $data['year'];
+
+        unset($data['_token']);
+
+        //lấy dữ liệu thống kê lượt đăng ký mới user
+        $data['newUser'] = Users::getUserRegistrationStatsByYear($year);
+
+        //lấy dữ liệu tiền thu được từ các gói premium
+        $data['revenue'] = PremiumRegistration::getPremiumRevenueStatsByYear($year);
+
+        return response()->json([
+            'status' => 200,
+            'data' => $data
+        ]);
     }
 }

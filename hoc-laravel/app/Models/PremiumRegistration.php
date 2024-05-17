@@ -152,4 +152,41 @@ class PremiumRegistration extends Model
             ->where('registration_id', $registrationId)
             ->first();
     }
+
+    //lấy data thống kê
+    public static function getPremiumRevenueStatsByYear($year)
+    {
+        // Khởi tạo mảng để lưu trữ tổng số tiền thu được trong từng tháng
+        $monthlyRevenue = [];
+        for ($month = 1; $month <= 12; $month++) {
+            $monthlyRevenue[$month] = 0;
+        }
+
+        // Lấy tất cả gói premium đăng ký trong năm
+        $premiumRegistrations = self::query()
+            ->whereYear('start_date', $year)
+            ->get();
+
+        // Tính toán tổng số tiền thu được trong từng tháng
+        foreach ($premiumRegistrations as $registration) {
+            $month = $registration->start_date->month;
+            $monthlyRevenue[$month] += $registration->package->price;
+        }
+
+        // Tính tổng số tiền thu được trong năm
+        $totalRevenue = array_sum($monthlyRevenue);
+
+        // Trả về mảng chứa tổng số tiền thu được trong từng tháng, cũng như tổng số tiền thu được trong năm
+        return [
+            'monthlyRevenue' => $monthlyRevenue,
+            'totalRevenue' => $totalRevenue,
+        ];
+    }
+
+    //create
+    public static function createPremiumRegistration($data)
+    {
+        return self::query()->create($data);
+    }
+
 }
