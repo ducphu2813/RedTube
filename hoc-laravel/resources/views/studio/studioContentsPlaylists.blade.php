@@ -47,7 +47,7 @@
 
             <div class="item__createdate">{{ $playlist->created_date }}</div>
 
-            <div class="item__count">0</div>
+            <div class="item__count">{{ $playlist->count }}</div>
         </li>
     @endforeach
 </ul>

@@ -70,9 +70,9 @@
 
             <div class="item__view">{{ $video->view }}</div>
 
-            <div class="item__comment">666</div>
+            <div class="item__comment">{{ $video->comment }}</div>
 
-            <div class="item__like">666</div>
+            <div class="item__like">{{ $video->likes }}</div>
         </li>
     @endforeach
 </ul>

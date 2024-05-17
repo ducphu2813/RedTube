@@ -21,6 +21,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,9 @@ Route::middleware('CheckLogin')->prefix('api/playlists')->group(function() {
     Route::delete('/', [PlaylistController::class, 'delete'])->name('api.playlists.delete');
 });
 
-Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
+Route::middleware('CheckLogin')->get('/', function () {
+    return Redirect::to('/home');
+})->name('home');
 
 //client route, school
 Route::middleware('CheckLogin')->prefix('schools')->group(function(){

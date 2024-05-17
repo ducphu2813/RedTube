@@ -8,6 +8,7 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\Video;
 use Psy\TabCompletion\Matcher\FunctionsMatcher;
@@ -34,7 +35,23 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $videos = Video::where('active', 1)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $videos = Video::query()
+            ->leftJoin('comment', 'video.video_id', '=', 'comment.video_id')
+            ->leftJoin('interaction', function ($join) {
+                $join->on('video.video_id', '=', 'interaction.video_id')
+                    ->where('interaction.reaction', '=', 1);
+            })
+            ->select('video.*',
+                DB::raw('COUNT(DISTINCT comment.comment_id) as comment'),
+                DB::raw('COUNT(DISTINCT interaction.video_id, interaction.user_id) as likes')
+            )
+            ->where('video.active', 1)
+            ->groupBy('video.video_id')
+            ->skip(($currentPage - 1) * $itemPerPage)
+            ->take($itemPerPage)
+            ->get();
+    
+
         $totalItems = Video::where('user_id', $userId)->where('active', 1)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -52,7 +69,15 @@ class StudioController extends Controller
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
         $userId = session('loggedInUser');
-        $playlists = Playlist::where('user_id', $userId)->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
+        $playlists = Playlist::query()
+            ->select('playlist.*', DB::raw('COUNT(CASE WHEN video.active = 1 THEN playlist_video.video_id END) as count'))
+            ->leftJoin('playlist_video', 'playlist.playlist_id', '=', 'playlist_video.playlist_id')
+            ->leftJoin('video', 'playlist_video.video_id', '=', 'video.video_id')
+            ->groupBy('playlist.playlist_id')
+            ->skip(($currentPage - 1) * $itemPerPage)
+            ->take($itemPerPage)
+            ->get();
+
         $totalItems = Playlist::where('user_id', $userId)->count();
 
         $totalPages = ceil($totalItems / $itemPerPage);
@@ -95,11 +120,18 @@ class StudioController extends Controller
 
     public function profile(Request $request) {
 
-        $data = [
-            'user' => Users::getUserById(session('loggedInUser')),
-        ];
+        // $user = Users::getUserById(session('loggedInUser'));
+        $user = Users::query()
+            ->select('users.*',
+                DB::raw('(SELECT COUNT(*) FROM video WHERE video.user_id = users.user_id AND video.active = 1) AS videos'),
+                DB::raw('(SELECT COUNT(*) FROM history WHERE history.user_id = users.user_id) AS views'),
+                DB::raw('(SELECT COUNT(*) FROM interaction WHERE interaction.user_id = users.user_id AND interaction.reaction = 1) AS likes'),
+                DB::raw('(SELECT COUNT(*) FROM follow WHERE follow.user_id = users.user_id) AS subscribers')
+            )
+            ->where('users.user_id', session('loggedInUser'))
+            ->first();
 
-        return view('studio.studioProfile', $data);
+        return view('studio.studioProfile', ['user' => $user]);
     }
 
     // lich su giao dich
