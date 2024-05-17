@@ -3,6 +3,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/studio.css') }}">
     <link rel="stylesheet" href="{{ asset('css/modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/studio/studioProfile.css') }}">
+
 @endsection
 
 @section('search')
@@ -37,7 +39,15 @@
         </div>
 
         <div class="acc-box ">
-            <img src="{{ asset('resources/img/user.png') }}" alt="XXX">
+            @if($user->picture_url)
+                <img id="avatar-right-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" alt="XXX" height="32" width="32">
+            @else
+                <img id="avatar-right-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="XXX" height="32" width="32">
+            @endif
+            <ul id="logged-in-feat">
+                <li class="logged-feat"><a href="{{ route('clients.homePage') }}">Trang chủ</a></li>
+                <li class="logged-feat"><a href="{{ route('auth.logout') }}">Đăng xuất</a></li>
+            </ul>
         </div>
     </div>
 @endsection
@@ -47,14 +57,18 @@
 
         <div class="account-box">
             <div class="account-box-avatar">
-                <img src="{{ asset('resources/img/ocean.jpg') }}" alt="XXX">
+                @if($user->picture_url)
+                    <img id="avatar-left-corner" src="{{ asset('storage/img/' . $user->picture_url) }}" height="112" width="112" alt="XXX">
+                @else
+                    <img id="avatar-left-corner" src="{{ asset('resources/img/defaulftPFP.jpg') }}" height="112" width="112" alt="XXX">
+                @endif
             </div>
-            <div class="account-box-name">UserChannel</div>
+            <div class="account-box-name">{{ $user->channel_name }}</div>
         </div>
 
         <ul class="list-container">
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.contents') }}">
+                <a href="{{ route('studio.contents') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -71,7 +85,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('studio.analysis') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -86,8 +100,8 @@
                     Số liệu phân tích
                 </a>
             </li>
-            <li class="list-item">
-                <a href="">
+            <li class="list-item" data-url="{{ route('studio.profile') }}">
+                <a href="{{ route('studio.profile') }}">
                     <span class="list-icon">
                         <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
                             class="style-scope tp-yt-iron-icon"
@@ -103,7 +117,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('studio.membershipManager') }}">
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24"
                             viewBox="0 0 24 24" width="24" focusable="false"
@@ -115,7 +129,8 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="">
+                <a href="{{ route('premium.premiumManager') }}">
+
                     <span class="list-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"
                             focusable="false" style="pointer-events: none; display: inherit; width: 100%; height: 100%;">
@@ -127,19 +142,51 @@
                     Premium
                 </a>
             </li>
+            <li class="list-item">
+                <a href="{{ route('clients.showAllNoti') }}">
+                    <span class="list-icon">
+                        <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"
+                            class="style-scope tp-yt-iron-icon"
+                            style="pointer-events: none; display: block; width: 100%; height: 100%;">
+                            <g width="24" height="24" viewBox="0 0 24 24" class="style-scope tp-yt-iron-icon">
+                                <path
+                                    d="M8 7H16V9H8V7ZM8 13H13V11H8V13ZM5 3V16H15H15.41L15.7 16.29L19 19.59V3H5ZM4 2H20V22L15 17H4V2Z"
+                                    class="style-scope tp-yt-iron-icon"></path>
+                            </g>
+                        </svg>
+                    </span>
+                    Thông báo
+                </a>
+            </li>
         </ul>
     </div>
 @endsection
 
+@section('content')
+    <div id="right">
+
+    </div>
+
+@endsection
+
 @section('scripts')
+
     <script>
         $(document).ready(function() {
 
             // handle creator list
-            $('.create-item').on('click', function() {
+            $('.create-item').on('click', function(event) {
                 var index = $(this).index();
                 if (index == 0) {
-
+                    $.ajax({
+                        url: '{{ route('studio.videoDetails') }}',
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#modal').html(data);
+                            $('.modal-pl').css('display', 'flex');
+                        }
+                    })
                 } else if (index == 1) {
                     $.ajax({
                         url: '{{ route('playlist.createPlaylist') }}',
@@ -181,42 +228,70 @@
                         }
                     })
                 }
+
+                event.preventDefault();
             });
 
             // handle left navigator
-            $('.list-item').on('click', function() {
-                var index = $(this).index();
-                if (index == 0) {
-                    console.log('Nội dung');
-                    event.preventDefault();
-                } else if (index == 1) {
-                    console.log('Số liệu phân tích');
-                    event.preventDefault();
-                } else if (index == 2) {
-                    console.log('Thông tin kênh');
-                    event.preventDefault();
-                } else if (index == 3) {
-                    $.ajax({
-                        url: '{{ route('membership.membershipManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                } else {
-                    $.ajax({
-                        url: '{{ route('premium.premiumManager') }}',
-                        type: 'GET',
-                        dataType: 'html',
-                        success: function(data) {
-                            $('#content').html(data);
-                        }
-                    });
-                    event.preventDefault();
-                }
+            $('.list-item').on('click', function(event) {
+                event.preventDefault();
+                var link = $(this).find('a').attr('href');
+                $('#content').hide();
+                $.ajax({
+                    url: link,
+                    type: 'GET',
+                    dataType: 'html',
+                    success: function(data) {
+                        $('#content').html(data);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
             });
         });
+
+        // Script bấm vào acc box
+        $('.acc-box').on('click', function() {
+            $('#logged-in-feat').toggleClass('show');
+        });
+
+        // Chuyển từ trang chủ sang xem tất cả thông báo
+        // Lấy flag từ session
+        var flag = "{{ session('flag', 'analysis') }}";
+        if(flag === 'noti'){
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('.list-item').eq(5).trigger('click');
+                }, 500); // Adjust the delay as needed
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
+            });
+
+            console.log(flag);
+        }else if(flag === 'analysis'){
+            $(document).ready(function() {
+                setTimeout(function() {
+                    $('.list-item').eq(4).trigger('click');
+                }, 500); // Adjust the delay as needed
+            });
+
+            $(document).ajaxComplete(function() {
+                setTimeout(function() {
+                    $('#content').show(); // Show the content
+                }, 100); // Delay of 1 second
+            });
+            
+        }
     </script>
 @endsection

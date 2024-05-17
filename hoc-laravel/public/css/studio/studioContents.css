@@ -1,0 +1,37 @@
+button:hover {
+    cursor: pointer;
+}
+
+.content__title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 32px 0px;
+}
+
+.content__option {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+}
+
+.content__option--item {
+    margin: 0px 42px 0px 0px;
+    padding: 8px 0px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.content__option--item:hover {
+    cursor: pointer;
+}
+
+.selected {
+    border-bottom: solid 3px #3ea6ff;
+    color: #3ea6ff;
+}
+
+
+.content__body {
+
+}
+

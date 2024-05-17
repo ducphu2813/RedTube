@@ -34,7 +34,8 @@
   box-shadow: none!important;
 }
 #body-comment{
-  display: flex;
+    display: flex;
+    margin-bottom: 30px;
 }
 
 #comment #user-comment-info{

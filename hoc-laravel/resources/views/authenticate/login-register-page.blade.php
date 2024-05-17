@@ -142,6 +142,8 @@
                     dataType: 'json', //chuyển dữ liệu về dạng json
 
                     success: function(response) {
+
+                        console.log(response);
                         if (response.status === 200) {
                             //khi đăng ký thành công
 
@@ -175,10 +177,6 @@
                                 var invalidField = document.getElementById('register_' + field).nextElementSibling;
                                 invalidField.innerText = response.message[field];
                             });    
-                        }
-                        if (response.status === 200) {
-                            //khi đăng ký thành công
-                            window.location.href = '{{ route('login-register') }}';
                         }
                     }
                 });

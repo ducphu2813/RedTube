@@ -4,15 +4,17 @@
     </div>
 
     {{-- Chổ này cho comment-reply-item --}}
-    <div class="show-comment">
-        @for ($i = 0; $i < 2; $i++)
-            @component('comments.comment-reply-item')
+    {{--show tất cả reply của 1 comment--}}
+    <div class="show-comment" id="reply-section-{{ $comment->comment_id }}">
+
+        @foreach ($replies as $reply)
+            @component('comments.comment-reply-item', ['reply' => $reply])
             @endcomponent
-        @endfor
+        @endforeach
     </div>
 
-</div>
+    <script>
+        // Xử lý nút phản hồi
 
-<script>
-    // Xử lý nút phản hồi
-</script>
+    </script>
+</div>

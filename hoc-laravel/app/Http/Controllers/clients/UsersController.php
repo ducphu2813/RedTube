@@ -10,14 +10,23 @@ use App\Models\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\NotFoundExceptionInterface;
 
 class UsersController extends Controller{
 
 
     public function index(){
         return view('users.list-user');
+    }
+
+    //check login .....
+    public function checkLogin(Request $request){
+
+        if(!$request->session()->has('loggedInUser')){
+            return response()->json(['status' => 'not_logged_in']);
+        }
+        else{
+            return response()->json(['status' => 'logged_in']);
+        }
     }
 
     //show form login register
@@ -93,6 +102,8 @@ class UsersController extends Controller{
         $data = [
             'user' => Users::getUserById(session('loggedInUser')),
         ];
+
+        $user = Users::getUserById(session('loggedInUser'));
 
         //tất cả record premium của user
         $data['all_premium'] = PremiumRegistration::getAllPremiumRegistrationsByUser(session('loggedInUser'));

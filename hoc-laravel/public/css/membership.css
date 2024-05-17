@@ -2,20 +2,23 @@
 
 .package-wrapper {
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     min-height: 100%;
     flex-wrap: wrap;
+    margin: 33px 0 0 33px;
 }
 
 .package-container {
     display: flex;
-    width: 20%;
+    width: 22%;
     flex-direction: column;
     justify-content: space-between;
     margin: 15px;
     padding: 20px;
     height: 300px;
     border-radius: 20px;
+    background-color: #ccc;
+    color: #000;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Adjusted this line */
 }
 
@@ -51,4 +54,37 @@
     opacity: .9;
     transform: scale(1.1);
     transition: .2s;
+}
+
+/* Membership registration */
+.regis-membership-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.regis-membership-container{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #dedede;
+    padding: 10px 0;
+}
+
+.regis-membership-name,
+.regis-membership-dura,
+.regis-membership-price,
+.regis-membership-btn{
+    flex: 1;
+    text-align: center;
+}
+
+.regis-membership-name{
+
+}
+
+.regis-membership-dura{
+
+}
+
+.regis-membership-btn{
+
 }

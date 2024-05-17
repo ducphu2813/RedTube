@@ -13,12 +13,45 @@
         </div>
 
         <div class="pre-share-quantity">
-            <h5>Số lượng người được share</h5>
+            <h5>Thông tin chi tiết</h5>
         </div>
     </div>
 
-    @foreach($listShares as $share)
-        @component('premium.premiumShareItem', ['share'=>$share])
+    {{-- Chổ này đổ data của gói premium --}}
+    @for ($i = 0; $i < 5; $i++)
+        @component('premium.premiumShareItem')
         @endcomponent
-    @endforeach
+    @endfor
 </div>
+
+<script>
+    // Hiển thị danh sách người được chia sẻ premium
+    // Kèm theo nút đóng modal
+    $(document).ready(function() {
+
+        //nút coi chi tiết share
+        $('.btn-detail-share').click(function() {
+            // console.log('click')
+            $.ajax({
+                url: '{{ route('clients.modalPremium') }}',
+                type: 'GET',
+                success: function(data) {
+                    $('#modal').append(data);
+                    $('.modal-share-premium').css('display', 'flex');
+                    $('.close-modal').click(function() {
+                        $('#modal').empty();
+                    });
+                }
+            })
+        });
+
+        // Cái này click bất kì ngoài modal thì ẩn modal đi
+        $(document).click(function(event) {
+            var target = $(event.target);
+            if(!target.closest('.modal-share-content').length && $('.modal-share-premium').is(":visible")) {
+                $('#modal').empty();
+            }
+        });
+
+    });
+</script>

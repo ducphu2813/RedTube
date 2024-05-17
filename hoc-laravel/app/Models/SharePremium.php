@@ -26,6 +26,7 @@ class SharePremium extends Model
         'created_date',
     ];
 
+    //kiểm tra user có đang sử dụng gói premium được share còn hạn hay không
     public static function isUserSharedPremium(int $userId): bool
     {
         return self::query()
@@ -37,6 +38,7 @@ class SharePremium extends Model
             ->exists();
     }
 
+    //lấy tất cả gói premium được share cho user và đã hết hạn
     public static function getExpiredSharedPremiumsByUser(int $userId)
     {
         $currentDate = date('Y-m-d H:i:s');

@@ -21,19 +21,23 @@
             </div>
             <ul>
                 <li>
-                    <img src="{{ asset('resources/img/video.svg') }}" /><a href="">Video</a>
+                    <img src="{{ asset('resources/img/video.svg') }}" />
+                    <a href="{{ route('admin.videoManager') }}">Video</a>
                 </li>
                 <li>
-                    <img src="{{ asset('resources/img/user.svg') }}" /><a href="">Người dùng</a>
+                    <img src="{{ asset('resources/img/user.svg') }}" />
+                    <a href="{{ route('admin.userManager') }}">Người dùng</a>
                 </li>
                 {{-- <li>
                     <img src="{{ asset('resources/img/chat.svg') }}" /><a href="">Bình luận</a>
                 </li> --}}
-                <li>
-                    <img src="{{ asset('resources/img/videotest.svg') }}" /><a href="">Kiểm duyệt</a>
+                <li id="check-item">
+                    <img src="{{ asset('resources/img/videotest.svg') }}" />
+                    <a href="{{ route('admin.checkManager') }}">Kiểm duyệt</a>
                 </li>
                 <li>
-                    <img src="{{ asset('resources/img/analytics.svg') }}" /><a href="">Thống kê</a>
+                    <img src="{{ asset('resources/img/analytics.svg') }}" />
+                    <a href="{{ route('admin.showChart') }}">Thống kê</a>
                 </li>
             </ul>
         </div>
@@ -63,6 +67,10 @@
 
             </div>
         </div>
+
+        <div id="admin-modal">
+            
+        </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -70,75 +78,20 @@
         <script>
             $(document).ready(function() {
                 $('#leftmenu li').on('click', function() {
-                    var index = $(this).index();
-                    if (index == 0) {
-                        $.ajax({
-                            url: '{{ route('admin.videoManager') }}',
-                            type: 'GET',
-                            dataType: 'html',
-                            success: function(data) {
-                                $('#leftsection').html(data);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                        event.preventDefault();
-                    } else if (index == 1) {
-                        $.ajax({
-                            url: '{{ route('admin.userManager') }}',
-                            type: 'GET',
-                            dataType: 'html',
-                            success: function(data) {
-                                $('#leftsection').html(data);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                        event.preventDefault();
-                    } 
-                    // else if (index == 2) {
-                    //     $.ajax({
-                    //         url: '{{ route('admin.commentManager') }}',
-                    //         type: 'GET',
-                    //         dataType: 'html',
-                    //         success: function(data) {
-                    //             $('#leftsection').html(data);
-                    //         },
-                    //         error: function(error) {
-                    //             console.log(error);
-                    //         }
-                    //     });
-                    //     event.preventDefault();
-                    // } 
-                    else if (index == 2) {
-                        $.ajax({
-                            url: '{{ route('admin.checkManager') }}',
-                            type: 'GET',
-                            dataType: 'html',
-                            success: function(data) {
-                                $('#leftsection').html(data);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                        event.preventDefault();
-                    } else if (index == 3) {
-                        $.ajax({
-                            url: '{{ route('admin.showChart') }}',
-                            type: 'GET',
-                            dataType: 'html',
-                            success: function(data) {
-                                $('#leftsection').html(data);
-                            },
-                            error: function(error) {
-                                console.log(error);
-                            }
-                        });
-                        event.preventDefault();
-                    }
+                    event.preventDefault();
+                    var link = $(this).find('a').attr('href');
+                    console.log(link);
+                    $.ajax({
+                        url: link,
+                        type: 'GET',
+                        dataType: 'html',
+                        success: function(data) {
+                            $('#leftsection').html(data);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
                 });
             });
         </script>

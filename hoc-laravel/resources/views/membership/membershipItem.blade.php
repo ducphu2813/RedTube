@@ -10,7 +10,7 @@
     <div class="package-description">
         <p>{{ $ms->description }}</p>
     </div>
-
+    
     <div class="package-btn">
         <button class="package-btn-item package-edit">
             <i class="fa-solid fa-pen-to-square"></i>
