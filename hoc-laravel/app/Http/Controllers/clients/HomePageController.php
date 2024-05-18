@@ -32,7 +32,8 @@ class HomePageController extends Controller
                 [
                     'videos' => $videos,
                     'currentUserProfile' => null,
-                    'followings' => null
+                    'followings' => null,
+                    'flag' => 2
                 ]
             );
         }
@@ -70,7 +71,8 @@ class HomePageController extends Controller
                 'currentUserProfile' => $currentUserProfile,
                 'followings' => $followings,
                 'notifications' => $notifications,
-                'listCate' => $categories
+                'listCate' => $categories,
+                'flag' => 2
             ]
         );
     }
@@ -93,6 +95,7 @@ class HomePageController extends Controller
         $videoCounts = $user->videosCount();
         $isFollowing = $user->isFollowing($logged_user_id);
 
+
         $currentUserProfile = Users::getUserById(session('loggedInUser'));
 
         return view('main.userChannel',
@@ -109,10 +112,16 @@ class HomePageController extends Controller
     public function userChannelVideos()
     {
         $data = request()->all();
+        $categories = Category::getAll();
         $user_id = $data['user_id'] ?? session('loggedInUser');
         $videos = Video::where('user_id', $user_id)->where('active', 1)->get();
 
-        return view('video.video-in-main-wrapper', ['videos' => $videos]);
+        return view('video.video-in-main-wrapper',
+            [
+                'videos' => $videos,
+                'listCate' => $categories,
+                'flag' => 1
+            ]);
     }
 
     public function userChannelPlaylists() {

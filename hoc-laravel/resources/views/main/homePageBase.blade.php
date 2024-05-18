@@ -273,7 +273,7 @@
 
 {{-- Chổ này là danh sách video được gợi ý khi mới vào --}}
 @section('content')
-    @component('video.video-in-main-wrapper', ['videos' => $videos, 'listCate' => $listCate])
+    @component('video.video-in-main-wrapper', ['videos' => $videos, 'listCate' => $listCate, 'flag' => 2])
     @endcomponent
 @endsection
 

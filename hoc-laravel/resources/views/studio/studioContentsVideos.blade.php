@@ -80,9 +80,9 @@
 
             <div class="item__view">{{ $video->view }}</div>
 
-            <div class="item__comment">666</div>
+            <div class="item__comment">{{ $video->getCommentsCount() }}</div>
 
-            <div class="item__like">666</div>
+            <div class="item__like">{{ $video->getLikesCount() }}</div>
         </li>
     @endforeach
 </ul>

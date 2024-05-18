@@ -138,7 +138,7 @@
                 {{-- thì cho coi vide0--}}
                 @if( (!$video->display_mode || $video->is_approved == 0 || !$video->active || $video->is_approved == null) && (session('loggedInUser') != $video->user->user_id))
                     {{-- video bị ẩn hoặc chưa được duyệt hoặc bị khóa --}}
-                    <div class="membership-info">
+                    <div class="error-info">
                         Không tìm thấy video
                     </div>
 
@@ -156,14 +156,14 @@
                     {{-- Các trường hợp không thể coi video--}}
                     {{-- video là video dành cho thành viên và người đang đăng nhập chưa tham gia membership--}}
                     {{-- chưa đăng nhập--}}
-                    <div class="membership-info">
+                    <div class="error-info">
                         Video dành cho thành viên
                         Hãy đăng ký tham gia làm thành viên của kênh này để xem video đặc quyền riêng
                         <button class="join-btn">Tham gia</button>
                     </div>
                 @endif
                 <div class="tag">
-                    <a href="">#Music</a> <a href="">#Trending</a>
+
                 </div>
                 <h3 id="title-video">{{ $video->title }}</h3>
                 <div class="play-video-infor">

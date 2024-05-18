@@ -280,4 +280,11 @@ class Video extends Model
             ->where('reaction', 0)
             ->count();
     }
+
+    //Hàm lấy số comment
+    public function getCommentsCount()
+    {
+        return $this->hasMany(Comment::class, 'video_id')
+            ->count();
+    }
 }

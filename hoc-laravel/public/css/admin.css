@@ -699,7 +699,8 @@ img.logo {
 }
 
 .video-category-item-clicked {
-	border-color: rgb(0, 81, 255) !important;
+    color: white;
+    background: rgb(245 70 70) !important;
 }
 
 .video-category-btn-list {

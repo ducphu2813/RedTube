@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="{{ asset('css/videoInMain.css') }}">
 <div class="video-category-filter">
-    <div class="video-category-container">
-        @foreach ($listCate as $cate)
-        <div class="video-category-item" id="{{ $cate->category_id }}">{{ $cate->name }}</div>
-        @endforeach
-
-    </div>
+    @if(($flag) == 2)
+        <div class="video-category-container">
+            @foreach ($listCate as $cate)
+                <div class="video-category-item" id="{{ $cate->category_id }}">{{ $cate->name }}</div>
+            @endforeach
+        </div>
+    @endif
 
     {{-- <div class="video-category-btn-list">
         <button class="video-category-btn-item btn btn-danger" id="cancel-cate">Hủy</button>

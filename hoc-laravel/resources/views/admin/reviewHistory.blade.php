@@ -16,7 +16,12 @@
     @foreach ($reviewList as $rv)
         <div class="review-all-item" id=" {{ $rv->review_id }} ">
             <div class="review-all-avt">
-                <img src="{{ $rv->video->user->picture_url }}" alt="">
+                @if($rv->video->user->picture_url)
+                    <img src="{{ asset('storage/img/' . $rv->video->user->picture_url) }}" alt="">
+                @else
+
+                    <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="">
+                @endif
                 <div>{{ $rv->video->user->user_name }}</div>
             </div>
             <div class="review-all-info">
@@ -24,7 +29,8 @@
                 {!! $rv->review_status == 1 ? 'Đã duyệt vào lúc ' . $rv->review_time : 'Lý do: ' . $rv->note . ' ' . $rv->review_time!!}
             </div>
             <div class="review-all-thumb">
-                <img src="{{ $rv->video->thumbnail_path }}" alt="">
+                <img src="{{ asset('storage/thumbnail/' . $rv->video->thumbnail_path) }}" alt="">
+
             </div>
         </div>
     @endforeach

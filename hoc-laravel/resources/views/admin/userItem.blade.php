@@ -2,13 +2,20 @@
 <div class="item-container" id="{{ $user->user_id }}">
     <div class="item-account">
         <a href="">
-            <img src="{{ $user->picture_url }}" alt="" class="logo">
+
+            @if ($user->picture_url)
+                <img src="{{ asset('storage/img/' . $user->picture_url) }}" alt="" class="logo">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" class="logo">
+            @endif
+
         </a>
     </div>
     <div class="item-name">
         <p>{{ $user->user_name }}</p>
     </div>
     <div class="item-role">
+
         <select name="" id="user-role">
             <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Người dùng</option>
             <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>Người kiểm duyệt</option>

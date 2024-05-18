@@ -100,7 +100,7 @@ Route::prefix('admin')->middleware('CheckLogin')->middleware('CheckPermissionMid
 
     // --------------------Phần này của Dương --------------------//
     // Show all
-    Route::get('adminLayout', [AdminController::class, 'showAll'])->name('admin.all');
+    Route::get('adminLayout', [AdminController::class, 'showAll'])->middleware('CheckLogin')->name('admin.all');
     // Show video
     Route::get('videoManager', [AdminController::class, 'showVideoList'])->name('admin.videoManager');
     Route::post('changeStatusVideo', [AdminController::class, 'changeStatusVideo'])->name('admin.changeStatusVideo');

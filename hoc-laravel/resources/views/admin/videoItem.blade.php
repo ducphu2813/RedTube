@@ -2,13 +2,17 @@
 <div class="item-container" id="{{ $video->video_id }}">
     <div class="item-account">
         <a href="">
-            <img src="{{ asset('resources/img/ocean.jpg') }}" alt="" class="logo">
+
+            @if ($video->user->picture_url)
+                <img src="{{ asset('storage/img/' . $video->user->picture_url) }}" alt="" class="logo">
+            @else
+                <img src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" class="logo">
+            @endif
+
         </a>
     </div>
     <div class="item-thumb">
-        <a href="">
-            <img src="{{ $video->thumbnail_path }}" alt="" class="thumb">
-        </a>
+        User: {{ $video->user->user_name }}
     </div>
     <div class="item-title">
         <p>{{ $video->title }}</p>
