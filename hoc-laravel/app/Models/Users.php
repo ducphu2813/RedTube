@@ -94,10 +94,6 @@ class Users extends Model
         return $this->hasMany(Comment::class, 'user_id');
     }
 
-    //     public static function lastInsertId(){
-    //         return self::query()->latest('user_id')->first();
-    //     }
-
     public function videoNoti(): HasMany
     {
         return $this->hasMany(VideoNotifications::class, 'user_id');
@@ -296,6 +292,7 @@ class Users extends Model
         // Mảng ánh xạ các ký tự tiếng Việt có dấu với các ký tự Latin không dấu
         $vietnameseChars = array('à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ằ', 'ắ', 'ẳ', 'ẵ', 'ặ', 'â', 'ầ', 'ấ', 'ẩ', 'ẫ', 'ậ', 'đ', 'è', 'é', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ề', 'ế', 'ể', 'ễ', 'ệ', 'ì', 'í', 'ỉ', 'ĩ', 'ị', 'ò', 'ó', 'ỏ', 'õ', 'ọ', 'ô', 'ồ', 'ố', 'ổ', 'ỗ', 'ộ', 'ơ', 'ờ', 'ớ', 'ở', 'ỡ', 'ợ', 'ù', 'ú', 'ủ', 'ũ', 'ụ', 'ư', 'ừ', 'ứ', 'ử', 'ữ', 'ự', 'ỳ', 'ý', 'ỷ', 'ỹ', 'ỵ');
         $latinChars = array('a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'y', 'y', 'y', 'y', 'y');
+        //Làm kiểu này rất dở, cần phải tối ưu hơn
 
         return $users->filter(function ($user) use ($user_name, $vietnameseChars, $latinChars) {
             // thay thế các ký tự tiếng việt có dấu bằng các ký tự latin

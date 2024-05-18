@@ -39,14 +39,6 @@
                 success: function(response) {
                     console.log(response);
                     $('#video-search-wrapper').html(response);
-                    // if (response == "") {
-                    //     $('#videoWrapper').html(
-                    //         "<h2 style='text-align: center; margin-top: 50px'>Không có dữ liệu</h2>"
-                    //         );
-                    // }
-                    // console.log(response.videos);
-                    // console.log(response);
-                    // bindItemBtnChange(); // Gán lại sự kiện sau khi cập nhật nội dung HTML
                 },
                 error: function(response) {
                     console.log(response);

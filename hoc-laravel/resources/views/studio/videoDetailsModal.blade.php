@@ -198,16 +198,6 @@
                     processData: false,
                     contentType: false,
                     dataType: 'json',
-                    {{--data: {--}}
-                    {{--    video_id: $('#video_id').val(),--}}
-                    {{--    title: $('#title').val(),--}}
-                    {{--    description: $('#description').val(),--}}
-                    {{--    video_path: $('#video_path').val(),--}}
-                    {{--    thumbnail_path: $('#thumbnail_path').val(),--}}
-                    {{--    display_mode: $('#display_mode').val(),--}}
-                    {{--    _token: '{{ csrf_token() }}'--}}
-                    {{--},--}}
-                    {{--dataType: 'html',--}}
                     success: function(data) {
                         console.log(data);
                         $('#modal').empty();

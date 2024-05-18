@@ -51,26 +51,6 @@
         @endif
     </div>
 </div>
-{{-- 
-<div class="modal-pl">
-    <div class="modal-info-wrapper">
-        <div id="modal-info-header">
-            <h4>Tạo danh sách phát mới</h4>
-        </div>
-
-        <div id="modal-info-content">
-            <div class="modal-info-content--item">
-                <label for="modal-name">Tên danh sách phát</label>
-                <input type="text" name="modal-name" id="modal-name" placeholder="Thêm tiêu đề">
-            </div>
-        </div>
-
-        <div id="modal-info-btn">
-            <button class="modal-btn" id="modal-info-btn--cancel">Hủy</button>
-            <button class="modal-btn" id="modal-info-btn--create">Tạo</button>
-        </div>
-    </div>
-</div> --}}
 
 <script>
     $('#modal__playlistDetails').ready(function() {
@@ -78,7 +58,7 @@
             $('#modal').empty();
             event.preventDefault();
         });
-    
+
         $('#save--btn').on('click', function(event) {
             if ('{{ $flag }}' == 'edit') {
                 $.ajax({

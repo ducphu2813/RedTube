@@ -25,10 +25,6 @@
         @endforeach
     @endif
 
-{{--    @for ($i = 0; $i < 5; $i++)--}}
-{{--        @component('premium.premiumShareItem')--}}
-{{--        @endcomponent--}}
-{{--    @endfor--}}
 </div>
 
 <script>

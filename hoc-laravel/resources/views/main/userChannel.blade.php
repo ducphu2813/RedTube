@@ -62,23 +62,6 @@
 
                 @endif
 
-{{--                @if ($logged_user_id != $user->user_id)--}}
-{{--                    @if ($isFollowing == true)--}}
-{{--                        <button class="btn" id="unsubcribe--btn">--}}
-{{--                            <i class="fa-solid fa-bell"></i>--}}
-{{--                            Hủy đăng ký--}}
-{{--                        </button>--}}
-{{--                        @else--}}
-{{--                        <button class="btn" id="subcribe--btn">--}}
-{{--                            <i class="fa-solid fa-bell"></i>--}}
-{{--                            Đăng ký--}}
-{{--                        </button>--}}
-{{--                     @endif--}}
-
-{{--                     <button class="btn" id="join--btn">--}}
-{{--                        Tham gia--}}
-{{--                    </button>--}}
-{{--                @endif--}}
             </div>
 
         </div>

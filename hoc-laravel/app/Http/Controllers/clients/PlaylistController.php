@@ -11,52 +11,6 @@ use Illuminate\Http\Request;
 
 class PlaylistController extends Controller
 {
-
-    // public function index()
-    // {
-    // }
-
-    // public function playlistDetail($id)
-    // {
-    // }
-
-    // public function updateplaylistPlaylist(Request $request)
-    // {
-    //     $playlistId = $request->input('playlist_id');
-    //     $playlistId = $request->input('playlist_id');
-    //     $isChecked = $request->input('is_checked');
-
-    //     $playlistplaylist = new Playlistplaylist();
-
-    //     //cần kiểm tra xem playlist_id và playlist_id có tồn tại không
-
-    //     if ($isChecked == 'true') {
-    //         if ($playlistplaylist->addplaylistToPlaylist($playlistId, $playlistId)) {
-    //             return response()->json([
-    //                 'status' => 200,
-    //                 'message' => 'Thêm playlist vào playlist thành công'
-    //             ]);
-    //         } else {
-    //             return response()->json([
-    //                 'status' => 400,
-    //                 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau'
-    //             ]);
-    //         }
-    //     } else {
-    //         if ($playlistplaylist->removeplaylistFromPlaylist($playlistId, $playlistId)) {
-    //             return response()->json([
-    //                 'status' => 200,
-    //                 'message' => 'Xóa playlist khỏi playlist thành công'
-    //             ]);
-    //         } else {
-    //             return response()->json([
-    //                 'status' => 400,
-    //                 'message' => 'Đã có lỗi xảy ra, vui lòng thử lại sau'
-    //             ]);
-    //         }
-    //     }
-    // }
-
     public function get() {
 
     }

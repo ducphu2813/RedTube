@@ -48,34 +48,9 @@
         <button class="save--btn">Lưu</button>
     </div>
 
-    <!-- <form class="content__body-pwd">
-        <div class="content__title w-100">Mật khẩu</div>
-        <div class="w-100">
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Mật khẩu</div>
-                    <input type="text" class="form-input">                
-                </div>
-            </div>
-
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Mật khẩu mới</div>
-                    <input type="text" class="form-input">                
-                </div>
-            </div>
-
-            <div class="w-100">
-                <div class="form-group">
-                    <div class="form-label">Xác nhận mật khẩu</div>
-                    <input type="text" class="form-input">                
-                </div>
-            </div>
-        </div>
-    </form> -->
 </form>
 
-<script>    
+<script>
     document.addEventListener("DOMContentLoaded", function() {
         const imageInput = document.getElementById("imageInput");
         const imgWrap = document.querySelector(".img__wrap img");

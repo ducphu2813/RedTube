@@ -3,7 +3,6 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\CategoryController;
 use App\Http\Controllers\admin\DashBoardController;
-use App\Http\Controllers\admin\ProductsController;
 use App\Http\Controllers\clients\CommentController;
 use App\Http\Controllers\clients\FollowController;
 use App\Http\Controllers\clients\HistoryController;
@@ -14,7 +13,6 @@ use App\Http\Controllers\clients\MemberShipController;
 use App\Http\Controllers\clients\PaymentController;
 use App\Http\Controllers\clients\PlaylistController;
 use App\Http\Controllers\clients\PremiumController;
-use App\Http\Controllers\clients\SchoolsController;
 use App\Http\Controllers\clients\StudioController;
 use App\Http\Controllers\clients\ShareNotiController;
 use App\Http\Controllers\clients\UsersController;
@@ -53,42 +51,6 @@ Route::middleware('CheckLogin')->prefix('api/playlists')->group(function() {
 });
 
 Route::middleware('CheckLogin')->get('/', [HomeController::class, 'index'])->name('home');
-
-//client route, school
-Route::middleware('CheckLogin')->prefix('schools')->group(function(){
-
-    //lấy ra danh sách trường học(GET)
-    Route::get('/', [SchoolsController::class, 'index'])->name('schools.index');
-
-    //lấy ra 1 trường học theo id(GET) áp dụng cho show form cập nhật thông tin trường học(GET)
-    Route::get('/{id}', [SchoolsController::class, 'getSchool'])
-        ->name('schools.detail')
-        ->where('id', '[0-9]+');
-
-    //show form cập nhật thông tin trường học(GET)
-    Route::get('/edit/{id}', [SchoolsController::class, 'showFormUpdateSchool'])
-        ->name('schools.edit')
-        ->where('id', '[0-9]+');
-
-    //xử lý cập nhật thông tin trường học(PUT)
-    Route::put('/edit/{id}', [SchoolsController::class, 'handleUpdateSchool'])
-        ->name('schools.update')
-        ->where('id', '[0-9]+');
-
-    //show form thêm mới trường học(GET)
-    Route::get('/add', [SchoolsController::class, 'showFormAddSchool'])
-        ->name('schools.add');
-
-    //xử lý thêm mới trường học(POST)
-    Route::post('/add', [SchoolsController::class, 'handleAddSchool'])
-        ->name('schools.store');
-
-    //xóa trường học(DELETE)
-    Route::delete('/delete/{id}', [SchoolsController::class, 'deleteSchool'])
-        ->name('schools.delete')
-        ->where('id', '[0-9]+');
-});
-
 
 //admin route
 Route::prefix('admin')->middleware('CheckLogin')->middleware('CheckPermissionMiddleware')->group(function (){
@@ -428,65 +390,3 @@ Route::get('payment-page', [PaymentController::class, 'showPayment'])
 //xử lý thanh toán
 Route::post('payment', [PaymentController::class, 'handlePayment'])
     ->name('payment.handle');
-
-
-//
-//Route::get('/category/{category}', [HomeController::class, 'getCategory'])->name('category');
-//
-//Route::get('/about', function () {
-//    return 'Among us';
-//});
-//
-//Route::get('/show-form', function(){
-//   return view('name');
-//})->name('show-form');
-//
-//Route::post('/name', function(Request $request){
-//    $name = $request->input('name');
-//   return 'Phương thức post và mày tên là '.$name;
-//});
-
-
-// group route
-//Route::prefix('users')->middleware('CheckPermissionMiddleware')->group(function(){
-//
-//    Route::get('/', function(){
-//        return 'Đây là trang danh sách user';
-//    });
-//
-//    Route::get('/{id}', function($id){
-//        return 'Đây là trang chi tiết user có id là '.$id;
-//    })->where('id', '[0-9]+');
-//
-//    Route::get('/{id}/invoice', function($id){
-//        return 'Tìm tất cả hóa đơn của user có id là '.$id;
-//    })->where('id', '[0-9]+');
-//
-//    Route::get('/{id}/invoice/{invId?}', function($id, $invId = null){
-//        return 'Tìm hóa đơn '.$invId. ' của user có id là '.$id;
-//    })->where('id', '[0-9]+')->where('invId', '[0-9]+');
-//
-//    Route::get('/show-form', function(){
-//        return view('name');
-//    })->name('users.show-form');
-//
-//});
-//
-//Route::get('/news/{category}-{id}', function($category, $id){
-//    return 'Đây là trang tin tức thuộc chuyên mục '.$category. ' có id là '.$id;
-//})->where(
-//    [
-//        'category' => '.+',
-//        'id' => '[0-9]+'
-//    ])->name('news.detail');
-
-//Route::put('/name', function(Request $request){
-//    $name = $request->input('name');
-//   return 'Phương thức put và mày tên là '.$name;
-//});
-
-//Route::match(['get', 'post', 'put'], '/name', function(Request $request){
-//    $name = $request->input('name');
-//    $method = $request->method();
-//    return 'Phương thức '. $method .' và mày tên là '.$name;
-//});

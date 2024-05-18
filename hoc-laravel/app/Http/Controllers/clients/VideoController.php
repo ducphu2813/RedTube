@@ -282,11 +282,6 @@ class VideoController extends Controller{
 
         $categories = Category::getAll();
 
-//        if(isset($data['category_id'])){
-//            $videos = Video::getVideoByCategoryId($data['category_id']);
-//            return view('video.video-search', ['videos' => $videos]);
-//        }
-
         $videos = Video::searchVideo($data['searchValue']);
         return view('video.video-search', ['videos' => $videos, 'listCate' => $categories]);
     }

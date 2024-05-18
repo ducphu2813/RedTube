@@ -20,11 +20,6 @@ class Category extends Model
         'name',
     ];
 
-    // public function video()
-    // {
-    //     return $this->belongsToMany(Video::class, 'video_category', 'category_id', 'video_id');
-    // }
-
     public function getVideos(): HasManyThrough{
 
         return $this->hasManyThrough(

@@ -8,11 +8,6 @@
         </div>
     @endif
 
-    {{-- <div class="video-category-btn-list">
-        <button class="video-category-btn-item btn btn-danger" id="cancel-cate">Hủy</button>
-        <button class="video-category-btn-item btn btn-success" id="find-by-cate">Xem kết quả</button>
-    </div> --}}
-
 </div>
 <div id="video-main-wrapper">
     @foreach($videos as $video)
@@ -21,8 +16,6 @@
     @endforeach
 </div>
 
-{{-- Chổ này cho script control các video-item --}}
-{{-- Hình như làm random video chổ này --}}
 <script>
 
 </script>

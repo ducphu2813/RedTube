@@ -2,8 +2,6 @@
 <div id="user-comment-reply">
     <div>
         <a id="user-comment-info" href="">
-{{--            <img src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"--}}
-{{--                alt="">--}}
 
             @if($reply->user->picture_url)
                 <img src="{{ asset('storage/img/' . $reply->user->picture_url) }}" alt="" height="40"

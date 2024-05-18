@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    Gói của mày không còn chia sẻ được nữa
+    Gói của bạn không còn chia sẻ được nữa
 </body>
 </html>

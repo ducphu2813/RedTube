@@ -50,9 +50,7 @@
                             Đã hủy
                         </div>
                         <div>
-{{--                            <button class="del-share" obj_id="{{ $shared_premium->share_id }}" receiver_id="{{ $shared_premium->user_id }}" obj="canceled_share">--}}
-{{--                                <i class="fa-solid fa-xmark"></i>--}}
-{{--                            </button>--}}
+
                         </div>
                     </div>
                 @endif
@@ -81,23 +79,6 @@
                 </div>
 
             @endforeach
-
-{{--            @for ($i = 0; $i < 6; $i++)--}}
-{{--                --}}{{-- Cái này là từng item --}}
-{{--                <div class="modal-share-body--item">--}}
-{{--                    <div class="modal-share-body--item--name">--}}
-{{--                        Nguyễn Văn A--}}
-{{--                    </div>--}}
-{{--                    <div class="noti-invate">--}}
-{{--                        Chưa chấp nhận--}}
-{{--                    </div>--}}
-{{--                    <div>--}}
-{{--                        <button class="del-share">--}}
-{{--                            <i class="fa-solid fa-xmark"></i>--}}
-{{--                        </button>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endfor--}}
         </div>
     </div>
 </div>

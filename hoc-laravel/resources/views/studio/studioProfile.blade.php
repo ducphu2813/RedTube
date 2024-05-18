@@ -125,13 +125,6 @@
     $('.save--btn').on('click', function(event) {
         event.preventDefault();
 
-        // const user_id = $('#user_id').val();
-        // const user_name = $('input[name="user_name"]').val();
-        // const email = $('input[name="email"]').val();
-        // const channel_name = $('input[name="channel_name"]').val();
-        // const description = $('textarea[name="description"]').val();
-        // var file = $('input[name="picture_url"]')[0].files[0];
-
         let formData = new FormData();
         formData.append('user_id', $('#user_id').val());
         formData.append('user_name', $('input[name="user_name"]').val());
@@ -146,12 +139,6 @@
             var file = clonedFileInput.files[0];
             formData.append('picture_url', file);
         }
-
-        // console.log(file);
-        // console.log(url);
-        // console.log(fileInput);
-        // console.log(formData);
-
 
         $.ajax({
             url: '{{ route('studio.profileEdit') }}',

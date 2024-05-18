@@ -25,12 +25,6 @@ class ShareNotiController extends Controller
             $noti->premiumRegistration = $noti->registration();
         }
 
-//        $data['noti_id'] = $noti->noti_id;
-//        $data['sender'] = $noti->sender;
-//        $data['premium_registration_id'] = $noti->premium_registration_id;
-//        $data['status'] = $noti->status;
-//        $data['created_date'] = $noti->created_date;
-
         return response()->json(['data' => $notiList]);
     }
 }

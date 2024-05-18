@@ -186,10 +186,6 @@ class UsersController extends Controller{
     public function addUser(){
         $data = request()->all();
 
-//        echo '<pre>';
-//        print_r($data);
-//        echo '</pre>';
-
         unset($data['_token'], $data['_method']);
 
         $user = new Users();

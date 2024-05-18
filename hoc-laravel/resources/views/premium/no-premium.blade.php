@@ -8,6 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-    Đéo có premium đâu mà đòi share
+    Bạn chưa có Premium, hãy nâng cấp Premium để sử dụng tính năng này
+    <a href="{{ route('payment.payment-page') }}">Nâng cấp Premium</a>
 </body>
 </html>

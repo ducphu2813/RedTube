@@ -21,11 +21,6 @@
             @endcomponent
         @endforeach
 
-
-{{--        @for ($i = 0; $i < 20; $i++)--}}
-{{--            @component('video.playlist-in-video-item')--}}
-{{--            @endcomponent--}}
-{{--        @endfor--}}
     </span>
 
 </div>

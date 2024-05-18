@@ -27,7 +27,7 @@
 
 </div>
 
-{{-- Sờ cờ ríp xóa danh sách phát ở này --}}
+{{-- script xóa danh sách phát ở đậy --}}
 <script>
 
     $(document).ready(function() {
@@ -40,26 +40,6 @@
         //thêm sự kiện cho cả img và name
 
         $('.all-playlist-img, .all-playlist-name').click(function() {
-
-            //đừng xóa comment vì có thể sẽ cần coi lại để debug
-            // console.log('Chuyển trang thành phát danh sách');
-            // var hasVideos = $(this).closest('.all-playlist-item').data('has-videos') === 'true';
-            // if (!hasVideos) {
-            //     alert('Danh sách phát không có video nào');
-            //     return;
-            // }
-            //
-            //
-            // var firstVideoId = $(this).closest('.all-playlist-item').data('first-video-id');
-            // if (!firstVideoId) {
-            //     alert('Không tìm thấy video đầu tiên trong danh sách phát.');
-            //     return;
-            // }
-            // console.log(firstVideoId);
-            // var playlistId = $(this).closest('.all-playlist-item').attr('id');
-            // console.log(playlistId);
-            // window.location.href = '/playVideo/' + firstVideoId + '/' + playlistId;
-
 
             var hasVideosBool = $(this).closest('.all-playlist-item').data('has-videos');
             console.log('hasVideos:', hasVideosBool);
@@ -82,29 +62,4 @@
             window.location.href = '/playVideo/' + firstVideoId + '/' + playlistId;
         });
     });
-
-    //đừng xóa comment vì có thể sẽ cần coi lại để debug
-    //đây mới là event click vào danh sách phát
-    // $(document).on('click', '.all-playlist-img, .all-playlist-name', function() {
-    //
-    //     var hasVideosBool = $(this).closest('.all-playlist-item').data('has-videos');
-    //     console.log('hasVideos:', hasVideosBool);
-    //
-    //     var hasVideos = String(hasVideosBool) === 'true';
-    //     console.log(hasVideos);
-    //     if (!hasVideos) {
-    //         alert('Danh sách phát không có video nào');
-    //         return;
-    //     }
-    //
-    //     var firstVideoId = $(this).closest('.all-playlist-item').data('first-video-id');
-    //     console.log(firstVideoId);
-    //     if (!firstVideoId) {
-    //         alert('Không tìm thấy video đầu tiên trong danh sách phát.');
-    //         return;
-    //     }
-    //     var playlistId = $(this).closest('.all-playlist-item').attr('id');
-    //     console.log(playlistId);
-    //     window.location.href = '/playVideo/' + firstVideoId + '/' + playlistId;
-    // });
 </script>

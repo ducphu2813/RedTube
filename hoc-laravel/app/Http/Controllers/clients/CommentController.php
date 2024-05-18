@@ -50,11 +50,7 @@ class CommentController extends Controller{
             //route này để gắn vào form reply, phương thức post
             $data['reply_route'] = route('comments.reply.save');
             $data['csrf_token'] = csrf_token();
-//        echo "<pre>";
-//        print_r($data);
-//        echo "</pre>";
 
-//        echo route('comments.reply', ['comment_id' => 1]);
 
             //save comment
             $comment = [
@@ -72,14 +68,6 @@ class CommentController extends Controller{
 
             return response()->json($data);
         }
-
-
-
-//        echo "<pre>";
-//        print_r($data);
-//        echo "</pre>";
-
-//        Comment::saveComment($data);
     }
 
     //lưu comment trả lời
@@ -113,11 +101,6 @@ class CommentController extends Controller{
             return response()->json($data);
         }
 
-
-
-//        echo "<pre>";
-//        print_r($view);
-//        echo "</pre>";
     }
 
 

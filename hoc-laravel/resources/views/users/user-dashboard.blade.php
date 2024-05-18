@@ -182,24 +182,6 @@
         <h4><a href="{{ route('premium.noti') }}">Thông báo</a></h4>
     </div>
 
-{{--    <div class="video-list">--}}
-{{--        <h2>Danh sách video</h2>--}}
-{{--        <ul>--}}
-{{--            @if($user->videos->count() == 0)--}}
-{{--                <li>Không có video nào</li>--}}
-
-{{--            @else--}}
-{{--                @foreach($user->videos as $video)--}}
-{{--                    <li>--}}
-{{--                        <a href="{{ route('video.detail', ['video_id' => $video->video_id]) }}">{{ $video->title }}</a>--}}
-{{--                    </li>--}}
-{{--                @endforeach--}}
-
-{{--            @endif--}}
-
-{{--        </ul>--}}
-{{--    </div>--}}
-
     <a href="{{ route('auth.logout') }}">Đăng xuất</a>
 @endsection
 

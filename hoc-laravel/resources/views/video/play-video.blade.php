@@ -118,8 +118,6 @@
 
         {{-- phần icon user nhỏ phía trên bên phải --}}
         <div class="acc-box">
-            {{-- <img src="{{ asset('resources/img/user.png') }}" alt="" width="32" height="32"> --}}
-
             @if (session('loggedInUser') && $currentUserProfile->picture_url)
                 <img src="{{ asset('storage/img/' . $currentUserProfile->picture_url) }}" alt="" width="32"
                     height="32">
@@ -311,8 +309,6 @@
                     ])
                     @endcomponent
                 @endif
-                {{-- @component('video.playlist-in-video-wrapper'); --}}
-                {{-- @endcomponent --}}
 
                 {{-- Cái này là cái danh sách đề xuất video --}}
                 @component('video.video-hint-wrapper', ['relatedVideos' => $relatedVideos])

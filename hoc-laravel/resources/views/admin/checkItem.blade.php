@@ -2,7 +2,6 @@
 <div class="item-container" id="{{ $check->video_id }}" >
     <div class="item-account">
         <a href="">
-{{--            <img src="{{ $check->user->picture_url }}" alt="" class="logo">--}}
 
             <img src="{{ asset('storage/thumbnail/' . $check->thumbnail_path) }}" alt="" class="logo">
         </a>

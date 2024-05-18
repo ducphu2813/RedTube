@@ -24,9 +24,6 @@ class AdminController extends Controller
         $itemPerPage = $data['itemPerPage'] ?? 10;
         $pageDisplay = $data['pageDisplay'] ?? 3;
 
-        // $listVideo = Cache::remember('list_video', 0, function () {
-        //     return Video::getAllVideoIsApproved();
-        // });
         $videos = Video::whereNotNull('is_approved')->skip(($currentPage - 1) * $itemPerPage)->take($itemPerPage)->get();
         $totalItem = Video::whereNotNull('is_approved')->count();
         $totalPages = ceil($totalItem / $itemPerPage);
@@ -43,39 +40,7 @@ class AdminController extends Controller
         ]);
     }
 
-    // Xử lý hiển thị video
-    // public function filterVideoList(Request $request)
-    // {
-    //     $data = $request->all();
-    //     $choice = $data['is_approved'] ?? null;
-    //     $category_ids = $data['category_ids'] ?? [];
-
-    //     $arrayVideo = [];
-
-    //     if ($choice == 1) {
-    //         $listVideo = Video::getAllVideoIsApproved();
-    //     } else if ($choice == 2) {
-    //         $listVideo = Video::getVideoAccept();
-    //     } else {
-    //         $listVideo = Video::getVideoDeny();
-    //     }
-
-    //     if (!isset($category_ids) || count($category_ids) == 0) {
-    //         foreach ($listVideo as $video) {
-    //             $item = view('admin.videoItem', ['video' => $video])->render();
-    //             array_push($arrayVideo, $item);
-    //         }
-    //     } else {
-    //         $videoCate = Video::getVideosByCategoryIds($category_ids, $listVideo);
-    //         foreach ($videoCate as $video) {
-    //             $item = view('admin.videoItem', ['video' => $video])->render();
-    //             array_push($arrayVideo, $item);
-    //         }
-    //     }
-    //     return response()->json($arrayVideo);
-    // }
-
-    // tim kiem tron bo
+    // tim kiem có bộ lọc
     public function filterVideoList(Request $request)
     {
         $data = $request->all();
@@ -155,52 +120,6 @@ class AdminController extends Controller
 
         return response()->json($arrayUser);
     }
-
-
-
-    // public function filterVideoList(Request $request)
-    // {
-    //     $data = $request->all();
-    //     $choice = $data['is_approved'] ?? null;
-    //     $category_ids = $data['category_ids'] ?? [];
-    //     $currentPage = $data['currentPage'] ?? 1;
-    //     $itemPerPage = $data['itemPerPage'] ?? 10;
-    //     $pageDisplay = $data['pageDisplay'] ?? 3;
-
-    //     // Initialize the query builder
-    //     $query = Video::query();
-
-    //     // Apply the approval choice filter
-    //     if ($choice == 1) {
-    //         $query->whereNotNull('is_approved');
-    //     } else if ($choice == 2) {
-    //         $query->where('is_approved', 1);
-    //     } else if ($choice == 3) {
-    //         $query->where('is_approved', 0);
-    //     }
-
-    //     // Apply category filter if provided
-    //     if (!empty($category_ids)) {
-    //         $query->whereIn('category_id', $category_ids);
-    //     }
-
-    //     // Paginate the results
-    //     $paginatedVideos = $query->paginate($itemPerPage, ['*'], 'page', $currentPage);
-
-    //     $arrayVideo = [];
-    //     foreach ($paginatedVideos as $video) {
-    //         $item = view('admin.videoItem', ['video' => $video])->render();
-    //         array_push($arrayVideo, $item);
-    //     }
-
-    //     return response()->json([
-    //         'videos' => $arrayVideo,
-    //         'totalPages' => $paginatedVideos->lastPage(),
-    //         'currentPage' => $paginatedVideos->currentPage(),
-    //         'itemPerPage' => $itemPerPage,
-    //         'pageDisplay' => $pageDisplay
-    //     ]);
-    // }
 
     public function searchVideo(Request $request)
     {

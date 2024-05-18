@@ -9,8 +9,4 @@
         @endcomponent
     @endforeach
 
-{{--    @for ($i = 0; $i < 3; $i++)--}}
-{{--        @component('history.video-history-item')--}}
-{{--        @endcomponent--}}
-{{--    @endfor--}}
 </div>

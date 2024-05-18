@@ -13,11 +13,6 @@ class Video extends Model
 {
     use HasFactory;
 
-    // public function category()
-    // {
-    //     return $this->belongsToMany(Category::class, 'video_category', 'video_id', 'category_id');
-    // }
-
     public $timestamps = false;
 
     protected $table = 'video';
@@ -96,16 +91,6 @@ class Video extends Model
         return self::query()->where('category_id', $category_id)->get();
     }
 
-    // public static function getVideosByCategoryIds($categoryIds, $listVideo)
-    // {
-    //     return $listVideo
-    //         ->whereHas('getCategories', function ($query) use ($categoryIds) {
-    //             $query->whereIn('category.category_id', $categoryIds);
-    //         })
-    //         ->distinct()
-    //         ->get();
-    // }
-
     public static function getVideosByCategoryIds($categoryIds, $listVideo)
     {
         return $listVideo->filter(function ($video) use ($categoryIds) {
@@ -160,24 +145,12 @@ class Video extends Model
         return self::query()->whereNotNull('is_approved')->get();
     }
 
-    // Lấy video bằng tên từ 1 danh sách sẵn có
-    // public function getVideosByNameSimilarity($videos, $video_name)
-    // {
-    //     return $videos->filter(function ($video) use ($video_name) {
-    //         // Chuyển tên video và video_name về dạng chữ thường và loại bỏ các dấu tiếng Việt
-    //         $videoLowerCase = mb_strtolower(preg_replace('/\pM/u', '', $video->title));
-    //         $videoNameLowerCase = mb_strtolower(preg_replace('/\pM/u', '', $video_name));
-
-    //         // Sử dụng hàm strpos() để kiểm tra xem tên video có chứa video_name không
-    //         return strpos($videoLowerCase, $videoNameLowerCase) !== false;
-    //     });
-    // }
-
     public function getVideosByNameSimilarity($videos, $video_name)
     {
         // Mảng ánh xạ các ký tự tiếng Việt có dấu với các ký tự Latin không dấu
         $vietnameseChars = array('à', 'á', 'ả', 'ã', 'ạ', 'ă', 'ằ', 'ắ', 'ẳ', 'ẵ', 'ặ', 'â', 'ầ', 'ấ', 'ẩ', 'ẫ', 'ậ', 'đ', 'è', 'é', 'ẻ', 'ẽ', 'ẹ', 'ê', 'ề', 'ế', 'ể', 'ễ', 'ệ', 'ì', 'í', 'ỉ', 'ĩ', 'ị', 'ò', 'ó', 'ỏ', 'õ', 'ọ', 'ô', 'ồ', 'ố', 'ổ', 'ỗ', 'ộ', 'ơ', 'ờ', 'ớ', 'ở', 'ỡ', 'ợ', 'ù', 'ú', 'ủ', 'ũ', 'ụ', 'ư', 'ừ', 'ứ', 'ử', 'ữ', 'ự', 'ỳ', 'ý', 'ỷ', 'ỹ', 'ỵ');
         $latinChars = array('a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'd', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'e', 'i', 'i', 'i', 'i', 'i', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'o', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'u', 'y', 'y', 'y', 'y', 'y');
+        //ko làm như này nữa nhé
 
         return $videos->filter(function ($video) use ($video_name, $vietnameseChars, $latinChars) {
             // Thay thế các ký tự tiếng Việt có dấu bằng các ký tự Latin không dấu trong tên video và tên video_name
@@ -196,9 +169,6 @@ class Video extends Model
             return strpos($videoLowerCase, $videoNameLowerCase) !== false;
         });
     }
-
-
-
 
     //hàm này lấy tất cả video
     public static function getAllVideo(){

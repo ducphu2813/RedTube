@@ -47,6 +47,4 @@ class VideoCategory extends Model
             ->exists();
     }
 
-    
-    
 }

@@ -35,9 +35,6 @@
                     <img id="img" class="video-renderer" src="{{ asset('resources/img/defaulftPFP.jpg') }}" alt="" width="24" height="24">
 
                 @endif
-{{--                <img id="img" class="video-renderer"--}}
-{{--                    src="https://yt3.googleusercontent.com/ytc/AIdro_lCzI--zWxJHl_sZunYFi5uIN_n6okiNy7lZ6FLidxG_0M=s176-c-k-c0x00ffffff-no-rj"--}}
-{{--                    alt="">--}}
             </a>
             <div id="text-container" class="video-renderer">
                 <a id="channel-name" class="video-renderer" href="https://www.youtube.com/@TunaGamingvn">{{ $video->user->channel_name }}</a>

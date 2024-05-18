@@ -24,10 +24,6 @@
             type: 'GET',
             dataType: 'html',
             success: function(data) {
-                // var users = '';
-                // $.each(data, function(key, value){
-                //     users += '<p>' + value.name + '</p>'; // Thay đổi dựa trên cấu trúc dữ liệu trả về
-                // });
                 $('#list-users').html(data);
                 console.log(data);
             },

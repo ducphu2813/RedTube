@@ -31,14 +31,8 @@
     </div>
 
     <div class="createVideo--modal">
-        
-    </div>
 
-    <?php
-    // -------------------------MAIN-------------------------
-    // include_once(__DIR__.'\topMainPage.php');
-    // include_once(__DIR__.'\leftMainPage.php');
-    ?>
+    </div>
 </body>
 
 </html>

@@ -30,12 +30,6 @@
         @endforeach
     @endif
 
-
-{{--    @for ($i = 0; $i < 5; $i++)--}}
-{{--        @component('premium.premiumHistoryItem')--}}
-{{--        @endcomponent--}}
-{{--    @endfor--}}
-
     <script>
 
         //event cho nút hủy ở tab được share

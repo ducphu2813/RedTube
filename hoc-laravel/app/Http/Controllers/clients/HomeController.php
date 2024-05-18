@@ -24,13 +24,6 @@ class HomeController extends Controller{
         // cách 2 cần thêm use Illuminate\Support\Facades\View; ở đầu file
         return view('home', $data);
 
-//        return View::make('home', $data);
-
-
-//        $contentView = View::make('home', $data);
-//        $contentView = $contentView->render();
-//        dd($contentView);
-//        echo $contentView;
     }
 
 
