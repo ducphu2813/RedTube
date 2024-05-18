@@ -115,6 +115,9 @@
 
         //event của nút xóa
         $('.delete--btn').on('click', function(event) {
+
+            if(!confirm('Bạn có chắc chắn muốn xóa video này không?')) return false;
+
             var video_id = $(this).attr('video_id')
             $.ajax({
                 url: '{{ route('api.videos.delete') }}',
@@ -125,6 +128,7 @@
                 },
                 dataType: 'html',
                 success: function(data) {
+                    alert('Xóa video thành công')
                     $('#modal').empty();
                     loadPage(1, '{{ route('studio.contents.videos') }}', {{ $itemPerPage }})
                 },
@@ -150,9 +154,8 @@
             success: function(data) {
                 $('#body').append(data);
             },
-            error: function(xhr, status, error) {
-                console.error('Error fetching content:', error);
-                console.log({{ $currentPage }})
+            error: function(data) {
+                console.log(data)
             }
         });
 

@@ -286,6 +286,19 @@ class AdminController extends Controller
         $is_approved = $data['is_approved'];
         $video = new Video();
         $video->updateVideo($id, ['is_approved' => $is_approved]);
+
+        $reviewModel = new ReviewHistory();
+
+        $review_item = [
+            'video_id' => $video->video_id,
+            'reviewer_id' => $data['reviewer_id'],
+            'review_time' => date('Y-m-d H:i:s'),
+            'review_status' => 0,
+            'note' => 'Video của bạn đã bị khóa'
+        ];
+
+        // Lưu vào bảng review
+        $reviewModel->createNewReview($review_item);
     }
 
     // Check video
@@ -356,7 +369,7 @@ class AdminController extends Controller
         $data['reviewer_id'] = $request->session()->get('loggedInUser');
         $data['review_time'] = date('Y-m-d H:i:s');
         $data['review_status'] = 1;
-        $data['note'] = 'Video đã được';
+        $data['note'] = 'Video của bạn đã được duyệt';
         $review_item = [
             'video_id' => $videoId,
             'reviewer_id' => $data['reviewer_id'],

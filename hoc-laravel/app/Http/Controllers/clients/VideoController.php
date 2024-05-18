@@ -174,20 +174,20 @@ class VideoController extends Controller{
         }
 
         //phần lưu lịch sử xem và tăng view
-//        if($userId){
-//            //lưu lịch sử xem video
-//            $history = new History();
-//            $history->createHistory(
-//                [
-//                    'user_id' => $userId,
-//                    'video_id' => $id,
-//                    'created_date' => date('Y-m-d H:i:s')
-//                ]
-//            );
-//        }
-//
-//        //tăng view của video
-//        $videoModel->increaseView($id);
+        if($userId){
+            //lưu lịch sử xem video
+            $history = new History();
+            $history->createHistory(
+                [
+                    'user_id' => $userId,
+                    'video_id' => $id,
+                    'created_date' => date('Y-m-d H:i:s')
+                ]
+            );
+        }
+
+        //tăng view của video
+        $videoModel->increaseView($id);
 
         //lấy danh sách video related
         $categoryIds = array_map(function($category) {
